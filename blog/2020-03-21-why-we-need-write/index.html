@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='Volantis' version='1.6.3' docs='https://volantis.js.org/'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>作为码农，我们为什么要写作 | voiue</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="/avatar/favicon.ico">
+  
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/css/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <p class="title ">VOIUE</p>
+  
+    <p class="subtitle ">「路漫漫其修远兮 吾将上下而求索」</p>
+  
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <i class="icon fas fa-search fa-fw"></i>
+      <input type="text" class="input u-search-input" placeholder="" />
+    </form>
+  </div>
+
+<div class='menu navigation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home "
+            href="/"
+            
+            
+            id="home">
+            <i class='fas fa-house-damage fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/blog/archives/"
+            
+            
+            id="blogarchives">
+            <i class='fas fa-archive fa-fw'></i>&nbsp;归档
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/wiki/"
+            
+            
+            id="wiki">
+            <i class='fas fa-landmark fa-fw'></i>&nbsp;Wiki
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/friends/"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/about/"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header nav-blur">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar"></div>
+  </div>
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      
+        <a class="logo flat-box" target="_self" href='/' >
+          
+            
+              
+              
+                VOIUE
+              
+            
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                  
+                  id="blogcategories">
+									<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/about/"
+                  
+                  
+                  id="about">
+									<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="搜索一下" />
+        </form>
+      </div>
+
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone white-box">
+    <header>
+		<nav class="menu navigation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/categories/"
+                
+                
+                id="blogcategories">
+								<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box   article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2020-03-21-why-we-need-write/">
+        作为码农，我们为什么要写作
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/blog/categories/others/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>others</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年3月21日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          <p>在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。</p>
+<p>不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。</p>
+<a id="more"></a>
+
+<h2 id="提高自己对知识的掌握层次"><a href="#提高自己对知识的掌握层次" class="headerlink" title="提高自己对知识的掌握层次"></a>提高自己对知识的掌握层次</h2><p>美国教育心理学家 <a href="http://zh.wikipedia.org/wiki/%E6%9C%AC%E5%82%91%E6%98%8E%C2%B7%E5%B8%83%E9%AD%AF%E5%A7%86" target="_blank" rel="noopener">Bloom</a> 将知识认知分为了两个维度，其中认知历程维度又分为 6 个层次，分别为：记忆、理解、应用、分析、评鉴、创造。如下图所示，层次越高，表示对知识的掌握程度越深。</p>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200322113417.png">
+</fancybox>
+
+<p>对于写作者来说，在写作过程中，因为需要对知识进行精确地表述，常常要对知识的细节再次的探索。在这个过程中，写作者可能会发现自己的观点不清晰的地方，通过二次学习，使自己的理解更加完善。写作者也可能会发现自己观点中的错误，从而改正自己的曲解。在经历过这段过程后，通常对于自己所写的知识的掌握程度，都上升了一个层次。</p>
+<p>我自己的每次技术写作都经历了这样的提高过程。所以，我更多时候是把写作当成学习的一种方式。这种学习方式比普通的学习方式更加深入，效果更好。当然，花费的时间也更多。</p>
+<h2 id="提高表达和沟通的能力"><a href="#提高表达和沟通的能力" class="headerlink" title="提高表达和沟通的能力"></a>提高表达和沟通的能力</h2><p>作为一个程序员，日常的工作大部分时间都是面对电脑。许多人周末也喜欢当一个技术宅，待在家里上网、看电影或者玩游戏来消遣。长时间的面对机器，使得我们的语言表达能力极度衰退。而写作是一个很好的机会，让我们练习自己的表达能力。</p>
+<p>长时间写作之后，你会更加注意平时沟通的语言。你的用词更加精准，表达更加生动。在表达能力提高的同时，你的沟通效率也得到提高。</p>
+<h2 id="接受读者的沟通和反馈"><a href="#接受读者的沟通和反馈" class="headerlink" title="接受读者的沟通和反馈"></a>接受读者的沟通和反馈</h2><p>当你的文章通过博客或者 InfoQ 网站发表出来后，你就会接着获得写作的第三个好处：来自读者的沟通和反馈。一篇好的文章通常会吸引一些读者回复，通过和读者的交流，你可以收获以下好处：<br>1 错误内容反馈：尽管文章在写作时经历过二次学习，但是人难免会犯错。写作将你的思想完全暴露出来，有水平的读者可以指出你文章中的错误，从而使你对知识的理解更加准确。我的很多博客文章都有一些细微错误，通过读者的找反馈，我很快就将错误内容改正过来了，自己的水平也得到了提高。</p>
+<p>2 认识朋友：一个乐于分享的人总会比沉默寡言的人更招人喜欢。所以通过写作，你可以结交很多和你一样，乐于分享的朋友。</p>
+<p>3 了解更多相关信息：一些读者会回复说：” 某某框架也用了这个技术方案 “，或者是：” 你的这个实现方案没有另一个某某开源方案好 “。这些信息，作为你当前文章知识点的补充，使你能够了解更多相关的资料，再一次完善自己所学的知识。</p>
+<h2 id="影响力"><a href="#影响力" class="headerlink" title="影响力"></a>影响力</h2><p>当你持续的写作，坚持一年以上，你就会慢慢收获影响力。这个时候，你也会收到技术大会的分享邀请，出版社的约稿邀请，著名互联网公司的工作邀请，甚至是创业项目的合伙人邀请。你相比那些不分享的人，获得了更多的机会。当然你的技术观点也会被更多人接受，你也会收获到传递知识的乐趣。</p>
+<p>#结束语</p>
+<p>在写作过程中，你将收获提高自己对知识的掌握层次和提高表达和沟通的能力的好处。</p>
+<p>在写作结束后，你将收获错误内容反馈、认识朋友和了解更多相关信息的好处。</p>
+<p>在坚持写作一段时间，你将收获影响力和传递知识的乐趣。</p>
+<p>另外，<a href="http://book.douban.com/subject/6709809/" target="_blank" rel="noopener">《暗时间》</a> 的作者刘未鹏在 <a href="http://blog.csdn.net/pongba/article/details/3896311" target="_blank" rel="noopener">他的文章</a>，也总结了很多写作的好处，大家也可以看看。</p>
+<p>看了写作的这么多好处，你是否心动？那赶快创建一个博客，开始你的技术写作之旅吧！</p>
+<br>
+
+<blockquote><p>原文链接：<a href="http://blog.devtang.com/2014/01/08/why-we-need-write/" target="_blank" rel="noopener">http://blog.devtang.com/2014/01/08/why-we-need-write</a></p>
+</blockquote>
+
+          
+            <br>
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+
+<section class="widget copyright  widget-blur desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            
+          
+        
+          
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-03-21-why-we-need-write/>https://voiue.github.io/blog/2020-03-21-why-we-need-write/</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+                
+              
+                
+              
+            
+          
+        </div>
+        
+          <br>
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-21T18:07:11+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年3月21日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/others/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>others</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-03-21-why-we-need-write/&title=作为码农，我们为什么要写作 - voiue&summary=在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。
+不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-03-21-why-we-need-write/&title=作为码农，我们为什么要写作 - voiue&summary=在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。
+不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-03-21-why-we-need-write/&title=作为码农，我们为什么要写作 - voiue&summary=在程序员这个行业，坚持做技术写作的人一直比较少。我和身边的朋友沟通后，发现他们除了借口没有时间外，大多没有意识到写作带来的收益。在他们看来，将自己学到的知识简单记录下来就足够自己需要的时候回顾了。而技术写作通常需要花更多时间，因为需要将技术的细节以及来龙去脉讲清楚。
+不得不承认，这的确是一个事实，通常情况下，把一个知识讲清楚比理解它更难。那我们为什么要花时间写作呢？我想写作至少有以下好处。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+        
+        <fancybox>
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpklEQVR42u3aQXLjMAwEQP//09kHbLlMDCAJcZq3JLJEti4TjF8/VrReCMCBAwfOAgduCdwrXP/dMLz+3c/V66vPSc8LDhw4cODAgQO3De44AB5usAub7u/d86bOCw4cOHDgwIEDtxXuYwAsXj91kPS67v7BgQMHDhw4cOC+HW4qQHeDdDoQBQcOHDhw4MCB+6tw3eunCuqv+c8BHDhw4MCBAwfu4kL6NNBOQVUHmmubfHDgwIEDBw4cuCG46uoWwE//HJ8XHDhw4MCBAwduCVx3pUXy6SAxDd5p4P14XnDgwIEDBw4cuCVwaUCsbrg7WJzeZ/Vz4MCBAwcOHDhw2+CqhfBUwJ0OutPr7XPBgQMHDhw4cOCWwJUDYHEQmV6fBuh2wO02+eDAgQMHDhw4cDfBdQNod4PV+04V5fEAFRw4cODAgQMHbglctSBOC+WpgWf3c+kCBw4cOHDgwIHbBhcP9C4qoNMC/Kr7f2zywYEDBw4cOHDgHoI7DZop6Ol92ge6qxgHBw4cOHDgwIFbAlctcqtAaRBN7zdVnIMDBw4cOHDgwP0WuG4hPL3hbuGcBu6P9wEHDhw4cODAgVsO91Nc6UDy6ueND0zBgQMHDhw4cOCWwFVv0B1wTgXU6iB06sWCAwcOHDhw4MBtgUsfVAWYLpbTQWr7BYADBw4cOHDgwC2BOy1k08I6ve/p/rqFdfkLkuDAgQMHDhw4cMvg0gCcfmGw+0KqzxkL4uDAgQMHDhw4cEvg7gKsBtapgWcamMsTYHDgwIEDBw4cuIfgqhtOD9o9wHQhXX4eOHDgwIEDBw7cMrjpgDk+QGwW090BKThw4MCBAwcO3Da402CYDjRTiLT4ngrO4MCBAwcOHDhwvw2uuoGpQWM6QE1f4OmLfTvIBAcOHDhw4MCBWwY3HSyrRfDVxXUaoMGBAwcOHDhw4LbDTQfOapBNgdJBaLnABgcOHDhw4MCBWwLXXWmgrQbPqUFkewALDhw4cODAgQO3BK4bCLsDz+ogNR2cjgV6cODAgQMHDhy4ZXBViHQgWQ2m1b+nL+L4fuDAgQMHDhw4cEvhqgVztxjuFtXjhfMnaHDgwIEDBw4cuC+Fq/6+GsDjIrl4ntsDMDhw4MCBAwcO3ENw1QHj9MGmBqNxIQ0OHDhw4MCBA/cwXLWQTl9ACn914L2tyQcHDhw4cODAgRuCmypw0893YaYGouUADA4cOHDgwIED9xCcVYRGAA4cOHAWOHDPrn9ZxX+mQ/o5bgAAAABJRU5ErkJggg==">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpklEQVR42u3aQXLjMAwEQP//09kHbLlMDCAJcZq3JLJEti4TjF8/VrReCMCBAwfOAgduCdwrXP/dMLz+3c/V66vPSc8LDhw4cODAgQO3De44AB5usAub7u/d86bOCw4cOHDgwIEDtxXuYwAsXj91kPS67v7BgQMHDhw4cOC+HW4qQHeDdDoQBQcOHDhw4MCB+6tw3eunCuqv+c8BHDhw4MCBAwfu4kL6NNBOQVUHmmubfHDgwIEDBw4cuCG46uoWwE//HJ8XHDhw4MCBAwduCVx3pUXy6SAxDd5p4P14XnDgwIEDBw4cuCVwaUCsbrg7WJzeZ/Vz4MCBAwcOHDhw2+CqhfBUwJ0OutPr7XPBgQMHDhw4cOCWwJUDYHEQmV6fBuh2wO02+eDAgQMHDhw4cDfBdQNod4PV+04V5fEAFRw4cODAgQMHbglctSBOC+WpgWf3c+kCBw4cOHDgwIHbBhcP9C4qoNMC/Kr7f2zywYEDBw4cOHDgHoI7DZop6Ol92ge6qxgHBw4cOHDgwIFbAlctcqtAaRBN7zdVnIMDBw4cOHDgwP0WuG4hPL3hbuGcBu6P9wEHDhw4cODAgVsO91Nc6UDy6ueND0zBgQMHDhw4cOCWwFVv0B1wTgXU6iB06sWCAwcOHDhw4MBtgUsfVAWYLpbTQWr7BYADBw4cOHDgwC2BOy1k08I6ve/p/rqFdfkLkuDAgQMHDhw4cMvg0gCcfmGw+0KqzxkL4uDAgQMHDhw4cEvg7gKsBtapgWcamMsTYHDgwIEDBw4cuIfgqhtOD9o9wHQhXX4eOHDgwIEDBw7cMrjpgDk+QGwW090BKThw4MCBAwcO3Da402CYDjRTiLT4ngrO4MCBAwcOHDhwvw2uuoGpQWM6QE1f4OmLfTvIBAcOHDhw4MCBWwY3HSyrRfDVxXUaoMGBAwcOHDhw4LbDTQfOapBNgdJBaLnABgcOHDhw4MCBWwLXXWmgrQbPqUFkewALDhw4cODAgQO3BK4bCLsDz+ogNR2cjgV6cODAgQMHDhy4ZXBViHQgWQ2m1b+nL+L4fuDAgQMHDhw4cEvhqgVztxjuFtXjhfMnaHDgwIEDBw4cuC+Fq/6+GsDjIrl4ntsDMDhw4MCBAwcO3ENw1QHj9MGmBqNxIQ0OHDhw4MCBA/cwXLWQTl9ACn914L2tyQcHDhw4cODAgRuCmypw0893YaYGouUADA4cOHDgwIED9xCcVYRGAA4cOHAWOHDPrn9ZxX+mQ/o5bgAAAABJRU5ErkJggg==">
+          </a>
+        </fancybox>
+      
+    
+  </div>
+</div>
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/blog/2020-03-22-ios-memory-management/" rel="prev" title="理解 iOS 的内存管理">
+                                  
+                                      理解 iOS 的内存管理
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/iOS/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> iOS</a> <a class="tag" href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 内存管理</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/blog/2020-03-16-add-widget-with-your-website/" rel="prev" title="给网站添加小插件">
+                                    
+                                        给网站添加小插件
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/others/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> others</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '作为码农，我们为什么要写作',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+      
+    
+      
+        
+
+
+  <section class="widget toc-wrapper  widget-blur desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#提高自己对知识的掌握层次"><span class="toc-text">提高自己对知识的掌握层次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提高表达和沟通的能力"><span class="toc-text">提高表达和沟通的能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接受读者的沟通和反馈"><span class="toc-text">接受读者的沟通和反馈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#影响力"><span class="toc-text">影响力</span></a></li></ol>
+    </div>
+  </section>
+
+
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+</aside>
+
+<footer class="clearfix ">
+  <br><br>
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="mailto:voiue@foxmail.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/voiue"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=363662803"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <div>
+    本站使用
+    <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+  
+    <div class='copyright'>
+    <p><a href="https://voiue.github.io">Copyright © 2020 voiue</a></p>
+
+    </div>
+  
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+  <script>
+    
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) ROOT += '/';
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js" async></script>
+
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+  
+  
+  
+    
+<script src="//cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        if ('') {
+          $('').backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/search.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/comment_typing.js"></script>
+
+
+
+<!-- 复制 -->
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+
+
+<!-- fancybox -->
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!--动态线条背景-->
+  <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="/js/snow.js"></script>
+</body>
+</html>

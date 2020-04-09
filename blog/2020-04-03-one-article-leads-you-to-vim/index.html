@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='Volantis' version='1.6.3' docs='https://volantis.js.org/'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>效率至上-一文带你真正走进vim | voiue</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="/avatar/favicon.ico">
+  
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/css/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <p class="title ">VOIUE</p>
+  
+    <p class="subtitle ">「路漫漫其修远兮 吾将上下而求索」</p>
+  
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <i class="icon fas fa-search fa-fw"></i>
+      <input type="text" class="input u-search-input" placeholder="" />
+    </form>
+  </div>
+
+<div class='menu navigation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home "
+            href="/"
+            
+            
+            id="home">
+            <i class='fas fa-house-damage fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/blog/archives/"
+            
+            
+            id="blogarchives">
+            <i class='fas fa-archive fa-fw'></i>&nbsp;归档
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/wiki/"
+            
+            
+            id="wiki">
+            <i class='fas fa-landmark fa-fw'></i>&nbsp;Wiki
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/friends/"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/about/"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header nav-blur">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar"></div>
+  </div>
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      
+        <a class="logo flat-box" target="_self" href='/' >
+          
+            
+              
+              
+                VOIUE
+              
+            
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                  
+                  id="blogcategories">
+									<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/about/"
+                  
+                  
+                  id="about">
+									<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="搜索一下" />
+        </form>
+      </div>
+
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone white-box">
+    <header>
+		<nav class="menu navigation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/categories/"
+                
+                
+                id="blogcategories">
+								<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box   article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2020-04-03-one-article-leads-you-to-vim/">
+        效率至上-一文带你真正走进vim
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/blog/categories/vim/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>vim</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年4月3日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          <p><code>vim</code>一直是程序员之间比较有争议的一个话题。有人认为她是编辑器之神，有人则认为她古老过时，远远不如<strong>IDE</strong>，或是以当红小生<code>vscode</code>为代表的图形化文本编辑器。无论爱恨，我们的开发工作，大到远程登录服务器<code>coding</code>，修改<code>config</code>文件，小到<code>git commit message</code>，或多或少总要接触她。</p>
+<p>为什么要写这篇blog呢，是因为我发现各大平台充斥的<code>vim</code>教程类blog其实很不友好，大多数是命令的堆砌，很少有对思想的解读。由此造成的结果，很多工程师对<code>vim</code>总是敬畏三分，或者就算部分人可以使用<code>vim</code>，也只是以自己的固有思维，结合vim的命令操作，并没有真正掌握<code>vim</code>的精髓。所以我尝试用自己的方式，试图帮助大家<strong>系统</strong>地建立起<code>vim</code>的知识系统。</p>
+<a id="more"></a>
+
+<p>文章主要结构如下：</p>
+<ul>
+<li>首先介绍<code>vim</code>编辑器最简单、基本的操作，让你快速入门，在遇到<code>vim</code>时，可以不至于惊慌，从容完成任务。如果想到某些操作，比如常用的复制、粘贴之类，可以到第二部分查找对应高阶操作，循序渐进使用<code>vim</code>。</li>
+<li>接下来，将会介绍<code>vim</code>一系列高级操作，将我们的效率最大化。注：这部分信息量较大，建议您在阅读部分内容后，快速浏览不熟悉的命令，做到心中有数；随后可前进到第三部分；回过头来，再循序渐进，边学边练。</li>
+<li>最后，试图讲述<code>vim</code>思想的精髓，既让我们真正对<code>vim</code>的操作融会贯通，又让我们可以在使用其他IDE/编辑器时应用这些思想，甚至在我们自己设计、实现功能、组件时，都能进行应用。这才算真正掌握了神器<code>vim</code>。</li>
+</ul>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>vim有三个模式，分别为普通（正常）模式、插入模式以及命令模式。</p>
+<ul>
+<li>普通模式：一般用于浏览文件，也包括一些复制、粘贴、除等操作。</li>
+<li>插入模式：主要用来输入、修改、删除字符，此时的操作，除了不能用鼠标外，与我们日常在编辑器中操作无异。普通模式下，通过<code>i</code>等命令进入插入模式。</li>
+<li>命令模式：用以执行一些输入并执行一些vim或插件提供的指令。在普通模式下通过输入<code>:</code>后，可以发现，屏幕的右下角会出现<code>:</code>，此时便进入了命令模式。本文中使用：开头的命令，便可视为输入<code>:</code>进入命令模式后，输入后面的字符，执行命令。</li>
+</ul>
+<p>很多人对于<code>vim</code>的第一点疑惑，便来源于此。我们习惯了图形化编辑器下，始终处于插入状态。然而在<code>vim</code>中，大多数情况下，我们会处于正常模式。只有当需要输入字符时，进入插入模式；当需要使用命令时，进入到命令模式。在插入和命令模式下，输入<code>Esc</code>便可返回正常模式。一张图概括如下：</p>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200403193157.png">
+</fancybox>
+
+<blockquote><p>注：后文讲解，如无特殊说明，均为普通模式下操作。</p>
+</blockquote>
+
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><p>如果不追求效率，只想完成修改文件的任务，并保存退出，只需要掌握以下三个命令：</p>
+<ol>
+<li>移动：<code>h j k l</code>最简单的移动，相当于键盘上面的方向键，分别对应左下上右。</li>
+<li>进入插入模式：<code>i</code></li>
+<li>保存退出：<code>ZZ</code>（注意区分大小写）</li>
+</ol>
+<p>流程如下：</p>
+<ol>
+<li>普通模式下，通过<code>h j k l</code>移动到想要修改的位置</li>
+<li>输入<code>i</code>进入插入模式，此时通过输入(字母、数字、符号)，删除(Backspace)等，完成基本修改操作</li>
+<li><code>Esc</code>回到普通模式，<code>ZZ</code>，保存修改并退出。</li>
+</ol>
+<h2 id="进阶：命令形式"><a href="#进阶：命令形式" class="headerlink" title="进阶：命令形式"></a>进阶：命令形式</h2><p>普通模式下，<code>vim</code>的命令主要分为以下三种：</p>
+<ol>
+<li><p>动作，用以移动光标，或者定义操作的范围；比如：</p>
+<ol>
+<li><code>h</code>：定义操作范围为一格，单独使用时，向左移动光标一格。</li>
+<li><code>w</code>：定义操作范围为一个单词，移动光标到下一个单词首部。</li>
+</ol>
+</li>
+<li><p>操作，这种命令需要在后面接表示操作范围的指令；</p>
+<ol>
+<li><code>d</code>，删除，后接表示一个单词操作范围的<code>w</code>，即<code>dw</code>时，表示删除到当前词尾。</li>
+<li><code>c</code>，修改，后接表示一个单词操作范围的<code>w</code>，即<code>cw</code>时，表示修改当前单词。(编辑器行为表现为，删除到当前词尾，同时进入插入模式)。</li>
+</ol>
+</li>
+<li><p>命令，直接执行的命令，其中一部分，在执行命令后，直接进入编辑模式；比如：</p>
+</li>
+<li><p><code>D</code>，删除至行末。</p>
+</li>
+<li><p><code>I</code>，到行首进入插入模式。 我们的使用方式主要也是三种：命令、动作、操作+动作。 此外，在<strong>动作</strong>类的命令前，加上<code>number</code>为可选项，可实现<code>重复n次</code>的效果：</p>
+</li>
+<li><p><code>[number] + h/j/k/l</code>向<code>左/下/上/右</code>移动<code>number</code>个字符。比如，’2j’，向下移动光标2个字符。</p>
+</li>
+<li><p>依旧使用<code>d</code>和<code>w</code>来举例，<code>d</code>是删除，<code>w</code>是单词，<code>dw</code>代表删除一个单词，<code>d2w</code>代表删除两个单词。后面的命令，大多都可应用此种形式组合使用，大家多注意，养成这种<code>操作 + [次数] + 范围</code>的思维模式，举一反三，便可发挥最大功效。</p>
+</li>
+</ol>
+<h3 id="移动进阶"><a href="#移动进阶" class="headerlink" title="移动进阶"></a>移动进阶</h3><h4 id="单词级别的移动"><a href="#单词级别的移动" class="headerlink" title="单词级别的移动"></a>单词级别的移动</h4><p>这里有仅大小写不同的两组命令，两组命令的功能，是相同的：跳转光标到对应位置。但是对应的单位不同，分别为<code>word</code>和<code>string</code>。具体区别是：</p>
+<ul>
+<li><code>string</code>仅以<strong>空格</strong>分开；</li>
+<li><code>word</code>以<strong>字母数字以外的字符</strong>分开。</li>
+</ul>
+<p>以这个字符串为例：<code>hello world-hehe111 abcde</code></p>
+<ul>
+<li><code>word</code>有5个，分别为<code>hello world</code>, <code>-</code>, <code>hehe111</code>和<code>abcde</code>。</li>
+<li><code>string</code>有3个，分别为<code>hello world-hehe111</code>和<code>abcde</code>。</li>
+</ul>
+<p>两组命令如下：（跳转光标至）</p>
+<ul>
+<li><code>w</code> 下一个单词开头</li>
+<li><code>e</code> 当前或下一个单词结尾</li>
+<li><code>b</code> 当前或上一个单词开头</li>
+<li><code>ge</code> 上一个单词的结尾</li>
+<li><code>W</code> 下一个字符串的开头</li>
+<li><code>E</code> 当前或下一个字符串结尾</li>
+<li><code>B</code> 当前或上一个字符串的开头</li>
+<li><code>GE</code> 上一个字符串的结尾</li>
+</ul>
+<p>举个例子，当光标位于<code>hehe111</code>的第一个字符h时，前后的单词/字符串信息如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>前一个</th>
+<th>当前</th>
+<th>后一个</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单词</td>
+<td>-</td>
+<td>hehe111</td>
+<td>abcde</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>hello</td>
+<td>world-hehe111</td>
+<td>abcde</td>
+</tr>
+</tbody></table>
+<p>那么以上各个敲击以上各个命令的结果，便一目了然(加粗字表示命令运行后光标位置)：</p>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200403200449.png">
+</fancybox>
+
+<h4 id="句子，段落级别的移动"><a href="#句子，段落级别的移动" class="headerlink" title="句子，段落级别的移动"></a>句子，段落级别的移动</h4><ul>
+<li><code>0</code> 移动到当前行行首</li>
+<li><code>^</code> 移动到当前行的第一个非空字符</li>
+<li><code>$</code> 移动到当前行尾</li>
+<li><code>(</code> 跳转到当前或前一个句子的开头</li>
+<li><code>)</code> 跳转到当前或下一个句子的结尾</li>
+<li><code>{</code> 跳转到当前或前一个段落的开头</li>
+<li><code>}</code> 跳转到当前或下一个段落的结尾</li>
+<li>这里段落很容易理解，是以空行分隔开的。句子麻烦些，是按照句号来算的。</li>
+<li>记得在这些命令前添加<code>d</code>试一下效果吧，掌握<code>操作+范围</code>这种命令形式吧。</li>
+</ul>
+<h4 id="页面级别的移动"><a href="#页面级别的移动" class="headerlink" title="页面级别的移动"></a>页面级别的移动</h4><p><strong>按行移动光标</strong><br><code>gg</code> 移动到文本第一行行首<br><code>G</code> 移动到文本末行行首<br><code>[n] + %</code>：按百分比近似定位到某行，该行位于整个文件的<code>n%</code>处<br><code>[n] + gg/G</code> 跳转到第<code>n</code>行，常用。</p>
+<p>要想用好上述几个命令，有两个简单的建议：</p>
+<p>结合命令：<code>ctrl-g</code>。该命令的作用是显示当前行的位置信息（第几行，相对整个文本行数的百分比）。<br>在命令模式下输入以下命令，或在<code>~/.vimrc</code>中添加如下代码片段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set nu &quot; 显示行号</span><br><span class="line">set cursorline &quot; 高亮光标所在行&lt;&#x2F;pre&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>显示页面内移动光标</strong></p>
+<ul>
+<li><code>H</code>：屏幕顶部行首</li>
+<li><code>M</code>：屏幕中央行首</li>
+<li><code>L</code>：屏幕底部行首</li>
+</ul>
+<p><strong>滚动与翻页</strong></p>
+<ul>
+<li><code>ctrl-d/u</code>：前进/后退半页</li>
+<li><code>ctrl-f/b</code>：前进/后退整页</li>
+<li><code>ctrl+e</code>：上滚一行</li>
+<li><code>ctrl+y</code>：下滚一行</li>
+<li><code>zt</code>：使光标所在位置移动到屏幕的顶部（所有内容做位移）</li>
+<li><code>zz</code>：使光标所在位置移动到屏幕的中央（所有内容做位移）</li>
+<li><code>zb</code>：使光标所在位置移动到屏幕的底部（所有内容做位移）</li>
+</ul>
+<h4 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h4><ul>
+<li><code>f+单个字符</code>：在本行内向右移动到指定字符</li>
+<li><code>F+单个字符</code>：在本行内向左移动到指定字符</li>
+<li><code>t+单个字符</code>：在本行内向右移动到指定字符的前一个字符</li>
+<li><code>T+单个字符</code>：在本行内向左移动到指定字符的前一个字符</li>
+<li><code>%</code>: 在“( )”、“[ ]”、“{ }”类符号的首尾间切换</li>
+<li><code>*</code> 和<code>#</code>: 匹配光标当前所在的单词，移动光标到下一个（或上一个）匹配单词（*是下一个，#是上一个）。</li>
+</ul>
+<h4 id="Mark"><a href="#Mark" class="headerlink" title="Mark"></a>Mark</h4><ul>
+<li><code>m+[a~z]</code> ：在当前光标做标记，如ma</li>
+<li><code>'+[mark]</code>：光标返回指定标记所在的行，如<code>'a</code>，则光标返回到标记<code>a</code>所在行首</li>
+<li><code>`+[mark]</code>：光标返回指定标记</li>
+<li><code>ctrl+o</code>：跳转回光标前一个位置</li>
+<li><code>ctrl+i</code>：跳转回较新的光标位置</li>
+<li>建议结合命令模式下如下两个命令，可获得更好体验：<ul>
+<li><code>:marks</code>：显示全部mark</li>
+<li><code>:delmarks [mark]</code>：删除指定mark</li>
+</ul>
+</li>
+</ul>
+<h3 id="编辑进阶"><a href="#编辑进阶" class="headerlink" title="编辑进阶"></a>编辑进阶</h3><h4 id="进入插入模式"><a href="#进入插入模式" class="headerlink" title="进入插入模式"></a>进入插入模式</h4><p><strong>在不同位置进入插入模式</strong></p>
+<ul>
+<li><code>i</code>：在光标前插入字符</li>
+<li><code>I</code>：在行首插入字符</li>
+<li><code>a</code>：在光标后插入字符</li>
+<li><code>A</code>：在行尾插入字符</li>
+<li><code>o</code>：在光标下发插入空行</li>
+<li><code>O</code>：在光标上方插入空行</li>
+</ul>
+<p><strong>使用修改命令进入插入模式</strong></p>
+<ul>
+<li><code>c</code>：修改，后面需要接范围</li>
+<li><code>c+w</code>：删除光标位置单词，并进入插入模式</li>
+<li><code>c+l / s</code>：删除光标位置字符，并进入插入模式</li>
+<li><code>c+c / S</code>：删除光标所在行，并进入插入模式</li>
+<li><code>c+$ / C</code>：删除光标位置到行尾的字符，并进入插入模式</li>
+<li><code>r</code>： 替换当前字符。</li>
+<li><code>R</code>：（进入replace模式）持续替换光标所在字符，直到使用ESC退出替换模式。</li>
+</ul>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><ul>
+<li><code>x</code>： 删除当前位置或下一个位置的字符。</li>
+<li><code>d</code>：删除，属于动作指令，后面需要加操作类指令。比如如下命令：<ul>
+<li><code>de</code>：删除到当前单词结尾。</li>
+<li><code>dw</code>：删除到下一个单词开始。</li>
+<li>注意，此处与<code>de</code>的区别在于，<code>dw</code>会删除两个单词之间的空格。</li>
+<li><code>daw</code>：删除一个单词，包含单词的边界（空格）。</li>
+<li><code>d0</code>：删除至行首。</li>
+<li><code>d$ / D</code>：删除至行尾。</li>
+</ul>
+</li>
+<li><code>da[</code>：删除[ ]整个块，包含符号本身；</li>
+<li><code>di[</code>：删除[ ]块，不包含符号本身；</li>
+<li><code>da/di +</code> ‘ “ { ( 等，也与接[类似，删除整个区块。唯一需要注意的，”和’仅仅在行内。</li>
+<li><code>dt[x]</code>：在本行，删除到[x]。比如，<code>dt"</code>删除到双引号，<code>dtf</code>，删除到字母<code>f</code>。 <code>d/foo</code>：在全文， 删除到 “foo” 。</li>
+</ul>
+<h4 id="剪切"><a href="#剪切" class="headerlink" title="剪切"></a>剪切</h4><p>剪切操作其实就是我们之前讲的删除。也就是d。删除的内容，默认会存放到剪切板中。也就相当于进行了剪切。</p>
+<h4 id="进阶操作符"><a href="#进阶操作符" class="headerlink" title="进阶操作符"></a>进阶操作符</h4><p>从这里大家可以看出，<code>i</code>和<code>a</code>的作用比较特殊，代表与区块相关的某种操作。区别就在于，<code>i</code>不包含区块边界符号。<code>a</code>包含。这两个操作符很重要，在后面的复制操作中还会用到。此外还有<code>t</code>，<code>/</code>。此外，<code>i</code>和<code>a</code>还可以接<code>t</code>，此时<code>t</code>表示一对xml标签。<code>i</code>：区块，不包含边界。<code>a</code>：区块，包含边界。<code>t</code>：”<code>t</code>o”，本行到哪里。<code>/</code>：接匹配，全文到哪里。</p>
+<h4 id="粘贴"><a href="#粘贴" class="headerlink" title="粘贴"></a>粘贴</h4><ul>
+<li><code>p</code>：粘贴到光标后，或下一行。</li>
+<li><code>P</code>：粘贴到光标前，或前一行。</li>
+</ul>
+<p>为什么会有光标前后或上下一行两种情况呢？是因为我们复制或剪切的内容有可能是字符串或者整行：</p>
+<ul>
+<li>当复制内容为字符串时，粘贴到光标前/后。</li>
+<li>当复制内容为整行时，粘贴到上/下一行。</li>
+</ul>
+<h4 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h4><ul>
+<li><p><code>y</code>，复制，属于操作，后面需要接动作来标识复制的范围。比如：</p>
+<ul>
+<li><code>yw</code>：复制到当前单词结尾。</li>
+<li><code>ye</code>：从当前位置复制到本单词的最后一个字符。</li>
+<li><code>y$</code>：复制到当前行尾。</li>
+<li><code>yy</code>或<code>Y</code>：复制当前行。</li>
+<li><code>nyy</code>：复制从光标所在行起的n行，注意n在最前面。<br><code>0y$</code>： 命令意味着：</li>
+</ul>
+</li>
+<li><p><code>0</code> → 先到行头</p>
+</li>
+<li><p><code>y</code> → 从这里开始拷贝</p>
+</li>
+<li><p><code>$</code> → 拷贝到本行最后一个字符<br>当然也可以结合我们刚刚介绍的进阶操作符来进行操作：</p>
+</li>
+<li><p><code>yi"</code>：复制两个引号之间</p>
+</li>
+<li><p><code>yit</code>：复制两个xml标签之间</p>
+</li>
+<li><p><code>y/[x]</code>：复制到x。</p>
+</li>
+</ul>
+<h4 id="剪切板"><a href="#剪切板" class="headerlink" title="剪切板"></a>剪切板</h4><p>vim 有 12 个剪切板，分别是 0、1、2、…、9、a、“、＋。<code>:reg</code>：查看各个剪切板里的内容。<code>y</code>，<code>p</code>默认使用 “剪切板中的内容。 <code>"[n]y</code>：复制到剪切板<code>n</code>中。<code>"[n]p</code>：粘贴剪切板<code>n</code>中的内容。</p>
+<p><strong>查看是否支持系统剪切板：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --version | grep &quot;clipboard&quot;</span><br></pre></td></tr></table></figure>
+
+<p>观看输出中，<code>clipboard</code>前面是<code>+</code>还是<code>-</code>。若是<code>-</code>，则说明不支持系统剪切板。 <code>+</code>号剪切板比较特殊，是系统剪切板，用于与系统其他应用互动：</p>
+<ul>
+<li><code>"+y</code>，将内容复制到系统剪切板，<code>ctrl＋v</code>将其粘贴到其他应用中，比如<code>vs code</code>。</li>
+<li><code>"+p</code>，将其他应用中复制的内容，粘贴到vim中。</li>
+</ul>
+<h4 id="可视模式"><a href="#可视模式" class="headerlink" title="可视模式"></a>可视模式</h4><p><code>v</code>：进入可视模式。<code>V</code>：进入行选择模式。<code>Crtl + v</code>：进入块选择模式。</p>
+<p>进入可视模式后，可以通过之前的移动操作，来进行选择。比如：<code>hjkl</code>：前后左右选择。<code>$</code>：选择到行尾。<code>i"</code>：选择两个引号之间。</p>
+<p>选择后，可以使用</p>
+<ul>
+<li><code>d</code>进行删除/剪切，</li>
+<li><code>y</code>进行复制。</li>
+<li>还可以使用以下很有意思的命令：<ul>
+<li><code>gU</code>：变大写。</li>
+<li><code>gu</code>：变小写。</li>
+<li><code>J</code>：把所有的行连接起来（变成一行）。</li>
+<li><code><</code> 或 <code>></code>：左右缩进。</li>
+<li><code>=</code> ：自动缩进 。</li>
+</ul>
+</li>
+</ul>
+<h4 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h4><p><code>=</code>：调整格式化缩进。<code>gg=G</code>：全文代码格式化。</p>
+<ul>
+<li><code>gg</code>，到文章开头</li>
+<li><code>=</code>，调整格式</li>
+<li><code>G</code>，到文章结尾。</li>
+</ul>
+<h4 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h4><p>编辑模式下<code>Ctrl + n/p</code>出现提示，此时会出现补全的选项。按住<code>Ctrl</code>不放，用<code>n</code>和<code>p</code>来遍历提示选项，到达期待的选项后，无需其他操作，继续输入即可。</p>
+<h4 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h4><ul>
+<li><code>u</code>：撤销前一个动作</li>
+<li><code>U</code>：撤销当前行的一系列动作</li>
+<li><code>CTRL-R</code>：Redo，意思就是我又不想撤销了。</li>
+</ul>
+<h4 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h4><ul>
+<li><code>/</code>： 查找，此时Terminal左下角会出现<code>/</code>，在后面输入想要查找的内容，回车即可。</li>
+<li><code>?</code>：反向查找，同样道理，左下角会出现<code>?</code>。</li>
+<li><code>/[search]\c</code>：忽略大小写。比如：<code>/test\c</code>，查找test，忽略大小写</li>
+<li><code>n</code>： 下一个匹配</li>
+<li><code>N</code>： 前一个匹配</li>
+</ul>
+<p>命令模式下：</p>
+<ul>
+<li><code>s/old/new/</code>：用<code>new</code>替换<code>old</code></li>
+<li><code>s/old/new/g</code>：全局替换</li>
+<li><code>set hlsearch</code>：高亮搜索结果</li>
+</ul>
+<h4 id="宏录制"><a href="#宏录制" class="headerlink" title="宏录制"></a>宏录制</h4><p><code>qa</code>操作序列<code>q</code>, <code>@a</code>, <code>@@</code></p>
+<ul>
+<li><code>qa</code>把你的操作记录在寄存器<code>a</code>。</li>
+<li>于是<code>@a</code>会replay被录制的宏。</li>
+<li><code>@@</code> 是一个快捷键用来replay最新录制的宏。</li>
+</ul>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><ul>
+<li><code>:w</code>：保存修改</li>
+<li><code>:wq</code>：保存修改并退出</li>
+<li><code>ZZ</code>：保存修改并退出</li>
+<li><code>q!</code>：不保存修改，强制退出</li>
+<li><code>e!</code>：不保存修改，强制重新打开当前文件</li>
+</ul>
+<blockquote><p>大家可以看到，<code>!</code>的作用便在于，强制。除此以外，他还有另一个很强势的功能，就是执行shell命令。具体信息，大家可以详细阅读下一节。</p>
+</blockquote>
+
+<ul>
+<li><code>.</code>：重复执行前一个命令。这个命令很灵活、实用，建议多多尝试。</li>
+<li><code>:help [command]</code>：查看某命令的help此外，在命令行中执行如下命令，便可进入vim的教程。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vimtutor</span><br></pre></td></tr></table></figure>
+
+<h3 id="外部命令"><a href="#外部命令" class="headerlink" title="外部命令"></a>外部命令</h3><p>这是<code>vim</code>的一个很神奇的功能，在编辑的时候可以与外部文本互动，甚至执行一些<code>shell</code>命令。</p>
+<ul>
+<li><code>:w [file-name]</code>：将当前内容输出到指定文件中</li>
+<li><code>:r [file-name]</code>：将另外一个文件的内容输出到当前位置</li>
+<li><code>:e filename</code>：vim下打开指定文本</li>
+<li><code>ctrl+w, s</code>：水平拆分窗口</li>
+<li><code>ctrl+w, v</code>：垂直拆分窗口</li>
+<li><code>ctrl+w, ARROW(h,j,k,l或方向键)</code>：在窗口间切换光标。</li>
+<li><code>ctrl+w, w</code>：在窗口间切换光标。</li>
+<li><code>:qa</code>：关闭所有窗口。</li>
+<li><code>:saveas</code>：另存为。</li>
+<li><code>:n/bn/bp</code>：在打开的多个文件间切换。</li>
+<li><code>:![command]</code>：vim下执行某shell命令。</li>
+<li>比如，<code>:!ls</code>，便会暂时切换到shell下，输出当前目录的文件名。此时输入回车，便可退回当前<code>vim</code>编辑的文件中。</li>
+</ul>
+<p>如果你觉得这种输入命令的方式还不够过瘾，<code>vim</code>还提供了保留当前工作现场，直接进入shell的方式。这种命令一个典型的工作场景是，如我们编辑了一个文件，但是发现无法保存（没有写权限），此时可以先进入到shell下，执行类似<code>chmod u+w [filename]</code>，的命令，为当前用户获取该文件的写权限，然后再回到 <code>vim</code> 保存刚刚的修改。 有如下两种方法：</p>
+<ol>
+<li><code>:shell</code> 或 <code>:sh</code>，当退出当前 shell 时（比如<code>exit</code>），就会回到 vim。</li>
+<li><code>ctr-z</code> 进入 shell，<code>fg</code> 退回 vim。</li>
+</ol>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>这部分主要是一些<code>vim</code>的config。可以直接命令模式输入，也可以保存到<code>~/.vimrc</code>中，便可每次打开<code>vim</code>自动应用。(其中一些命令是互相冲突的，请自行选择有用的命令)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">syntax on # 开启语法高亮</span><br><span class="line"></span><br><span class="line">set nu[mber] # 显示行号</span><br><span class="line">set nonu[mber] # 隐藏行号</span><br><span class="line"></span><br><span class="line">set cursorline # 高亮当前行</span><br><span class="line">set ruler # 显示光标位置信息</span><br><span class="line">set noruler # 隐藏光标位置信息</span><br><span class="line"></span><br><span class="line">set hlsearch # 高亮匹配</span><br><span class="line">set nohlsearch # 取消高亮匹配</span><br><span class="line">nohlsearch # 临时取消高亮（只取消一次查询的高亮）</span><br><span class="line">set incsearch # 在输入字符串过程中显示匹配点</span><br><span class="line">set nowrapscan # 找到文尾后停止查找</span><br><span class="line">set wrapscan # 恢复为到文尾后自动从头开始</span><br><span class="line">set ic&#x2F;ignorecase) # 忽略大小写</span><br><span class="line">set noic&#x2F;noignorecase # 区分大小写&lt;&#x2F;pre&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="VIM思想"><a href="#VIM思想" class="headerlink" title="VIM思想"></a>VIM思想</h2><p>这部分主要是一些我在使用<code>vim</code>过程中的一些思考和感悟，试图尽力阐述出来。如果大家能有一些思考和收获，说明我的思考是有意义的。如果大家有不同见解，十分欢迎拍砖交流。</p>
+<h3 id="Why-Normal"><a href="#Why-Normal" class="headerlink" title="Why Normal"></a>Why Normal</h3><ul>
+<li>为什么vim下，要放弃人们习惯的插入模式，使用命令模式呢？仔细想一想，其实原因很简单：在没有鼠标的年代，人们只能依靠键盘来移动光标，修改文本。</li>
+<li>为什么现在有了鼠标，我们还要用正常模式呢?<ol>
+<li>工作内容覆盖。我们每个人都认为，工程师的工作，是写代码。然而，其实我们主要的工作，是读，或者说，理解代码。经调查，工程师日常工作中，读：写代码的比例，为10：1(参考《Clean Code》一书)。所以默认的普通模式，主要满足占比重更大的”读“；遇到需要修改的时候，再进入编辑模式。</li>
+<li>大量快捷键。相信每个人，都最起码知道一组快捷键：<code>ctrl-c/v</code>，也就是我们熟悉的copy &amp; paste. 如果你平时注重效率，养成了快捷键的习惯，还可能知道一些诸如<code>ctrl-a/x/s/w</code>等。不知你注意到没有，如刚刚列举的很多快捷键，都由<code>特殊的命令符+字母</code>构成。因为在此时，键盘上的大多数按键，都是可以<strong>输入到文本中的字符</strong>。而在vim的正常模式下面，无法直接向文件中输入这些字符，相当于<strong>不用按<code>ctrl</code>等特殊的命令符</strong>，直接可以把这些按键，用作命令的快捷键。</li>
+</ol>
+</li>
+</ul>
+<h3 id="合理的快捷键"><a href="#合理的快捷键" class="headerlink" title="合理的快捷键"></a>合理的快捷键</h3><ul>
+<li>vim中的快捷键，布局非常合理。根据使用频繁程度，调整距离手边的距离。比如，最基础的移动操作，放在手边的<code>HJKL</code>。虽然移动将手移动到键盘上的方向键，并未真正的浪费多少时间，但是其对思维的打断，其实非常影响效率。</li>
+<li>快捷键的设置，也是非常合理，结合了单词的意义、读音，非常便于记忆。比如：<ul>
+<li><code>d</code> delete</li>
+<li><code>c</code> change</li>
+<li><code>w</code> word</li>
+<li><code>e</code> end</li>
+<li><code>b</code> back</li>
+<li><code>I</code> edit</li>
+<li><code>f</code> find</li>
+<li><code>r</code> replace</li>
+</ul>
+</li>
+</ul>
+<h3 id="精细化，多维度命令"><a href="#精细化，多维度命令" class="headerlink" title="精细化，多维度命令"></a>精细化，多维度命令</h3><p>快捷键应有尽有，各个维度移动，都切合使用者思维，几乎可以做到”指哪儿打哪儿“。 比如，移动、删除、复制、等等操作，都可以结合精细化的位置，根据符合人类思维的不同维度，进行操作。 比如，字符，单词，行，文章，屏幕，匹配（位置、文字、符号），以及类似书签的Mark等。</p>
+<h3 id="原子、组合命令"><a href="#原子、组合命令" class="headerlink" title="原子、组合命令"></a>原子、组合命令</h3><p><code>vim</code>的大部分快捷键，都是原子操作，并通过与范围结合，排列组合，灵活多变，完成各种强大的功能。这也与<code>unix</code>的主要思想契合：每个命令做好，且只做好同一件事。 与此同时，通过用数字和宏，代替无意义的重复。 此外，对一些常用操作，提供了现成的宏，方便操作。比如，<code>dd</code>，是删除整行，同时也可以直接用<code>D</code>来完成。<code>I</code>，<code>A</code>等，也是类似道理。</p>
+<h3 id="外部命令-1"><a href="#外部命令-1" class="headerlink" title="外部命令"></a>外部命令</h3><p>类似栈的思路，可以放下当前操作，保存现场，然后进入另一个操作。当操作完成后，回到当前现场。</p>
+<h3 id="思维模式"><a href="#思维模式" class="headerlink" title="思维模式"></a>思维模式</h3><p><code>vim</code>的快捷键，或者说命令，不仅很符合我们的思维，而且还能在很大程度上扩展我们的思维。 拿编辑代码时最多的操作，移动光标来说。原来我们的移动，基本就是通过键盘的方向键，上下左右，或者通过鼠标，移动到想要去的位置。而在<code>vim</code>中，你会发现，光标除了上下左右，还可以移动到词首，词尾，句首，句尾，行首，行尾，页面首部，页面中部，页面尾部，文档首部，文档尾部，文档任意一行，甚至还可以移动到某个指定字母，某个tag，匹配大、中、小括号。度过最初的不适应后，通过刻意练习和日常使用，肌肉形成记忆，便无需刻意回想是用什么命令，而是潜意识完成操作。掌握了这些命令后，当你使用原来的编辑器时，也会去寻找这些快捷键。这就不仅仅是使用<code>vim</code>时候提供效率了，而是通过提高编辑操作的意识、思想，提高了整体的工作效率。</p>
+<p>使用<code>vim</code>一段时间后，我在其他工具中进行编辑时，编再也无法忍受，一个一个自读地移动光标。于是也会主动去找单词、行级别移动的快捷键。</p>
+<ul>
+<li>Mac系统<ul>
+<li><code>cmd + ←/→</code> 移动到：当前行首/尾部</li>
+<li><code>alt + ←/→</code> 移动到：当前单词首/尾部</li>
+</ul>
+</li>
+<li>iterm：<ul>
+<li><code>ctrl + f/b</code> 前进/后退一个字符</li>
+<li><code>Esc + f/b</code> 前进/后退一个单词</li>
+<li><code>ctrl + a/e</code> 行首/行尾</li>
+<li><code>ctrl + h/d</code> 删除光标前/后一个字符</li>
+<li><code>ctrl + w</code> 删除光标前一个单词</li>
+<li><code>ctrl + k/u</code> 删除光标前/后所有内容</li>
+<li><code>ctrl + y</code> 粘贴之前删除的内容</li>
+</ul>
+</li>
+</ul>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这篇文章到这里也就结束了，洋洋洒洒写了这么多，一次读下来就接受，很难；仅仅通过阅读就掌握，更难。想要真正用熟<code>vim</code>，掌握思想，需要后续更多思考、实践。但是相信我，这些付出，一定是值得的。因为它不仅能让你掌握一个开发利器，更能带给你很有价值的思想。</p>
+<br>
+
+<blockquote><p>原文链接：<a href="https://juejin.im/post/5c14ad47f265da614c4cb018" target="_blank" rel="noopener">https://juejin.im/post/5c14ad47f265da614c4cb018</a></p>
+</blockquote>
+
+          
+            <br>
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+
+<section class="widget copyright  widget-blur desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            
+          
+        
+          
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-04-03-one-article-leads-you-to-vim/>https://voiue.github.io/blog/2020-04-03-one-article-leads-you-to-vim/</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+                
+              
+                
+              
+            
+          
+        </div>
+        
+          <br>
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-03T18:54:52+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年4月3日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/vim/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>vim</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-04-03-one-article-leads-you-to-vim/&title=效率至上-一文带你真正走进vim - voiue&summary=vim一直是程序员之间比较有争议的一个话题。有人认为她是编辑器之神，有人则认为她古老过时，远远不如IDE，或是以当红小生vscode为代表的图形化文本编辑器。无论爱恨，我们的开发工作，大到远程登录服务器coding，修改config文件，小到git commit message，或多或少总要接触她。
+为什么要写这篇blog呢，是因为我发现各大平台充斥的vim教程类blog其实很不友好，大多数是命令的堆砌，很少有对思想的解读。由此造成的结果，很多工程师对vim总是敬畏三分，或者就算部分人可以使用vim，也只是以自己的固有思维，结合vim的命令操作，并没有真正掌握vim的精髓。所以我尝试用自己的方式，试图帮助大家系统地建立起vim的知识系统。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-04-03-one-article-leads-you-to-vim/&title=效率至上-一文带你真正走进vim - voiue&summary=vim一直是程序员之间比较有争议的一个话题。有人认为她是编辑器之神，有人则认为她古老过时，远远不如IDE，或是以当红小生vscode为代表的图形化文本编辑器。无论爱恨，我们的开发工作，大到远程登录服务器coding，修改config文件，小到git commit message，或多或少总要接触她。
+为什么要写这篇blog呢，是因为我发现各大平台充斥的vim教程类blog其实很不友好，大多数是命令的堆砌，很少有对思想的解读。由此造成的结果，很多工程师对vim总是敬畏三分，或者就算部分人可以使用vim，也只是以自己的固有思维，结合vim的命令操作，并没有真正掌握vim的精髓。所以我尝试用自己的方式，试图帮助大家系统地建立起vim的知识系统。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-04-03-one-article-leads-you-to-vim/&title=效率至上-一文带你真正走进vim - voiue&summary=vim一直是程序员之间比较有争议的一个话题。有人认为她是编辑器之神，有人则认为她古老过时，远远不如IDE，或是以当红小生vscode为代表的图形化文本编辑器。无论爱恨，我们的开发工作，大到远程登录服务器coding，修改config文件，小到git commit message，或多或少总要接触她。
+为什么要写这篇blog呢，是因为我发现各大平台充斥的vim教程类blog其实很不友好，大多数是命令的堆砌，很少有对思想的解读。由此造成的结果，很多工程师对vim总是敬畏三分，或者就算部分人可以使用vim，也只是以自己的固有思维，结合vim的命令操作，并没有真正掌握vim的精髓。所以我尝试用自己的方式，试图帮助大家系统地建立起vim的知识系统。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+        
+        <fancybox>
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqUlEQVR42u3aQXLbQAwEQP//0849KZeAARhDdu/NlrRcNHUYAfz4tKL1gQAcOHDgLHDgjsB9hOvvz/9zgS/eV933ZQEv3v/qvHG94MCBAwcOHDhwx+CeOnB3/3Sf6o2d1gsOHDhw4MCBA3cVbivwbgXOLmT19bRecODAgQMHDhy4nwLXhdwK2lsBGBw4cODAgQMH7rfDdQfYVZhuEE8hwYEDBw4cOHDg3h2uPaBdamxOwd5ukg8OHDhw4MCBA7cElw6M3/XvuF5w4MCBAwcOHLgjcNOVBuBuY7O73+dDCxw4cODAgQMH7gpc98DVoLgF8NRgu9tQBQcOHDhw4MCBuwq3tnGz0HTA3YWuDrBfngMcOHDgwIEDB+4IXBocqxfq7t8N4lv7lX8QgAMHDhw4cODAHYHbbkB2Pz9tmHaDbvULUP7lAA4cOHDgwIEDdwRuGizTRmFa0PZ5Xt4ocODAgQMHDhy4I3ApWDpg3gqk1f9PB9MvO8DgwIEDBw4cOHDfBFdtFMYP4jUbkmmgTa/ThgYHDhw4cODAgTsKl4J1g28VojsQnzY2wYEDBw4cOHDg3g0uLWDr4OtBdSkYgwMHDhw4cODAXYebgqUNzPSBw61Bc7sxCw4cOHDgwIEDdxRuGly3AmjaiEzBy9cFBw4cOHDgwIE7Atf94DRoPh2Mq0DpDQQHDhw4cODAgbsKl65qoVuBdju4l28gOHDgwIEDBw7cMbitwqdBNB1IPzWwBgcOHDhw4MCBuwpXPXi1oTgNyE9Bp0EfHDhw4MCBAwfuXeA+H17VG5QG8u4XoH0OcODAgQMHDhy4I3DThmE3GE8L39o33h8cOHDgwIEDB+4I3PSA1QCdFlQN0t2GZPoDABw4cODAgQMH7gpc9YDVRt+0obgdlNehwYEDBw4cOHDgjsOlDcw4WDYh0hsxrRscOHDgwIEDB+4K3HRQO20gpkE4bVR2633ZAQYHDhw4cODAgfsmuOlKB75bDctp47UdkMGBAwcOHDhw4I7ATYPt9IHCtJAULh2wgwMHDhw4cODAXYV7KvB2B8rdxuUUpv1FAQcOHDhw4MCBOwq3PRhOA/T24HtroA4OHDhw4MCBA/dT4FLA/92gTAP5YwEYHDhw4MCBAwfuCFza8NxqqKYQ7XODAwcOHDhw4MAdhZuCdAfLaXBOB93p4BscOHDgwIEDB+4qXDqo7R4whewG3Gkj88t9wIEDBw4cOHDgjsBZvQUOHDhw4Cxw4L55/QHpp3viqVAHcAAAAABJRU5ErkJggg==">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqUlEQVR42u3aQXLbQAwEQP//0849KZeAARhDdu/NlrRcNHUYAfz4tKL1gQAcOHDgLHDgjsB9hOvvz/9zgS/eV933ZQEv3v/qvHG94MCBAwcOHDhwx+CeOnB3/3Sf6o2d1gsOHDhw4MCBA3cVbivwbgXOLmT19bRecODAgQMHDhy4nwLXhdwK2lsBGBw4cODAgQMH7rfDdQfYVZhuEE8hwYEDBw4cOHDg3h2uPaBdamxOwd5ukg8OHDhw4MCBA7cElw6M3/XvuF5w4MCBAwcOHLgjcNOVBuBuY7O73+dDCxw4cODAgQMH7gpc98DVoLgF8NRgu9tQBQcOHDhw4MCBuwq3tnGz0HTA3YWuDrBfngMcOHDgwIEDB+4IXBocqxfq7t8N4lv7lX8QgAMHDhw4cODAHYHbbkB2Pz9tmHaDbvULUP7lAA4cOHDgwIEDdwRuGizTRmFa0PZ5Xt4ocODAgQMHDhy4I3ApWDpg3gqk1f9PB9MvO8DgwIEDBw4cOHDfBFdtFMYP4jUbkmmgTa/ThgYHDhw4cODAgTsKl4J1g28VojsQnzY2wYEDBw4cOHDg3g0uLWDr4OtBdSkYgwMHDhw4cODAXYebgqUNzPSBw61Bc7sxCw4cOHDgwIEDdxRuGly3AmjaiEzBy9cFBw4cOHDgwIE7Atf94DRoPh2Mq0DpDQQHDhw4cODAgbsKl65qoVuBdju4l28gOHDgwIEDBw7cMbitwqdBNB1IPzWwBgcOHDhw4MCBuwpXPXi1oTgNyE9Bp0EfHDhw4MCBAwfuXeA+H17VG5QG8u4XoH0OcODAgQMHDhy4I3DThmE3GE8L39o33h8cOHDgwIEDB+4I3PSA1QCdFlQN0t2GZPoDABw4cODAgQMH7gpc9YDVRt+0obgdlNehwYEDBw4cOHDgjsOlDcw4WDYh0hsxrRscOHDgwIEDB+4K3HRQO20gpkE4bVR2633ZAQYHDhw4cODAgfsmuOlKB75bDctp47UdkMGBAwcOHDhw4I7ATYPt9IHCtJAULh2wgwMHDhw4cODAXYV7KvB2B8rdxuUUpv1FAQcOHDhw4MCBOwq3PRhOA/T24HtroA4OHDhw4MCBA/dT4FLA/92gTAP5YwEYHDhw4MCBAwfuCFza8NxqqKYQ7XODAwcOHDhw4MAdhZuCdAfLaXBOB93p4BscOHDgwIEDB+4qXDqo7R4whewG3Gkj88t9wIEDBw4cOHDgjsBZvQUOHDhw4Cxw4L55/QHpp3viqVAHcAAAAABJRU5ErkJggg==">
+          </a>
+        </fancybox>
+      
+    
+  </div>
+</div>
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/blog/2020-03-31-how-to-change-mac-address-on-linux/" rel="prev" title="如何在Linux中更改MAC地址">
+                                    
+                                        如何在Linux中更改MAC地址
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/linux/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> linux</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '效率至上-一文带你真正走进vim',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+      
+    
+      
+        
+
+
+  <section class="widget toc-wrapper  widget-blur desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模式"><span class="toc-text">模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本操作"><span class="toc-text">基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进阶：命令形式"><span class="toc-text">进阶：命令形式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#移动进阶"><span class="toc-text">移动进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单词级别的移动"><span class="toc-text">单词级别的移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#句子，段落级别的移动"><span class="toc-text">句子，段落级别的移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#页面级别的移动"><span class="toc-text">页面级别的移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配"><span class="toc-text">匹配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mark"><span class="toc-text">Mark</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑进阶"><span class="toc-text">编辑进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进入插入模式"><span class="toc-text">进入插入模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除"><span class="toc-text">删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#剪切"><span class="toc-text">剪切</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进阶操作符"><span class="toc-text">进阶操作符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#粘贴"><span class="toc-text">粘贴</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制"><span class="toc-text">复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#剪切板"><span class="toc-text">剪切板</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可视模式"><span class="toc-text">可视模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化"><span class="toc-text">格式化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动补全"><span class="toc-text">自动补全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#撤销"><span class="toc-text">撤销</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查找替换"><span class="toc-text">查找替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#宏录制"><span class="toc-text">宏录制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令"><span class="toc-text">命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外部命令"><span class="toc-text">外部命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Config"><span class="toc-text">Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIM思想"><span class="toc-text">VIM思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Normal"><span class="toc-text">Why Normal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合理的快捷键"><span class="toc-text">合理的快捷键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#精细化，多维度命令"><span class="toc-text">精细化，多维度命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原子、组合命令"><span class="toc-text">原子、组合命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外部命令-1"><span class="toc-text">外部命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思维模式"><span class="toc-text">思维模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-text">后记</span></a></li></ol>
+    </div>
+  </section>
+
+
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+</aside>
+
+<footer class="clearfix ">
+  <br><br>
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="mailto:voiue@foxmail.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/voiue"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=363662803"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <div>
+    本站使用
+    <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+  
+    <div class='copyright'>
+    <p><a href="https://voiue.github.io">Copyright © 2020 voiue</a></p>
+
+    </div>
+  
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+  <script>
+    
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) ROOT += '/';
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js" async></script>
+
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+  
+  
+  
+    
+<script src="//cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        if ('') {
+          $('').backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/search.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/comment_typing.js"></script>
+
+
+
+<!-- 复制 -->
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+
+
+<!-- fancybox -->
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!--动态线条背景-->
+  <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="/js/snow.js"></script>
+</body>
+</html>

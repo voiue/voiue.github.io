@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='Volantis' version='1.6.3' docs='https://volantis.js.org/'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>理解inode | voiue</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="/avatar/favicon.ico">
+  
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/css/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <p class="title ">VOIUE</p>
+  
+    <p class="subtitle ">「路漫漫其修远兮 吾将上下而求索」</p>
+  
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <i class="icon fas fa-search fa-fw"></i>
+      <input type="text" class="input u-search-input" placeholder="" />
+    </form>
+  </div>
+
+<div class='menu navigation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home "
+            href="/"
+            
+            
+            id="home">
+            <i class='fas fa-house-damage fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/blog/archives/"
+            
+            
+            id="blogarchives">
+            <i class='fas fa-archive fa-fw'></i>&nbsp;归档
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/wiki/"
+            
+            
+            id="wiki">
+            <i class='fas fa-landmark fa-fw'></i>&nbsp;Wiki
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/friends/"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/about/"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header nav-blur">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar"></div>
+  </div>
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      
+        <a class="logo flat-box" target="_self" href='/' >
+          
+            
+              
+              
+                VOIUE
+              
+            
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                  
+                  id="blogcategories">
+									<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/about/"
+                  
+                  
+                  id="about">
+									<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="搜索一下" />
+        </form>
+      </div>
+
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone white-box">
+    <header>
+		<nav class="menu navigation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/categories/"
+                
+                
+                id="blogcategories">
+								<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box   article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2020-03-15-inode/">
+        理解inode
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/blog/categories/linux/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>linux</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年3月15日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          <p><a href="http://en.wikipedia.org/wiki/Inode" target="_blank" rel="noopener">inode</a>是一个重要概念，是理解Unix/Linux文件系统和硬盘储存的基础。</p>
+<p>我觉得，理解inode，不仅有助于提高系统操作水平，还有助于体会Unix设计哲学，即如何把底层的复杂性抽象成一个简单概念，从而大大简化用户接口。</p>
+<p>下面就是我的inode学习笔记，尽量保持简单。</p>
+<a id="more"></a>
+
+<h1 id="理解inode"><a href="#理解inode" class="headerlink" title="理解inode"></a>理解inode</h1><h2 id="一、inode是什么？"><a href="#一、inode是什么？" class="headerlink" title="一、inode是什么？"></a>一、inode是什么？</h2><p>理解inode，要从文件储存说起。</p>
+<p>文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存512字节（相当于0.5KB）。</p>
+<p>操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个”块”（block）。这种由多个扇区组成的”块”，是文件存取的最小单位。”块”的大小，最常见的是4KB，即连续八个 sector组成一个 block。</p>
+<p>文件数据都储存在”块”中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为”索引节点”。</p>
+<p>每一个文件都有对应的inode，里面包含了与该文件有关的一些信息。</p>
+<h2 id="二、inode的内容"><a href="#二、inode的内容" class="headerlink" title="二、inode的内容"></a>二、inode的内容</h2><p>inode包含文件的元信息，具体来说有以下内容：</p>
+<ul>
+<li>文件的字节数</li>
+<li>文件拥有者的User ID</li>
+<li>文件的Group ID</li>
+<li>文件的读、写、执行权限</li>
+<li>文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。</li>
+<li>链接数，即有多少文件名指向这个inode</li>
+<li>文件数据block的位置</li>
+</ul>
+<p>可以用stat命令，查看某个文件的inode信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stat example.txt</span><br></pre></td></tr></table></figure>
+<fancybox>
+<img src="/img/bg2011120402.png">
+</fancybox>
+
+<p>总之，除了文件名以外的所有文件信息，都存在inode之中。至于为什么没有文件名，下文会有详细解释。</p>
+<h2 id="三、inode的大小"><a href="#三、inode的大小" class="headerlink" title="三、inode的大小"></a>三、inode的大小</h2><p>inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。</p>
+<p>每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，一般是每1KB或每2KB就设置一个inode。假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。</p>
+<p>查看每个硬盘分区的inode总数和已经使用的数量，可以使用df命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -i</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120403.png">
+</fancybox>
+
+<p>查看每个inode节点的大小，可以用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dumpe2fs -h &#x2F;dev&#x2F;hda | grep &quot;Inode size&quot;</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120404.png">
+</fancybox>
+
+<p>由于每个文件都必须有一个inode，因此有可能发生inode已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。</p>
+<h2 id="四、inode号码"><a href="#四、inode号码" class="headerlink" title="四、inode号码"></a>四、inode号码</h2><p>每个inode都有一个号码，操作系统用inode号码来识别不同的文件。</p>
+<p>这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。对于系统来说，文件名只是inode号码便于识别的别称或者绰号。</p>
+<p>表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。</p>
+<p>使用ls -i命令，可以看到文件名对应的inode号码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -i example.txt</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120405.png">
+</fancybox>
+
+<h2 id="五、目录文件"><a href="#五、目录文件" class="headerlink" title="五、目录文件"></a>五、目录文件</h2><p>Unix/Linux系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。</p>
+<p>目录文件的结构非常简单，就是一系列目录项（dirent）的列表。每个目录项，由两部分组成：所包含文件的文件名，以及该文件名对应的inode号码。</p>
+<p>ls命令只列出目录文件中的所有文件名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;etc</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120406.png">
+</fancybox>
+
+<p>ls -i命令列出整个目录文件，即文件名和inode号码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -i &#x2F;etc</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120407.png">
+</fancybox>
+
+<p>如果要查看文件的详细信息，就必须根据inode号码，访问inode节点，读取信息。ls -l命令列出文件的详细信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l &#x2F;etc</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120408.png">
+</fancybox>
+
+<p>理解了上面这些知识，就能理解目录的权限。目录文件的读权限（r）和写权限（w），都是针对目录文件本身。由于目录文件内只有文件名和inode号码，所以如果只有读权限，只能获取文件名，无法获取其他信息，因为其他信息都储存在inode节点中，而读取inode节点内的信息需要目录文件的执行权限（x）。</p>
+<h2 id="六、硬链接"><a href="#六、硬链接" class="headerlink" title="六、硬链接"></a>六、硬链接</h2><p>一般情况下，文件名和inode号码是”一一对应”关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。</p>
+<p>这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为”硬链接”（hard link）。</p>
+<p>ln命令可以创建硬链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln 源文件 目标文件</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120409.png">
+</fancybox>
+
+<p>运行上面这条命令以后，源文件与目标文件的inode号码相同，都指向同一个inode。inode信息中有一项叫做”链接数”，记录指向该inode的文件名总数，这时就会增加1。</p>
+<p>反过来，删除一个文件名，就会使得inode节点中的”链接数”减1。当这个值减到0，表明没有文件名指向这个inode，系统就会回收这个inode号码，以及其所对应block区域。</p>
+<p>这里顺便说一下目录文件的”链接数”。创建目录时，默认会生成两个目录项：”.”和”..”。前者的inode号码就是当前目录的inode号码，等同于当前目录的”硬链接”；后者的inode号码就是当前目录的父目录的inode号码，等同于父目录的”硬链接”。所以，任何一个目录的”硬链接”总数，总是等于2加上它的子目录总数（含隐藏目录）。</p>
+<h2 id="七、软链接"><a href="#七、软链接" class="headerlink" title="七、软链接"></a>七、软链接</h2><p>除了硬链接以外，还有一种特殊情况。</p>
+<p>文件A和文件B的inode号码虽然不一样，但是文件A的内容是文件B的路径。读取文件A时，系统会自动将访问者导向文件B。因此，无论打开哪一个文件，最终读取的都是文件B。这时，文件A就称为文件B的”软链接”（soft link）或者”符号链接（symbolic link）。</p>
+<p>这意味着，文件A依赖于文件B而存在，如果删除了文件B，打开文件A就会报错：”No such file or directory”。这是软链接与硬链接最大的不同：文件A指向文件B的文件名，而不是文件B的inode号码，文件B的inode”链接数”不会因此发生变化。</p>
+<p>ln -s命令可以创建软链接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s 源文文件或目录 目标文件或目录</span><br></pre></td></tr></table></figure>
+
+<fancybox>
+<img src="/img/bg2011120410.png">
+</fancybox>
+
+<h2 id="八、inode的特殊作用"><a href="#八、inode的特殊作用" class="headerlink" title="八、inode的特殊作用"></a>八、inode的特殊作用</h2><p>由于inode号码与文件名分离，这种机制导致了一些Unix/Linux系统特有的现象。</p>
+<p>　　1. 有时，文件名包含特殊字符，无法正常删除。这时，直接删除inode节点，就能起到删除文件的作用。</p>
+<p>　　2. 移动文件或重命名文件，只是改变文件名，不影响inode号码。</p>
+<p>　　3. 打开一个文件以后，系统就以inode号码来识别这个文件，不再考虑文件名。因此，通常来说，系统无法从inode号码得知文件名。</p>
+<p>第3点使得软件更新变得简单，可以在不关闭软件的情况下进行更新，不需要重启。因为系统通过inode号码，识别运行中的文件，不通过文件名。更新的时候，新版文件以同样的文件名，生成一个新的inode，不会影响到运行中的文件。等到下一次运行这个软件的时候，文件名就自动指向新版文件，旧版文件的inode则被回收。</p>
+<p>（完）</p>
+<br>
+
+<blockquote><p>原文链接：<a href="http://www.ruanyifeng.com/blog/2011/12/inode.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2011/12/inode.html</a></p>
+</blockquote>
+
+          
+            <br>
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+
+<section class="widget copyright  widget-blur desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            
+          
+        
+          
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-03-15-inode/>https://voiue.github.io/blog/2020-03-15-inode/</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+                
+              
+                
+              
+            
+          
+        </div>
+        
+          <br>
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-15T20:51:52+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年3月15日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/linux/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>linux</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/%E7%A3%81%E7%9B%98/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>磁盘</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/inode/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>inode</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-03-15-inode/&title=理解inode - voiue&summary=inode是一个重要概念，是理解Unix/Linux文件系统和硬盘储存的基础。
+我觉得，理解inode，不仅有助于提高系统操作水平，还有助于体会Unix设计哲学，即如何把底层的复杂性抽象成一个简单概念，从而大大简化用户接口。
+下面就是我的inode学习笔记，尽量保持简单。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-03-15-inode/&title=理解inode - voiue&summary=inode是一个重要概念，是理解Unix/Linux文件系统和硬盘储存的基础。
+我觉得，理解inode，不仅有助于提高系统操作水平，还有助于体会Unix设计哲学，即如何把底层的复杂性抽象成一个简单概念，从而大大简化用户接口。
+下面就是我的inode学习笔记，尽量保持简单。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-03-15-inode/&title=理解inode - voiue&summary=inode是一个重要概念，是理解Unix/Linux文件系统和硬盘储存的基础。
+我觉得，理解inode，不仅有助于提高系统操作水平，还有助于体会Unix设计哲学，即如何把底层的复杂性抽象成一个简单概念，从而大大简化用户接口。
+下面就是我的inode学习笔记，尽量保持简单。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+        
+        <fancybox>
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEYCAAAAACi5bZQAAAC7ElEQVR42u3aQXIkIQwEwPn/p7339TpWKkGHNZPcPGFoSC4VEq8v45/jhQAMGDBgwIBZA/MKx7cF//o9nV+dV/29vS4YMGDAgAEDZh1MOQAVYboHr65f/U56HjBgwIABAwbMXpjuxrsg02DYhWmfBwwYMGDAgAHz8TDd+V3w6n7AgAEDBgwYMGDSg3WDXTofDBgwYMCAAQNmGqi6QS9dL93PY51IMGDAgAEDBsxjMN2RbvSpv+PzgAEDBgwYMGDWwExHFy4Nht3gFp8HDBgwYMCAAbMGJg1IaWFqWnA6FfDAgAEDBgwYMO8Hkwax2w266nenDT4wYMCAAQMGzB6Y6YerASsF6O5rfDFgwIABAwYMmHUw06BWPWC30FSFTC8SDBgwYMCAAfM5MGkBaBq8bhe+wIABAwYMGDD7YE4Fqu7Dn+4Dn3T9dpAEAwYMGDBgwKyDOR3opoFv2ghMC1ZgwIABAwYMmPeDmRayToGcerBULlSBAQMGDBgwYNbAVD/Y3eipi0gLUeWCGxgwYMCAAQNmHcy0wTVt1FXBU4jyhYIBAwYMGDBg1sCkD4LSBtmpAlj3QVK7UAUGDBgwYMCA+fUw1QNWR1rQOtVom0KBAQMGDBgwYPbBpB9MC1m3CltpQAQDBgwYMGDA7IVJD/S/ed2HP2nDbQoNBgwYMGDAgHk/mO6GTxWwugftNgB/XA8MGDBgwIABsxbmdCGp2jhLQU8FUzBgwIABAwbMfphuo2v64OfUPqYBEgwYMGDAgAGzD2Y6bgFOQdP9gQEDBgwYMGD2wNwKSt3AN23cXStUgQEDBgwYMGB+PczpQFc9wKmC1akLAQMGDBgwYMDshbkVoNKHQrcuBgwYMGDAgAED5lZD7emHR2DAgAEDBgyYz4WZBr1qsOv+XztgggEDBgwYMGDWwnQbbtN5KXy3Ifj4wyEwYMCAAQMGzGMwpx4ApY2vtCGXBrof9wEGDBgwYMCAWQNjgAEDBgwYMGCWjT9h8OI794wTHQAAAABJRU5ErkJggg==">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEYCAAAAACi5bZQAAAC7ElEQVR42u3aQXIkIQwEwPn/p7339TpWKkGHNZPcPGFoSC4VEq8v45/jhQAMGDBgwIBZA/MKx7cF//o9nV+dV/29vS4YMGDAgAEDZh1MOQAVYboHr65f/U56HjBgwIABAwbMXpjuxrsg02DYhWmfBwwYMGDAgAHz8TDd+V3w6n7AgAEDBgwYMGDSg3WDXTofDBgwYMCAAQNmGqi6QS9dL93PY51IMGDAgAEDBsxjMN2RbvSpv+PzgAEDBgwYMGDWwExHFy4Nht3gFp8HDBgwYMCAAbMGJg1IaWFqWnA6FfDAgAEDBgwYMO8Hkwax2w266nenDT4wYMCAAQMGzB6Y6YerASsF6O5rfDFgwIABAwYMmHUw06BWPWC30FSFTC8SDBgwYMCAAfM5MGkBaBq8bhe+wIABAwYMGDD7YE4Fqu7Dn+4Dn3T9dpAEAwYMGDBgwKyDOR3opoFv2ghMC1ZgwIABAwYMmPeDmRayToGcerBULlSBAQMGDBgwYNbAVD/Y3eipi0gLUeWCGxgwYMCAAQNmHcy0wTVt1FXBU4jyhYIBAwYMGDBg1sCkD4LSBtmpAlj3QVK7UAUGDBgwYMCA+fUw1QNWR1rQOtVom0KBAQMGDBgwYPbBpB9MC1m3CltpQAQDBgwYMGDA7IVJD/S/ed2HP2nDbQoNBgwYMGDAgHk/mO6GTxWwugftNgB/XA8MGDBgwIABsxbmdCGp2jhLQU8FUzBgwIABAwbMfphuo2v64OfUPqYBEgwYMGDAgAGzD2Y6bgFOQdP9gQEDBgwYMGD2wNwKSt3AN23cXStUgQEDBgwYMGB+PczpQFc9wKmC1akLAQMGDBgwYMDshbkVoNKHQrcuBgwYMGDAgAED5lZD7emHR2DAgAEDBgyYz4WZBr1qsOv+XztgggEDBgwYMGDWwnQbbtN5KXy3Ifj4wyEwYMCAAQMGzGMwpx4ApY2vtCGXBrof9wEGDBgwYMCAWQNjgAEDBgwYMGCWjT9h8OI794wTHQAAAABJRU5ErkJggg==">
+          </a>
+        </fancybox>
+      
+    
+  </div>
+</div>
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/blog/2020-03-16-add-widget-with-your-website/" rel="prev" title="给网站添加小插件">
+                                  
+                                      给网站添加小插件
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/others/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> others</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/blog/2020-03-13-git-cheat-sheet/" rel="prev" title="常用 Git 命令清单">
+                                    
+                                        常用 Git 命令清单
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/Git/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Git</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '理解inode',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+      
+    
+      
+        
+
+
+  <section class="widget toc-wrapper  widget-blur desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、inode是什么？"><span class="toc-text">一、inode是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、inode的内容"><span class="toc-text">二、inode的内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、inode的大小"><span class="toc-text">三、inode的大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、inode号码"><span class="toc-text">四、inode号码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、目录文件"><span class="toc-text">五、目录文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、硬链接"><span class="toc-text">六、硬链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、软链接"><span class="toc-text">七、软链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、inode的特殊作用"><span class="toc-text">八、inode的特殊作用</span></a></li></ol>
+    </div>
+  </section>
+
+
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+</aside>
+
+<footer class="clearfix ">
+  <br><br>
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="mailto:voiue@foxmail.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/voiue"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=363662803"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <div>
+    本站使用
+    <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+  
+    <div class='copyright'>
+    <p><a href="https://voiue.github.io">Copyright © 2020 voiue</a></p>
+
+    </div>
+  
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+  <script>
+    
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) ROOT += '/';
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js" async></script>
+
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+  
+  
+  
+    
+<script src="//cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        if ('') {
+          $('').backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/search.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/comment_typing.js"></script>
+
+
+
+<!-- 复制 -->
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+
+
+<!-- fancybox -->
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!--动态线条背景-->
+  <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="/js/snow.js"></script>
+</body>
+</html>
