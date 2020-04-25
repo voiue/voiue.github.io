@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Category: CDN | voiue</title>
+  <title>Category: 虚拟内存 | voiue</title>
   
   
 
@@ -305,8 +305,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-10-free-cdn-with-jsdeliver-and-github/">
-      利用jsDeliver+github实现免费CDN
+    <a href="/blog/2020-03-09-virtual-memory/">
+      windows虚拟内存-折腾
     </a>
   </h2>
 
@@ -331,17 +331,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月10日</p>
+    <p>发布于：2020年3月9日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-10T19:23:20+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-09T20:16:11+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月10日</p>
+    <p>更新于：2020年3月9日</p>
   </a>
 </div>
 
@@ -362,8 +362,8 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p>CDN的全称是Content Delivery Network，即内容分发网络。CDN是构建在网络之上的内容分发网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。——百度百科</p>
-<p>放在Github的资源在国内加载速度比较慢，因此需要使用CDN加速来优化网站打开速度，jsDelivr + Github便是免费且好用的CDN，非常适合博客网站使用。</p>
+      <p>由于自己电脑之前是机械硬盘的，读写速度太慢了，后来就买了个120G的固态硬盘给扩展了，机械硬盘就用来存资料文档啥的，固态硬盘就被我分成40G的用作系统（C）盘，剩下的用作软件安装（D）盘。</p>
+<p>对操作系统有些了解的人应该听说过<a href="https://baike.baidu.com/item/虚拟内存" target="_blank" rel="noopener">虚拟内存</a>的概念，这里也不做过多的解释。虚拟内存默认是有系统自动托管的，对应着windows系统磁盘根目录下的pagefiles.sys文件，但是随着用户的慢慢使用，这个pagefiles.sys文件会越来越大，直到有一天，我发现C盘和D盘都红了，我才意识到了——该折腾了。</p>
       
         
           
@@ -373,11 +373,9 @@
     <!-- 
       <div class="full-width auto-padding tags">
         
-          <a href="/blog/tags/jsDeliver/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> jsDeliver</a>
+          <a href="/blog/tags/windows/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> windows</a>
         
-          <a href="/blog/tags/github/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> github</a>
-        
-          <a href="/blog/tags/CDN/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> CDN</a>
+          <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 虚拟内存</a>
         
       </div>
      -->
@@ -502,34 +500,49 @@
       <ul class="entry navigation">
         
           <li><a class="flat-box"
-            title="/blog/categories/CDN/" href="/blog/categories/CDN/"
-            id="blogcategoriesCDN"
+            title="/blog/categories/Dev/" href="/blog/categories/Dev/"
+            id="blogcategoriesDev"
+            ><div class='name'>Dev</div><div class='badge'>(11)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/CDN/" href="/blog/categories/Dev/CDN/"
+            id="blogcategoriesDevCDN"
             ><div class='name'>CDN</div><div class='badge'>(1)</div></a></li>
         
-          <li><a class="flat-box"
-            title="/blog/categories/Git/" href="/blog/categories/Git/"
-            id="blogcategoriesGit"
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/Git/" href="/blog/categories/Dev/Git/"
+            id="blogcategoriesDevGit"
             ><div class='name'>Git</div><div class='badge'>(3)</div></a></li>
         
-          <li><a class="flat-box"
-            title="/blog/categories/essay/" href="/blog/categories/essay/"
-            id="blogcategoriesessay"
-            ><div class='name'>essay</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/hexo/" href="/blog/categories/hexo/"
-            id="blogcategorieshexo"
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/hexo/" href="/blog/categories/Dev/hexo/"
+            id="blogcategoriesDevhexo"
             ><div class='name'>hexo</div><div class='badge'>(2)</div></a></li>
         
-          <li><a class="flat-box"
-            title="/blog/categories/linux/" href="/blog/categories/linux/"
-            id="blogcategorieslinux"
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/linux/" href="/blog/categories/Dev/linux/"
+            id="blogcategoriesDevlinux"
             ><div class='name'>linux</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/vim/" href="/blog/categories/Dev/vim/"
+            id="blogcategoriesDevvim"
+            ><div class='name'>vim</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" href="/blog/categories/Dev/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
+            id="blogcategoriesDevE6938DE4BD9CE7B3BBE7BB9F"
+            ><div class='name'>操作系统</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" href="/blog/categories/Dev/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"
+            id="blogcategoriesDevE8999AE68B9FE58685E5AD98"
+            ><div class='name'>虚拟内存</div><div class='badge'>(1)</div></a></li>
         
           <li><a class="flat-box"
             title="/blog/categories/others/" href="/blog/categories/others/"
             id="blogcategoriesothers"
-            ><div class='name'>others</div><div class='badge'>(5)</div></a></li>
+            ><div class='name'>others</div><div class='badge'>(4)</div></a></li>
         
           <li><a class="flat-box"
             title="/blog/categories/tool/" href="/blog/categories/tool/"
@@ -542,19 +555,9 @@
             ><div class='name'>video</div><div class='badge'>(1)</div></a></li>
         
           <li><a class="flat-box"
-            title="/blog/categories/vim/" href="/blog/categories/vim/"
-            id="blogcategoriesvim"
-            ><div class='name'>vim</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" href="/blog/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
-            id="blogcategoriesE6938DE4BD9CE7B3BBE7BB9F"
-            ><div class='name'>操作系统</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" href="/blog/categories/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"
-            id="blogcategoriesE8999AE68B9FE58685E5AD98"
-            ><div class='name'>虚拟内存</div><div class='badge'>(1)</div></a></li>
+            title="/blog/categories/%E8%AF%BB%E4%B9%A6/" href="/blog/categories/%E8%AF%BB%E4%B9%A6/"
+            id="blogcategoriesE8AFBBE4B9A6"
+            ><div class='name'>读书</div><div class='badge'>(2)</div></a></li>
         
       </ul>
     </div>

@@ -8,7 +8,7 @@
       <link href="/blog/2020-04-18-add-bookmark-for-your-pdf/"/>
       <url>/blog/2020-04-18-add-bookmark-for-your-pdf/</url>
       
-        <content type="html"><![CDATA[<p>pdf文档算是我们平时看到比较多的文档啦，而我们看pdf文件最喜欢的一个功能就是打开书签功能，这样我们就能快速定位，查看我们需要查看的内容，但是有时候会遇没有书签的pdf文档，这个时候看起来就有些不方便了，于是我在网上查了一下，还真的可以给pdf文件添加书签的办法，废话不多说，直接进入正题：</p><a id="more"></a><p>1，用Adobe acrobat 软件打开待添加书签的pdf文档。<br>2，打开之后点击软件左边栏的书签（有时被隐藏了，点击一下界面左边靠近中间位置的箭头）。</p><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200418233519.png"><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200418233701.png"></fancybox><p>3，打开书签栏之后，把pdf定位到要加书签的地方，然后点击新建书签（快捷键：Ctrl+B）。</p><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200418233815.png"></fancybox><p>4，再输入书签的名称。<br>5，如果要创建子书签，只需要像拖动文件夹一下，把要创立的子书签拖动到母书签那里，就行了。拖上去的时候，那里会显示一条细线，如题所示。</p><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200419001554.png"></fancybox><blockquote><p>原文链接：<a href="https://blog.csdn.net/xiaotao_1/article/details/79357859" target="_blank" rel="noopener">https://blog.csdn.net/xiaotao_1/article/details/79357859</a></p></blockquote>]]></content>
+        <content type="html"><![CDATA[<p>pdf文档算是我们平时看到比较多的文档啦，而我们看pdf文件最喜欢的一个功能就是打开书签功能，这样我们就能快速定位，查看我们需要查看的内容，但是有时候会遇没有书签的pdf文档，这个时候看起来就有些不方便了，于是我在网上查了一下，还真的可以给pdf文件添加书签的办法，废话不多说，直接进入正题：</p><a id="more"></a><p>1，用Adobe acrobat 软件打开待添加书签的pdf文档。<br>2，打开之后点击软件左边栏的书签（有时被隐藏了，点击一下界面左边靠近中间位置的箭头）。</p><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200418233519.png"></fancybox><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200418233701.png"></fancybox><p>3，打开书签栏之后，把pdf定位到要加书签的地方，然后点击新建书签（快捷键：Ctrl+B）。当然也可以用鼠标将要作为书签的文字选中，然后再按快捷键(Ctrl+B)，这样添加的书签标题就是刚刚选中的文字。</p><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200418233815.png"></fancybox><p>4，再输入书签的名称。<br>5，如果要创建子书签，只需要像拖动文件夹一下，把要创立的子书签拖动到母书签那里，就行了。拖上去的时候，那里会显示一条细线，如题所示。</p><fancybox><img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200419001554.png"></fancybox><blockquote><p>原文链接：<a href="https://blog.csdn.net/xiaotao_1/article/details/79357859" target="_blank" rel="noopener">https://blog.csdn.net/xiaotao_1/article/details/79357859</a></p></blockquote>]]></content>
       
       
       <categories>
@@ -38,6 +38,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> vim </category>
           
       </categories>
@@ -63,6 +65,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> linux </category>
           
       </categories>
@@ -87,6 +91,8 @@
       
       
       <categories>
+          
+          <category> Dev </category>
           
           <category> 操作系统 </category>
           
@@ -138,7 +144,7 @@
       
       <categories>
           
-          <category> others </category>
+          <category> 读书 </category>
           
       </categories>
       
@@ -240,6 +246,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> linux </category>
           
       </categories>
@@ -269,6 +277,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> Git </category>
           
       </categories>
@@ -293,6 +303,8 @@
       
       
       <categories>
+          
+          <category> Dev </category>
           
           <category> hexo </category>
           
@@ -319,6 +331,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> Git </category>
           
       </categories>
@@ -343,6 +357,8 @@
       
       
       <categories>
+          
+          <category> Dev </category>
           
           <category> Git </category>
           
@@ -396,6 +412,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> CDN </category>
           
       </categories>
@@ -425,6 +443,8 @@
       
       <categories>
           
+          <category> Dev </category>
+          
           <category> 虚拟内存 </category>
           
       </categories>
@@ -452,7 +472,7 @@
       
       <categories>
           
-          <category> essay </category>
+          <category> 读书 </category>
           
       </categories>
       
@@ -501,6 +521,8 @@
       
       
       <categories>
+          
+          <category> Dev </category>
           
           <category> hexo </category>
           
