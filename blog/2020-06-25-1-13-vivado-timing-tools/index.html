@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='Volantis' version='1.6.3' docs='https://volantis.js.org/'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>1-13-Vivado时序约束辅助工具 | voiue</title>
+  
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="/avatar/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/css/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <p class="title ">VOIUE</p>
+  
+    <p class="subtitle ">「路漫漫其修远兮 吾将上下而求索」</p>
+  
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <i class="icon fas fa-search fa-fw"></i>
+      <input type="text" class="input u-search-input" placeholder="" />
+    </form>
+  </div>
+
+<div class='menu navigation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home "
+            href="/"
+            
+            
+            id="home">
+            <i class='fas fa-house-damage fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/blog/archives/"
+            
+            
+            id="blogarchives">
+            <i class='fas fa-archive fa-fw'></i>&nbsp;归档
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/wiki/"
+            
+            
+            id="wiki">
+            <i class='fas fa-landmark fa-fw'></i>&nbsp;Wiki
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/friends/"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home "
+            href="/about/"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header nav-blur">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar"></div>
+  </div>
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      
+        <a class="logo flat-box" target="_self" href='/' >
+          
+            
+              
+              
+                VOIUE
+              
+            
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                  
+                  id="blogcategories">
+									<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/about/"
+                  
+                  
+                  id="about">
+									<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="搜索一下" />
+        </form>
+      </div>
+
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone white-box">
+    <header>
+		<nav class="menu navigation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/categories/"
+                
+                
+                id="blogcategories">
+								<i class='fab fa-apple fa-fw'></i>&nbsp;开发
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box   article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2020-06-25-1-13-vivado-timing-tools/">
+        1-13-Vivado时序约束辅助工具
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/blog/categories/Dev/FPGA/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Dev&nbsp;/&nbsp;FPGA</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          <h1 id="时序约束辅助工具"><a href="#时序约束辅助工具" class="headerlink" title="时序约束辅助工具"></a>时序约束辅助工具</h1><p>&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。</p>
+<a id="more"></a>
+
+<h2 id="1-时序约束编辑器"><a href="#1-时序约束编辑器" class="headerlink" title="1. 时序约束编辑器"></a>1. 时序约束编辑器</h2><p>&emsp;&emsp;打开之后就可显示出我们之前做的所有约束，当然，还可以再添加、删除或修改时序约束。</p>
+<center>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial51.png"  alt="" />
+</center>
+
+<p>&emsp;&emsp;比如我们要新添加一个主时钟，先选中左边的<code>Create Clock</code>，再点击<code>+</code>号添加约束，然后就会看到下面的界面，按下图中步骤操作。</p>
+<center>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial52.png"  alt="" />
+</center>
+
+<p>其中，选择时钟按钮会弹出一个新的窗口，如下图所示，我们只需根据时钟名字进行查找并选择即可。</p>
+<center>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial53.png"  alt="" />
+</center>
+
+<h2 id="2-时序约束向导"><a href="#2-时序约束向导" class="headerlink" title="2. 时序约束向导"></a>2. 时序约束向导</h2><p>&emsp;&emsp;时序约束向导可以自动识别出未约束的主时钟，我们把wave_gen工程的xdc文件中对clk2的时钟约束注释掉，重新综合并实现后，打开时序约束向导，可以看到clk2被检测出未约束，点击编辑按钮，设置参数后就可完成约束。</p>
+<center>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial54.png"  alt="" />
+</center>
+
+<p>&emsp;&emsp;时序约束向导会按照主时钟约束、衍生时钟约束、输入延迟约束、输出延迟约束、时序例外约束、异步时钟约束等的顺序引导设计者创建约束。</p>
+<br>
+
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=13" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+          
+            <br>
+            
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  
+
+<section class="widget copyright  widget-blur desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            
+          
+        
+          
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-13-vivado-timing-tools/>https://voiue.github.io/blog/2020-06-25-1-13-vivado-timing-tools/</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+                
+              
+                
+              
+            
+          
+        </div>
+        
+          <br>
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月25日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>timing-analysis</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-13-vivado-timing-tools/&title=1-13-Vivado时序约束辅助工具 - voiue&summary=时序约束辅助工具&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-13-vivado-timing-tools/&title=1-13-Vivado时序约束辅助工具 - voiue&summary=时序约束辅助工具&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-13-vivado-timing-tools/&title=1-13-Vivado时序约束辅助工具 - voiue&summary=时序约束辅助工具&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+        
+        <fancybox>
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADsElEQVR42u3awW7jMAwE0Pz/T3fvWxTWkHTMBE+3Bo4iPV8Gw75+rNJ6IQAHDhw4Cxy4JXCv4vr/+3/t9+uHLz6/+n66z+nvHN8XHDhw4MCBAwduGdxxADx8PoVO9zkFT3/v6r7gwIEDBw4cOHBb4dKDpAGzG0SnXkQZHhw4cODAgQMH7kvgporHatCuvjBw4MCBAwcOHDhwtcDZLU6rBSg4cODAgQMHDty3wsUD2sNAnD6XFqmnn6+Z5IMDBw4cOHDgwA3B3TUQ3vp3+b7gwIEDBw4cOHBL4LprKsheDbanitX2fcGBAwcOHDhw4JbAVQfKp4ExvVA3oHb3HWuAwYEDBw4cOHDg3gSXBtgqfDpI7hao6f6X3wMHDhw4cODAgVsCNx0cTy96esEUJn3haREKDhw4cODAgQO3HW4qYE59Xi0w033aARgcOHDgwIEDB+5NcNVgOTVonioeq4E5hgUHDhw4cODAgVsGlw6AT4NyNWB3g3FakB6fGxw4cODAgQMHbhlcdXDcLRarn1cH0l1wcODAgQMHDhy4bXBTA967BtopdHr+43ODAwcOHDhw4MAth0uDZQp2d1HZDcbgwIEDBw4cOHCfApduUC04TwfEaeBOB+zl+4IDBw4cOHDgwC2D6wbObtCcGpBPDbz/vB84cODAgQMHDtwSuGqArAbcbqCtBuZ0v8sADA4cOHDgwIED9zBcN9B2C9G7C8ruPcCBAwcOHDhw4LbCpUH13YXi9GC7fW5w4MCBAwcOHLglcNNFYHdQXS1Ypwbn7SITHDhw4MCBAwfuYbgUNh1gdwfF1RfeDtbgwIEDBw4cOHDL4arBN32uOnhOg3h1v19/gwMHDhw4cODAfShcCjwNUC02T1/gbQEYHDhw4MCBAwduGC7d6NVc1YKyOzBPzwMOHDhw4MCBA/dpcFM/1AWcKix/wnVcZIIDBw4cOHDgwD0Md1o0nh4sDczVc3RfXLn4BAcOHDhw4MCBWwLXXVOFZTUYtwfM6QsBBw4cOHDgwIFbAtcNiKcH6wbaNGinA3Zw4MCBAwcOHLhPhasObLtB+CmY9NzgwIEDBw4cOHDb4aoD6qmLV8+VwlQH0+DAgQMHDhw4cN8ClwbbbsDunrv9AsGBAwcOHDhw4L4UbjrApkXn1HO3F5ngwIEDBw4cOHDDcNWAeldxmBajUwPtt/1jIThw4MCBAwcOXBOuesEqRBqMU4hqAL+8Lzhw4MCBAwcO3BI4KyxQEYADBw6cBQ7cs+sfdL6Al1eI3HsAAAAASUVORK5CYII=">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADsElEQVR42u3awW7jMAwE0Pz/T3fvWxTWkHTMBE+3Bo4iPV8Gw75+rNJ6IQAHDhw4Cxy4JXCv4vr/+3/t9+uHLz6/+n66z+nvHN8XHDhw4MCBAwduGdxxADx8PoVO9zkFT3/v6r7gwIEDBw4cOHBb4dKDpAGzG0SnXkQZHhw4cODAgQMH7kvgporHatCuvjBw4MCBAwcOHDhwtcDZLU6rBSg4cODAgQMHDty3wsUD2sNAnD6XFqmnn6+Z5IMDBw4cOHDgwA3B3TUQ3vp3+b7gwIEDBw4cOHBL4LprKsheDbanitX2fcGBAwcOHDhw4JbAVQfKp4ExvVA3oHb3HWuAwYEDBw4cOHDg3gSXBtgqfDpI7hao6f6X3wMHDhw4cODAgVsCNx0cTy96esEUJn3haREKDhw4cODAgQO3HW4qYE59Xi0w033aARgcOHDgwIEDB+5NcNVgOTVonioeq4E5hgUHDhw4cODAgVsGlw6AT4NyNWB3g3FakB6fGxw4cODAgQMHbhlcdXDcLRarn1cH0l1wcODAgQMHDhy4bXBTA967BtopdHr+43ODAwcOHDhw4MAth0uDZQp2d1HZDcbgwIEDBw4cOHCfApduUC04TwfEaeBOB+zl+4IDBw4cOHDgwC2D6wbObtCcGpBPDbz/vB84cODAgQMHDtwSuGqArAbcbqCtBuZ0v8sADA4cOHDgwIED9zBcN9B2C9G7C8ruPcCBAwcOHDhw4LbCpUH13YXi9GC7fW5w4MCBAwcOHLglcNNFYHdQXS1Ypwbn7SITHDhw4MCBAwfuYbgUNh1gdwfF1RfeDtbgwIEDBw4cOHDL4arBN32uOnhOg3h1v19/gwMHDhw4cODAfShcCjwNUC02T1/gbQEYHDhw4MCBAwduGC7d6NVc1YKyOzBPzwMOHDhw4MCBA/dpcFM/1AWcKix/wnVcZIIDBw4cOHDgwD0Md1o0nh4sDczVc3RfXLn4BAcOHDhw4MCBWwLXXVOFZTUYtwfM6QsBBw4cOHDgwIFbAtcNiKcH6wbaNGinA3Zw4MCBAwcOHLhPhasObLtB+CmY9NzgwIEDBw4cOHDb4aoD6qmLV8+VwlQH0+DAgQMHDhw4cN8ClwbbbsDunrv9AsGBAwcOHDhw4L4UbjrApkXn1HO3F5ngwIEDBw4cOHDDcNWAeldxmBajUwPtt/1jIThw4MCBAwcOXBOuesEqRBqMU4hqAL+8Lzhw4MCBAwcO3BI4KyxQEYADBw6cBQ7cs+sfdL6Al1eI3HsAAAAASUVORK5CYII=">
+          </a>
+        </fancybox>
+      
+    
+  </div>
+</div>
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/blog/2020-06-25-1-11-false-path/" rel="prev" title="1-11-FPGA时序约束实战篇之伪路径约束">
+                                  
+                                      1-11-FPGA时序约束实战篇之伪路径约束
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/timing-analysis/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> timing-analysis</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/blog/2020-06-25-1-14-tcl-commands/" rel="prev" title="1-14-Vivado时序约束中Tcl命令的对象及属性">
+                                    
+                                        1-14-Vivado时序约束中Tcl命令的对象及属性
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/blog/tags/timing-analysis/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> timing-analysis</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments  ">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '1-13-Vivado时序约束辅助工具',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+      
+    
+      
+        
+
+
+  <section class="widget toc-wrapper  widget-blur desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-时序约束编辑器"><span class="toc-text">1. 时序约束编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-时序约束向导"><span class="toc-text">2. 时序约束向导</span></a></li></ol>
+    </div>
+  </section>
+
+
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+</aside>
+
+<footer class="clearfix ">
+  <br><br>
+  
+    <br>
+    <div class="aplayer-container">
+      
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='340px'
+      server='netease'
+      type='playlist'
+      id='363662803'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+    </div>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="mailto:voiue@foxmail.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/voiue"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=363662803"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <div>
+    本站使用
+    <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+  
+    <div class='copyright'>
+    <p><a href="https://voiue.github.io">Copyright © 2020 voiue</a></p>
+
+    </div>
+  
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+  <script>
+    
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) ROOT += '/';
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js" async></script>
+
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+  
+  
+  
+    
+<script src="//cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        if ('') {
+          $('').backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://cdn.jsdelivr.net/gh/voiue/cdn-wallpaper@1.0/abstract/8782D9-08FE07-E5E73E.jpg"],
+          {
+            duration: "20000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+    
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/valine.js"></script>
+
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+    appId: "iTqB5ruHOstPc8XTQkHYdj8W-gzGzoHsz",
+    appKey: "6Ta0gDrH0WJHMHOHkHcWCJXu",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    visitor: 'false',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/search.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@1.6.3/js/comment_typing.js"></script>
+
+
+
+<!-- 复制 -->
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+
+
+<!-- fancybox -->
+
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!--动态线条背景-->
+  <!-- <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="/js/snow.js"></script>
+</body>
+</html>

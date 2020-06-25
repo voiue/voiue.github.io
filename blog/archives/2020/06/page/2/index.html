@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Category: 读书 | voiue</title>
+  <title>Archives: 2020/6 | voiue</title>
   
   
 
@@ -279,21 +279,11 @@
     <div class='body-wrapper'>
       
 
-
 <div class='l_main'>
-  
-    
-      
+	
+		
   <section class="post-list ">
     
-      
-        
-          
-        
-          
-        
-      
-    
     
       
         
@@ -309,8 +299,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-22-what-is-love/">
-      什么是爱 - 读《少有人走的路》
+    <a href="/blog/2020-06-25-1-6-xdc-priority/">
+      1-6-FPGA时序约束理论篇之xdc约束优先级
     </a>
   </h2>
 
@@ -335,17 +325,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月22日</p>
+    <p>发布于：2020年6月25日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-22T16:08:44+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月22日</p>
+    <p>更新于：2020年6月25日</p>
   </a>
 </div>
 
@@ -366,12 +356,15 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200322160812.jpg">
-</fancybox>
-
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>爱是什么？这或许是一个永恒的话题。我很少从学校的传统教育以及家庭教育中获得这方面的知识。</p>
-<p>我小的时候对于爱的解释，印象中的故事竟然都是来自是电影：一部是 <a href="http://baike.baidu.com/item/%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7/6162581" target="_blank" rel="noopener">《泰坦尼克号》</a>，另一部是 <a href="http://baike.baidu.com/item/%E7%9C%9F%E7%88%B1%E8%87%B3%E4%B8%8A/1671898" target="_blank" rel="noopener">《真爱至上》</a>。《泰坦尼克号》的男主 Jack 为了心爱的人，放弃自己生存的机会，让我以为爱是一种牺牲。而在大学时看的《真爱至上》，电影中的 10 个故事，讲了各种各样爱的故事，有小朋友之间的爱，有情侣之间的爱，更有同性之间的爱。电影最后的一句台词给爱下了一个更广泛的定义：「Love actually is everything.」</p>
+      <h2 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h2><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
+<p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
+<p>时序例外的优先级从高到低为：</p>
+<ol>
+<li>Clock Groups (set_clock_groups)</li>
+<li>False Path (set_false_path)</li>
+<li>Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)</li>
+<li>Multicycle Paths (set_multicycle_path)</li>
+</ol>
       
         
           
@@ -381,7 +374,7 @@
     <!-- 
       <div class="full-width auto-padding tags">
         
-          <a href="/blog/tags/%E8%AF%BB%E4%B9%A6/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 读书</a>
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
         
       </div>
      -->
@@ -404,8 +397,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-09-its-better-to-be-a-titan/">
-      十万蝼蚁不如一个巨人
+    <a href="/blog/2020-06-25-1-8-primiry-clock/">
+      1-8-FPGA时序约束实战篇之主时钟约束
     </a>
   </h2>
 
@@ -430,17 +423,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月9日</p>
+    <p>发布于：2020年6月25日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-09T19:18:29+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月9日</p>
+    <p>更新于：2020年6月25日</p>
   </a>
 </div>
 
@@ -461,8 +454,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <blockquote><p>混乱不是深渊。<br>混乱是阶梯。<br>很多人想往上爬 却失败了<br>且永无机会再试。<br>他们坠落而亡。<br>有人本有机会攀爬，<br>但他们拒绝了。<br>他们守着王国不放<br>守着诸神<br>守着爱情<br>尽皆幻想。<br>唯有阶梯是真实存在。<br>攀爬才是生活的全部。<br>—— Game of Thrones</p>
-</blockquote>
+      <h2 id="约束主时钟"><a href="#约束主时钟" class="headerlink" title="约束主时钟"></a>约束主时钟</h2><p>&emsp;&emsp;在这一节开讲之前，我们先把<code>wave_gen</code>工程的<code>wave_gen_timing.xdc</code>中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？</p>
       
         
           
@@ -472,7 +464,188 @@
     <!-- 
       <div class="full-width auto-padding tags">
         
-          <a href="/blog/tags/essay/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> essay</a>
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-06-25-1-7-clock-tree/">
+      1-7-FPGA时序约束实战篇之梳理时钟树
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h1 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h1><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-06-25-1-9-generated-clock/">
+      1-9-FPGA时序约束实战篇之衍生时钟约束
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h2 id="约束衍生时钟"><a href="#约束衍生时钟" class="headerlink" title="约束衍生时钟"></a>约束衍生时钟</h2><p>&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对<code>clk_samp</code>和<code>spi_clk</code>进行约束即可。约束如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br></pre></td></tr></table></figure>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
         
       </div>
      -->
@@ -485,6 +658,21 @@
     
   </section>
   
+    
+      <br>
+      <div class="prev-next">
+        
+          <a class="prev" rel="prev" href="/blog/archives/2020/06/">
+            <section class="post prev white-box  widget-blur" >
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页&nbsp;
+            </section>
+          </a>
+        
+        <p class="current">
+          2 / 2
+        </p>
+        
+      </div>
     
     <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
     
@@ -493,9 +681,7 @@
   
 
 
-    
-  
-
+	
 </div>
 <aside class='l_side'>
   
@@ -599,12 +785,17 @@
           <li><a class="flat-box"
             title="/blog/categories/Dev/" href="/blog/categories/Dev/"
             id="blogcategoriesDev"
-            ><div class='name'>Dev</div><div class='badge'>(11)</div></a></li>
+            ><div class='name'>Dev</div><div class='badge'>(25)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/CDN/" href="/blog/categories/Dev/CDN/"
             id="blogcategoriesDevCDN"
             ><div class='name'>CDN</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/FPGA/" href="/blog/categories/Dev/FPGA/"
+            id="blogcategoriesDevFPGA"
+            ><div class='name'>FPGA</div><div class='badge'>(14)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/Git/" href="/blog/categories/Dev/Git/"
@@ -639,7 +830,7 @@
           <li><a class="flat-box"
             title="/blog/categories/others/" href="/blog/categories/others/"
             id="blogcategoriesothers"
-            ><div class='name'>others</div><div class='badge'>(6)</div></a></li>
+            ><div class='name'>others</div><div class='badge'>(4)</div></a></li>
         
           <li><a class="flat-box"
             title="/blog/categories/tool/" href="/blog/categories/tool/"
@@ -650,11 +841,6 @@
             title="/blog/categories/video/" href="/blog/categories/video/"
             id="blogcategoriesvideo"
             ><div class='name'>video</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E8%AF%BB%E4%B9%A6/" href="/blog/categories/%E8%AF%BB%E4%B9%A6/"
-            id="blogcategoriesE8AFBBE4B9A6"
-            ><div class='name'>读书</div><div class='badge'>(2)</div></a></li>
         
       </ul>
     </div>
@@ -693,7 +879,7 @@
 
 
     <div class='content'>
-      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/essay/" style="font-size: 14px; color: #999">essay</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 24px; color: #555">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a> <a href="/blog/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 14px; color: #999">读书</a>
+      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 17.33px; color: #828282">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/timing-analysis/" style="font-size: 24px; color: #555">timing-analysis</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a>
     </div>
   </section>
 
@@ -711,6 +897,30 @@
 
 <footer class="clearfix ">
   <br><br>
+  
+    <br>
+    <div class="aplayer-container">
+      
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='340px'
+      server='netease'
+      type='playlist'
+      id='363662803'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+    </div>
+  
   
     <div class="social-wrapper">
       
@@ -748,33 +958,6 @@
       
     </div>
   
-  
-    <br>
-    <div class="aplayer-container">
-      
-
-  
-    <meting-js
-      theme='#1BCDFC'
-      autoplay='false'
-      volume='0.7'
-      loop='all'
-      order='list'
-      fixed='false'
-      list-max-height='340px'
-      server='netease'
-      type='playlist'
-      id='363662803'
-      list-folded='true'>
-    </meting-js>
-  
-
-
-    </div>
-  
-  <br>
-  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
-</div>
   <div>
     本站使用
     <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
@@ -795,6 +978,14 @@
   
 </footer>
 <script>setLoadingBarProgress(80);</script>
+
+
+
+
+	<!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
+	
+
+	
 
 
       <script>setLoadingBarProgress(60);</script>
@@ -1009,8 +1200,7 @@
 
   <script>setLoadingBarProgress(100);</script>
   <!--动态线条背景-->
-  <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
-  </script>
+  <!-- <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
   <!-- 雪花特效 -->
   <script type="text/javascript" src="/js/snow.js"></script>
 </body>

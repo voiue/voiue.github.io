@@ -299,8 +299,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-16-add-widget-with-your-website/">
-      给网站添加小插件
+    <a href="/blog/2020-06-25-1-6-xdc-priority/">
+      1-6-FPGA时序约束理论篇之xdc约束优先级
     </a>
   </h2>
 
@@ -325,17 +325,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月16日</p>
+    <p>发布于：2020年6月25日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-17T15:02:58+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月17日</p>
+    <p>更新于：2020年6月25日</p>
   </a>
 </div>
 
@@ -356,12 +356,379 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="Hamster"><a href="#Hamster" class="headerlink" title="Hamster"></a>Hamster</h2><p><object type="application/x-shockwave-flash" style="outline:none;" data="https://cdn.jsdelivr.net/gh/voiue/cdn-assets@master/gadgets/hamster.swf?" width="300" height="225"><param name="movie" value="https://cdn.jsdelivr.net/gh/voiue/cdn-assets@master/gadgets/hamster.swf?"></param><param name="AllowScriptAccess" value="always"></param><param name="wmode" value="opaque"></param></object></p>
-<p>在网页中插入下面这些内容即可</p>
+      <h2 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h2><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
+<p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
+<p>时序例外的优先级从高到低为：</p>
+<ol>
+<li>Clock Groups (set_clock_groups)</li>
+<li>False Path (set_false_path)</li>
+<li>Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)</li>
+<li>Multicycle Paths (set_multicycle_path)</li>
+</ol>
       
         
           
         
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-06-25-1-8-primiry-clock/">
+      1-8-FPGA时序约束实战篇之主时钟约束
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h2 id="约束主时钟"><a href="#约束主时钟" class="headerlink" title="约束主时钟"></a>约束主时钟</h2><p>&emsp;&emsp;在这一节开讲之前，我们先把<code>wave_gen</code>工程的<code>wave_gen_timing.xdc</code>中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-06-25-1-7-clock-tree/">
+      1-7-FPGA时序约束实战篇之梳理时钟树
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h1 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h1><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-06-25-1-9-generated-clock/">
+      1-9-FPGA时序约束实战篇之衍生时钟约束
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h2 id="约束衍生时钟"><a href="#约束衍生时钟" class="headerlink" title="约束衍生时钟"></a>约束衍生时钟</h2><p>&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对<code>clk_samp</code>和<code>spi_clk</code>进行约束即可。约束如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br></pre></td></tr></table></figure>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-05-03-networks-http-status-code/">
+      HTTP状态码
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年5月3日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-05-03T15:20:21+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年5月3日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h1 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h1><fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200503152722.jpg">
+</fancybox>
+
       
     </div>
     <!-- 
@@ -390,8 +757,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-15-inode/">
-      理解inode
+    <a href="/blog/2020-04-18-add-bookmark-for-your-pdf/">
+      给pdf文件添加书签目录
     </a>
   </h2>
 
@@ -416,17 +783,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月15日</p>
+    <p>发布于：2020年4月18日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-15T20:51:52+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-18T23:25:50+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月15日</p>
+    <p>更新于：2020年4月18日</p>
   </a>
 </div>
 
@@ -447,9 +814,191 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p><a href="http://en.wikipedia.org/wiki/Inode" target="_blank" rel="noopener">inode</a>是一个重要概念，是理解Unix/Linux文件系统和硬盘储存的基础。</p>
-<p>我觉得，理解inode，不仅有助于提高系统操作水平，还有助于体会Unix设计哲学，即如何把底层的复杂性抽象成一个简单概念，从而大大简化用户接口。</p>
-<p>下面就是我的inode学习笔记，尽量保持简单。</p>
+      <p>pdf文档算是我们平时看到比较多的文档啦，而我们看pdf文件最喜欢的一个功能就是打开书签功能，这样我们就能快速定位，查看我们需要查看的内容，但是有时候会遇没有书签的pdf文档，这个时候看起来就有些不方便了，于是我在网上查了一下，还真的可以给pdf文件添加书签的办法，废话不多说，直接进入正题：</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/pdf/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> pdf</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-04-03-one-article-leads-you-to-vim/">
+      效率至上-一文带你真正走进vim
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年4月3日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-04-03T18:54:52+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年4月3日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <p><code>vim</code>一直是程序员之间比较有争议的一个话题。有人认为她是编辑器之神，有人则认为她古老过时，远远不如<strong>IDE</strong>，或是以当红小生<code>vscode</code>为代表的图形化文本编辑器。无论爱恨，我们的开发工作，大到远程登录服务器<code>coding</code>，修改<code>config</code>文件，小到<code>git commit message</code>，或多或少总要接触她。</p>
+<p>为什么要写这篇blog呢，是因为我发现各大平台充斥的<code>vim</code>教程类blog其实很不友好，大多数是命令的堆砌，很少有对思想的解读。由此造成的结果，很多工程师对<code>vim</code>总是敬畏三分，或者就算部分人可以使用<code>vim</code>，也只是以自己的固有思维，结合vim的命令操作，并没有真正掌握<code>vim</code>的精髓。所以我尝试用自己的方式，试图帮助大家<strong>系统</strong>地建立起<code>vim</code>的知识系统。</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/vim/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> vim</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-03-31-how-to-change-mac-address-on-linux/">
+      如何在Linux中更改MAC地址
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年3月31日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-31T20:10:15+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年3月31日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <p>在向你展示如何在 Linux 中更改 MAC 地址之前，让我们首先讨论为什么要更改它。</p>
+<p>可能有几个原因。也许你不希望在公共网络上公开你的实际 MAC 地址（也称为物理地址）？还有可能是网络管理员可能已在路由器或防火墙中阻止了特定的 MAC 地址。</p>
+<p>一个实用的“好处”是某些公共网络（例如机场 WiFi）允许在有限的时间内免费上网。如果你还想继续使用，那么伪造 Mac 地址可能会欺骗网络，让它认为是一台新设备。这也是一个有名的原因。</p>
+<p>我将展示更改 MAC 地址（也称为欺骗/伪造 MAC 地址）的步骤。</p>
       
         
           
@@ -461,10 +1010,6 @@
         
           <a href="/blog/tags/linux/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> linux</a>
         
-          <a href="/blog/tags/%E7%A3%81%E7%9B%98/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 磁盘</a>
-        
-          <a href="/blog/tags/inode/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> inode</a>
-        
       </div>
      -->
   </section>
@@ -486,8 +1031,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-13-git-cheat-sheet/">
-      常用 Git 命令清单
+    <a href="/blog/2020-03-26-understand-file-system/">
+      彻底理解文件系统
     </a>
   </h2>
 
@@ -512,17 +1057,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月13日</p>
+    <p>发布于：2020年3月26日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-13T20:25:14+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-26T17:09:51+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月13日</p>
+    <p>更新于：2020年3月26日</p>
   </a>
 </div>
 
@@ -543,10 +1088,8 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p>我每天使用 Git ，但是很多命令记不住。</p>
-<p>一般来说，日常使用只要记住下图6个命令，就可以了。但是熟练使用，恐怕要记住60～100个命令。</p>
-<fancybox>
-<img src="/img/bg2015120901.png">
+      <fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200326171416.png">
 </fancybox>
       
         
@@ -557,7 +1100,7 @@
     <!-- 
       <div class="full-width auto-padding tags">
         
-          <a href="/blog/tags/Git/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> Git</a>
+          <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 文件系统</a>
         
       </div>
      -->
@@ -580,8 +1123,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-03-13-add-bili-vedio-with-tag-in-hexo/">
-      Hexo博客中加入Bili标签插件添加视频
+    <a href="/blog/2020-03-22-how-to-get-help/">
+      如何请教别人
     </a>
   </h2>
 
@@ -606,17 +1149,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月13日</p>
+    <p>发布于：2020年3月22日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-13T16:27:21+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-22T16:58:10+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月13日</p>
+    <p>更新于：2020年3月22日</p>
   </a>
 </div>
 
@@ -637,9 +1180,10 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p>这篇文章是上篇文章《Hexo博客中加入B站视频播放器》的第二种实现过程，使用新增hexo标签的形式来添加B站视频。使用起来更方便~</p>
-<p>回顾下之前的实现过程代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw %&#125;</span><br><span class="line">&lt;div style&#x3D;&quot;position: relative; width: 100%; height: 0; padding-bottom: 75%;&quot;&gt;&lt;iframe src&#x3D;&quot;&#x2F;&#x2F;player.bilibili.com&#x2F;player.html?aid&#x3D;24897960&amp;cid&#x3D;42007693&amp;page&#x3D;3&quot; scrolling&#x3D;&quot;no&quot; border&#x3D;&quot;0&quot; frameborder&#x3D;&quot;no&quot; framespacing&#x3D;&quot;0&quot; allowfullscreen&#x3D;&quot;true&quot; style&#x3D;&quot;position: absolute; width: 100%; height: 100%; left: 0; top: 0;&quot;&gt;&lt;&#x2F;iframe&gt;&lt;&#x2F;div&gt;</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+      <h2 id="合适的自我介绍"><a href="#合适的自我介绍" class="headerlink" title="合适的自我介绍"></a>合适的自我介绍</h2><p>上次有一个人在一个线下分享会后一直拉着我问问题，我一直忍着没有问他是谁，后来问了太多，我实在受不了了，我问他：你是谁呀，为什么好像和我很熟的样子？他说：哦，我是一个 iOS 开发，你没必要记住我的名字。</p>
+<p>类似的情形出现过多次，还有一些人把名字故意取成很个性的，完全无法记住的 emoji 表情或者符号，也不做自我介绍，我完全无法记住这些人。</p>
+<p>合适的自我介绍为什么重要呢？因为它代表着一种尊重和平等。我义务解答问题没有关系，但是我即使完全不求回报，也希望我到底帮助的是谁。这个提问者的名字，毕业学校，工作单位，以及他的问题，都会给我带来记忆。</p>
+<p>这其实是基本的礼仪，看看那些著名演讲或者发布会的提问环节吧，提问者都会先自我介绍一番。</p>
       
         
           
@@ -649,557 +1193,7 @@
     <!-- 
       <div class="full-width auto-padding tags">
         
-          <a href="/blog/tags/hexo/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> hexo</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-11-github-common-command/">
-      Github常用命令
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月11日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-11T17:11:06+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月11日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <h2 id="本地仓库推送至github"><a href="#本地仓库推送至github" class="headerlink" title="本地仓库推送至github"></a>本地仓库推送至github</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">  coding</span><br><span class="line">$ git add.</span><br><span class="line">$ git commit -m &quot;balabala&quot;</span><br><span class="line">  github上新建仓库（最好同名）复制链接</span><br><span class="line">$ git remote add origin + 你的链接</span><br><span class="line">$ git pull --rebase oring master</span><br><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/Git/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> Git</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-10-delete-github-release-or-tag/">
-      删除github的release或tag
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月10日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-10T21:46:54+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月10日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>如何删除或者说如何更新当前的release呢？今天刚开始学习利用jsDeliver搭建图床的时候就遇到这个问题。</p>
-<p>刚开始的时候跟着网上的教程创建了一个cdn-wallpaper的仓库，也push了一张图片进去了，根据jsDeliver的引用链接成功的设置了博客的背景图片，但是后面发现这张图片的名字太长了，于是就把这张图片的名字删减了一部分，之后就重新提交到github仓库了，但是发现博客的背景却引用不了这个图片，通过网页调试发现引用的链接居然无效。</p>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/Git/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> Git</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-10-ultra-inspirational/">
-      超级励志的视频
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月10日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-13T19:42:23+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月13日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=1861309&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
-
-
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/video/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> video</a>
-        
-          <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 励志</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-10-free-cdn-with-jsdeliver-and-github/">
-      利用jsDeliver+github实现免费CDN
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月10日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-10T19:23:20+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月10日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>CDN的全称是Content Delivery Network，即内容分发网络。CDN是构建在网络之上的内容分发网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。——百度百科</p>
-<p>放在Github的资源在国内加载速度比较慢，因此需要使用CDN加速来优化网站打开速度，jsDelivr + Github便是免费且好用的CDN，非常适合博客网站使用。</p>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/jsDeliver/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> jsDeliver</a>
-        
-          <a href="/blog/tags/github/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> github</a>
-        
-          <a href="/blog/tags/CDN/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> CDN</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-09-virtual-memory/">
-      windows虚拟内存-折腾
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月9日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-09T20:16:11+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月9日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>由于自己电脑之前是机械硬盘的，读写速度太慢了，后来就买了个120G的固态硬盘给扩展了，机械硬盘就用来存资料文档啥的，固态硬盘就被我分成40G的用作系统（C）盘，剩下的用作软件安装（D）盘。</p>
-<p>对操作系统有些了解的人应该听说过<a href="https://baike.baidu.com/item/虚拟内存" target="_blank" rel="noopener">虚拟内存</a>的概念，这里也不做过多的解释。虚拟内存默认是有系统自动托管的，对应着windows系统磁盘根目录下的pagefiles.sys文件，但是随着用户的慢慢使用，这个pagefiles.sys文件会越来越大，直到有一天，我发现C盘和D盘都红了，我才意识到了——该折腾了。</p>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/windows/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> windows</a>
-        
-          <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 虚拟内存</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-09-its-better-to-be-a-titan/">
-      十万蝼蚁不如一个巨人
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月9日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-09T19:18:29+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月9日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <blockquote><p>混乱不是深渊。<br>混乱是阶梯。<br>很多人想往上爬 却失败了<br>且永无机会再试。<br>他们坠落而亡。<br>有人本有机会攀爬，<br>但他们拒绝了。<br>他们守着王国不放<br>守着诸神<br>守着爱情<br>尽皆幻想。<br>唯有阶梯是真实存在。<br>攀爬才是生活的全部。<br>—— Game of Thrones</p>
-</blockquote>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/essay/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> essay</a>
+          <a href="/blog/tags/%E6%99%BA%E6%85%A7/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 智慧</a>
         
       </div>
      -->
@@ -1223,7 +1217,7 @@
           </a>
         
         <p class="current">
-          2 / 3
+          2 / 4
         </p>
         
           <a class="next" rel="next" href="/blog/archives/2020/page/3/">
@@ -1345,12 +1339,17 @@
           <li><a class="flat-box"
             title="/blog/categories/Dev/" href="/blog/categories/Dev/"
             id="blogcategoriesDev"
-            ><div class='name'>Dev</div><div class='badge'>(11)</div></a></li>
+            ><div class='name'>Dev</div><div class='badge'>(25)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/CDN/" href="/blog/categories/Dev/CDN/"
             id="blogcategoriesDevCDN"
             ><div class='name'>CDN</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/FPGA/" href="/blog/categories/Dev/FPGA/"
+            id="blogcategoriesDevFPGA"
+            ><div class='name'>FPGA</div><div class='badge'>(14)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/Git/" href="/blog/categories/Dev/Git/"
@@ -1385,7 +1384,7 @@
           <li><a class="flat-box"
             title="/blog/categories/others/" href="/blog/categories/others/"
             id="blogcategoriesothers"
-            ><div class='name'>others</div><div class='badge'>(6)</div></a></li>
+            ><div class='name'>others</div><div class='badge'>(4)</div></a></li>
         
           <li><a class="flat-box"
             title="/blog/categories/tool/" href="/blog/categories/tool/"
@@ -1396,11 +1395,6 @@
             title="/blog/categories/video/" href="/blog/categories/video/"
             id="blogcategoriesvideo"
             ><div class='name'>video</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E8%AF%BB%E4%B9%A6/" href="/blog/categories/%E8%AF%BB%E4%B9%A6/"
-            id="blogcategoriesE8AFBBE4B9A6"
-            ><div class='name'>读书</div><div class='badge'>(2)</div></a></li>
         
       </ul>
     </div>
@@ -1439,7 +1433,7 @@
 
 
     <div class='content'>
-      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/essay/" style="font-size: 14px; color: #999">essay</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 24px; color: #555">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a> <a href="/blog/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 14px; color: #999">读书</a>
+      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 17.33px; color: #828282">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/timing-analysis/" style="font-size: 24px; color: #555">timing-analysis</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a>
     </div>
   </section>
 
@@ -1457,6 +1451,30 @@
 
 <footer class="clearfix ">
   <br><br>
+  
+    <br>
+    <div class="aplayer-container">
+      
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='340px'
+      server='netease'
+      type='playlist'
+      id='363662803'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+    </div>
+  
   
     <div class="social-wrapper">
       
@@ -1494,33 +1512,6 @@
       
     </div>
   
-  
-    <br>
-    <div class="aplayer-container">
-      
-
-  
-    <meting-js
-      theme='#1BCDFC'
-      autoplay='false'
-      volume='0.7'
-      loop='all'
-      order='list'
-      fixed='false'
-      list-max-height='340px'
-      server='netease'
-      type='playlist'
-      id='363662803'
-      list-folded='true'>
-    </meting-js>
-  
-
-
-    </div>
-  
-  <br>
-  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
-</div>
   <div>
     本站使用
     <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a>
@@ -1763,8 +1754,7 @@
 
   <script>setLoadingBarProgress(100);</script>
   <!--动态线条背景-->
-  <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
-  </script>
+  <!-- <script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
   <!-- 雪花特效 -->
   <script type="text/javascript" src="/js/snow.js"></script>
 </body>
