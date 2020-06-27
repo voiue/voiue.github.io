@@ -299,8 +299,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-06-25-1-6-xdc-priority/">
-      1-6-FPGA时序约束理论篇之xdc约束优先级
+    <a href="/blog/2020-06-05-1-4-clock-period-constraints/">
+      1-4-FPGA时序约束理论篇之时钟周期约束
     </a>
   </h2>
 
@@ -325,17 +325,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月5日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-05T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月5日</p>
   </a>
 </div>
 
@@ -356,15 +356,37 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h2><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
-<p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
-<p>时序例外的优先级从高到低为：</p>
-<ol>
-<li>Clock Groups (set_clock_groups)</li>
-<li>False Path (set_false_path)</li>
-<li>Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)</li>
-<li>Multicycle Paths (set_multicycle_path)</li>
-</ol>
+      <h2 id="时钟周期约束"><a href="#时钟周期约束" class="headerlink" title="时钟周期约束"></a>时钟周期约束</h2><p>&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。</p>
+<p>&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。</p>
+<p> <strong>1. Create_clock</strong></p>
+<p>&emsp;&emsp;在Vivado中使用<code>create_clock</code>来创建时钟周期约束。使用方法为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name &lt;name&gt; -period &lt;period&gt; -waveform &#123;&lt;rise_time&gt; &lt;fall_time&gt;&#125; [get_ports &lt;input_port&gt;]</span><br></pre></td></tr></table></figure>
+
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-name</td>
+<td>时钟名称</td>
+</tr>
+<tr>
+<td>-period</td>
+<td>时钟周期，单位为ns</td>
+</tr>
+<tr>
+<td>-waveform</td>
+<td>波形参数，第一个参数为时钟的第一个上升沿时刻，第二个参数为时钟的第一个下降沿时刻</td>
+</tr>
+<tr>
+<td>-add</td>
+<td>在同一时刻源上定义多个时钟时使用</td>
+</tr>
+</tbody></table>
       
         
           
@@ -397,8 +419,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-06-25-1-8-primiry-clock/">
-      1-8-FPGA时序约束实战篇之主时钟约束
+    <a href="/blog/2020-06-03-1-3-IO-constraints/">
+      1-3-FPGA时序约束理论篇之IO约束
     </a>
   </h2>
 
@@ -423,17 +445,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月3日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-03T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月3日</p>
   </a>
 </div>
 
@@ -454,7 +476,10 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="约束主时钟"><a href="#约束主时钟" class="headerlink" title="约束主时钟"></a>约束主时钟</h2><p>&emsp;&emsp;在这一节开讲之前，我们先把<code>wave_gen</code>工程的<code>wave_gen_timing.xdc</code>中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？</p>
+      <h2 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h2><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
+<h3 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h3><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
+<p>&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]</span><br></pre></td></tr></table></figure>
       
         
           
@@ -487,8 +512,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-06-25-1-7-clock-tree/">
-      1-7-FPGA时序约束实战篇之梳理时钟树
+    <a href="/blog/2020-06-02-1-2-Timing-path/">
+      1-2-FPGA时序约束理论篇之时序路径与时序模型
     </a>
   </h2>
 
@@ -513,17 +538,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月2日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-02T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月2日</p>
   </a>
 </div>
 
@@ -544,7 +569,11 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h1 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h1><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
+      <h3 id="时序路径"><a href="#时序路径" class="headerlink" title="时序路径"></a>时序路径</h3><p>&emsp;&emsp;典型的时序路径有4类，如下图所示，这4类路径可分为片间路径（标记①和标记③)和片内路径（标记②和标记④）。</p>
+<center>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial2.png"  alt="" /></fancybox>
+</center>
       
         
           
@@ -577,8 +606,8 @@
       
         
   <h2 class="title">
-    <a href="/blog/2020-06-25-1-9-generated-clock/">
-      1-9-FPGA时序约束实战篇之衍生时钟约束
+    <a href="/blog/2020-06-01-1-1-setup-hold/">
+      1-1-FPGA时序约束理论篇之建立保持时间
     </a>
   </h2>
 
@@ -603,17 +632,17 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月1日</p>
   </a>
 </div>
 
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-01T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月1日</p>
   </a>
 </div>
 
@@ -634,8 +663,13 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="约束衍生时钟"><a href="#约束衍生时钟" class="headerlink" title="约束衍生时钟"></a>约束衍生时钟</h2><p>&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对<code>clk_samp</code>和<code>spi_clk</code>进行约束即可。约束如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br></pre></td></tr></table></figure>
+      <h1 id="读万卷书–时序约束理论篇"><a href="#读万卷书–时序约束理论篇" class="headerlink" title="读万卷书–时序约束理论篇"></a>读万卷书–时序约束理论篇</h1><h2 id="周期约束理论"><a href="#周期约束理论" class="headerlink" title="周期约束理论"></a>周期约束理论</h2><p>&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。</p>
+<p>&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。</p>
+<p>&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：</p>
+<ul>
+<li>发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端</li>
+<li>接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端</li>
+</ul>
       
         
           
@@ -727,8 +761,8 @@
     <div class="article-entry" itemprop="articleBody">
       <h1 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h1><fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200503152722.jpg">
-</fancybox>
-
+</fancybox></fancybox>
+</center>
       
     </div>
     <!-- 

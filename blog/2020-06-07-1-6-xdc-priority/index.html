@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-14-Vivado时序约束中Tcl命令的对象及属性 | voiue</title>
+  <title>1-6-FPGA时序约束理论篇之xdc约束优先级 | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-14-tcl-commands/">
-        1-14-Vivado时序约束中Tcl命令的对象及属性
+      <a href="/blog/2020-06-07-1-6-xdc-priority/">
+        1-6-FPGA时序约束理论篇之xdc约束优先级
       </a>
     </h1>
   
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月7日</p>
   </a>
 </div>
 
@@ -357,135 +357,48 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="Vivado时序约束中Tcl命令的对象及属性"><a href="#Vivado时序约束中Tcl命令的对象及属性" class="headerlink" title="Vivado时序约束中Tcl命令的对象及属性"></a>Vivado时序约束中Tcl命令的对象及属性</h1><p>&emsp;&emsp;在前面的章节中，我们用了很多Tcl的指令，但有些指令并没有把所有的参数多列出来解释，这一节，我们就把约束中的Tcl指令详细讲一下。</p>
-<p>我们前面讲到过<code>get_pins</code>和<code>get_ports</code>的区别，而且我们也用过<code>get_cells</code>、<code>get_clocks</code>和<code>get_nets</code>这几个指令，下面就通过一张图直观展现它们的区别。</p>
+          <h2 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h2><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
+<p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
+<p>时序例外的优先级从高到低为：</p>
+<ol>
+<li>Clock Groups (set_clock_groups)</li>
+<li>False Path (set_false_path)</li>
+<li>Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)</li>
+<li>Multicycle Paths (set_multicycle_path)</li>
+</ol>
 <a id="more"></a>
 
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial55.png"  alt="" />
-</center>
-
-<p><code>get_clocks</code>后面的对象是我们之前通过<code>create_clocks</code>或者<code>create_generated_clocks</code>创建的时钟，不在硬件上直接映射。</p>
-<p>&emsp;&emsp;我们再来看下各个命令的属性。</p>
-<h2 id="1-port"><a href="#1-port" class="headerlink" title="1. port"></a>1. port</h2><p>我们可以通过Tcl脚本查看port的所有属性，比如上面的wave_gen工程中，有一个port是<code>clk_pin_p</code>，采用如下脚本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set inst [get_ports clk_pin_p]</span><br><span class="line">report_property $inst</span><br></pre></td></tr></table></figure>
-<p>显示如下：</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial56.png"  alt="" />
-</center>
-
-<p><code>get_ports</code>的使用方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 获取所有端口</span><br><span class="line">get_ports *</span><br><span class="line"></span><br><span class="line"># 获取名称中包含data的端口</span><br><span class="line">get_ports *data*</span><br><span class="line"></span><br><span class="line"># 获取所有输出端口</span><br><span class="line">get_ports -filter &#123;DIRECTION &#x3D;&#x3D; OUT&#125;</span><br><span class="line"></span><br><span class="line"># 获取所有输入端口</span><br><span class="line">all_inputs</span><br><span class="line"></span><br><span class="line"># 获取输入端口中名字包含data的端口</span><br><span class="line">get_ports -filter &#123;DIRECTION &#x3D;&#x3D; IN&#125; *data*</span><br><span class="line"></span><br><span class="line"># 获取总线端口</span><br><span class="line">get_ports -filter &#123;BUS_NAME !&#x3D; &quot;&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-cell"><a href="#2-cell" class="headerlink" title="2. cell"></a>2. cell</h2><p>按照上面的同样的方式，获取cell的property，如下：</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial57.png"  alt="" />
-</center>
-
-<p><code>get_cells</code>的使用方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 获取顶层模块</span><br><span class="line">get_cells *</span><br><span class="line"></span><br><span class="line"># 获取名称中包含字符gen的模块</span><br><span class="line">get_cells *gen*</span><br><span class="line"></span><br><span class="line"># 获取clk_gen_i0下的所有模块</span><br><span class="line">get_cells clk_gen_i0&#x2F;*</span><br><span class="line"></span><br><span class="line"># 获取触发器为FDRE类型且名称中包含字符samp</span><br><span class="line">get_cells -hier -filter &#123;REF_NAME &#x3D;&#x3D; FDRE&#125; *samp*</span><br><span class="line"></span><br><span class="line"># 获取所有的时序单元逻辑</span><br><span class="line">get_cells -hier -filter &#123;IS_SEQUENTIAL &#x3D;&#x3D; 1&#125;</span><br><span class="line"></span><br><span class="line"># 获取模块uart_rx_i0下两层的LUT3</span><br><span class="line">get_cells -filter &#123;REF_NAME &#x3D;&#x3D; LUT3&#125; *uart_tx_i0&#x2F;*&#x2F;*</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-pin"><a href="#3-pin" class="headerlink" title="3. pin"></a>3. pin</h2><p>获取pin的property，如下：</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial58.png"  alt="" />
-</center>
-
-
-<p><code>get_pins</code>的使用方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 获取所有pins</span><br><span class="line">get_pins *</span><br><span class="line"></span><br><span class="line"># 获取名称中包含字符led的引脚</span><br><span class="line">get_pins -hier -filter &#123;NAME &#x3D;~ *led*&#125;</span><br><span class="line"></span><br><span class="line"># 获取REF_PIN_NAME为led的引脚</span><br><span class="line">get_pins -hier -filter &#123;REF_PIN_NAME &#x3D;&#x3D; led&#125;</span><br><span class="line"></span><br><span class="line"># 获取时钟引脚</span><br><span class="line">get_pins -hier -filter &#123;IS_CLOCK &#x3D;&#x3D; 1&#125;</span><br><span class="line"></span><br><span class="line"># 获取名称中包含cmd_parse_i0的使能引脚</span><br><span class="line">get_pins -filter &#123;IS_ENABLE &#x3D;&#x3D; 1&#125; cmd_parse_i0&#x2F;*&#x2F;*</span><br><span class="line"></span><br><span class="line"># 获取名称中包含字符cmd_parse_i0且为输入的引脚</span><br><span class="line">get_pins -filter &#123;DIRECTION &#x3D;&#x3D; IN&#125; cmd_parse_i0&#x2F;*&#x2F;*</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="4-net"><a href="#4-net" class="headerlink" title="4. net"></a>4. net</h2><p>获取net的property，如下：</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial59.png"  alt="" />
-</center>
-
-
-
-<p><code>get_nets</code>的使用方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 获取所有nets</span><br><span class="line">get_nets *</span><br><span class="line"></span><br><span class="line"># 获取名称中包含字符send_resp_val的网线</span><br><span class="line">get_nets -hier *send_resp_val*</span><br><span class="line">get_nets -filter &#123;NAME &#x3D;~ *send_resp_val*&#125; -hier</span><br><span class="line"></span><br><span class="line"># 获取穿过边界的同一网线的所有部分</span><br><span class="line">get_nets &#123;resp_gen_i0&#x2F;data4[0]&#125; -segments</span><br><span class="line"></span><br><span class="line"># 获取模块cmd_parse_i0下的所有网线</span><br><span class="line">get_nets -filter &#123;PARENT_CELL &#x3D;&#x3D; cmd_parse_i0&#125; -hier</span><br><span class="line"></span><br><span class="line"># 获取模块cmd_parse_i0下的名称中包含字符arg_cnt[]的网线</span><br><span class="line">get_nets -filter &#123;PARENT_CELL &#x3D;&#x3D; cmd_parse_i0&#125; -hier *arg_cnt[*]</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;这5个tcl指令的常用选项如下表：</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>-hierarchy</th>
-<th>-filter</th>
-<th>-of_objects</th>
-<th>-regexp</th>
-<th>-nocase</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>get_cells</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>get_nets</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>get_pins</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>get_ports</td>
-<td></td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>get_clocks</td>
-<td></td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody></table>
-<p>&emsp;&emsp;这5个Tcl命令对应的5个对象之间也有着密切的关系，下图所示的箭头的方向表示已知箭头末端对象可获取箭头指向的对象。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial60.png"  alt="" />
-</center>
-
-<p>&emsp;&emsp;以wave_gen中的<code>clk_gen_i0</code>模块为例来说明上面的操作：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 获取模块的输入引脚</span><br><span class="line">get_pins -of [get_cells &#123;clk_gen_i0&#x2F;clk_core_i0&#125;] -filter &#123;DIRECTION &#x3D;&#x3D; IN&#125;</span><br><span class="line"></span><br><span class="line"># 已知引脚名获取所在模块</span><br><span class="line">get_cells -of [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_in1_n]</span><br><span class="line"></span><br><span class="line"># 已知模块名获取与该模块相连的网线</span><br><span class="line">get_nets -of [get_cells &#123;clk_gen_i0&#x2F;clk_core_i0&#125;]</span><br><span class="line"></span><br><span class="line"># 已知引脚名获取与该引脚相连的网线</span><br><span class="line">get_nets -of [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_rx]</span><br><span class="line"></span><br><span class="line"># 已知时钟引脚获取时钟引脚对应的时钟</span><br><span class="line">get_clocks -of [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_rx]</span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是：</p>
+<p><code>set_bus_skew</code>约束并不影响上述优先级且不与上述约束冲突。原因在于set_bus_skew并不是某条路径上的约束，而是路径与路径之间的约束。</p>
+<p>&emsp;&emsp;对于同样的约束，定义的越精细，优先级越高。各对象的约束优先级从高到低为：</p>
 <ol>
-<li><p>-hier不能和层次分隔符“/”同时使用，但“/”可出现在-filter中</p>
-</li>
-<li><p>可根据属性过滤查找目标对象</p>
-</li>
-<li><p>-filter中的属性为：“==”（相等）、“!=”（不相等）、”=<del>“（匹配）、”!</del>“（不匹配）若有多个表达式，其返回值为bool类型时，支持逻辑操作</p>
-</li>
+<li>ports-&gt;pins-&gt;cells</li>
+<li>clocks。</li>
 </ol>
+<p>&emsp;&emsp;路径声明的优先级从高到低为：</p>
+<ol>
+<li>-from -through -to</li>
+<li>-from -to</li>
+<li>-from -through</li>
+<li>-from</li>
+<li>-through -to</li>
+<li>-to</li>
+<li>-through</li>
+</ol>
+<p><strong><em>优先考虑对象，再考虑路径。</em></strong></p>
+<p>&emsp;&emsp;Example1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 12 -from [get_clocks clk1] -to [get_clocks clk2]</span><br><span class="line">set_max_delay 15 -from [get_clocks clk1]</span><br></pre></td></tr></table></figure>
+<p>该约束中，第一条约束会覆盖第二条约束。</p>
+<p>&emsp;&emsp;Example2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 12 -from [get_cells inst0] -to [get_cells inst1]</span><br><span class="line">set_max_delay 15 -from [get_clocks clk1] -through [get_pins hier0&#x2F;p0] -to</span><br><span class="line">[get_cells inst1]</span><br></pre></td></tr></table></figure>
+<p>该约束中，第一条约束会覆盖第二条约束。</p>
+<p>&emsp;&emsp;Example3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 4 -through [get_pins inst0&#x2F;I0]</span><br><span class="line">set_max_delay 5 -through [get_pins inst0&#x2F;I0] -through [get_pins inst1&#x2F;I3]</span><br></pre></td></tr></table></figure>
+<p>这个约束中，两条都会存在，这也使得时序收敛的难度更大，因为这两条语句合并成了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 4 -through [get_pins inst0&#x2F;I0] -through [get_pins inst1&#x2F;I3]</span><br></pre></td></tr></table></figure>
+
 <br>
 
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=14" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
-
-
-
-<p>谢鸣：<a href="http://www.technomania.cn/" target="_blank" rel="noopener">http://www.technomania.cn/</a></p>
-
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=6" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
           
             <br>
             
@@ -518,7 +431,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-14-tcl-commands/>https://voiue.github.io/blog/2020-06-25-1-14-tcl-commands/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-07-1-6-xdc-priority/>https://voiue.github.io/blog/2020-06-07-1-6-xdc-priority/</a></p>
           
         
       </blockquote>
@@ -547,10 +460,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-07T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月7日</p>
   </a>
 </div>
 
@@ -572,8 +485,15 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-14-tcl-commands/&title=1-14-Vivado时序约束中Tcl命令的对象及属性 - voiue&summary=Vivado时序约束中Tcl命令的对象及属性&emsp;&emsp;在前面的章节中，我们用了很多Tcl的指令，但有些指令并没有把所有的参数多列出来解释，这一节，我们就把约束中的Tcl指令详细讲一下。
-我们前面讲到过get_pins和get_ports的区别，而且我们也用过get_cells、get_clocks和get_nets这几个指令，下面就通过一张图直观展现它们的区别。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-07-1-6-xdc-priority/&title=1-6-FPGA时序约束理论篇之xdc约束优先级 - voiue&summary=xdc约束优先级&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。
+&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。
+时序例外的优先级从高到低为：
+
+Clock Groups (set_clock_groups)
+False Path (set_false_path)
+Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)
+Multicycle Paths (set_multicycle_path)
+"
           
           >
           
@@ -585,8 +505,15 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-14-tcl-commands/&title=1-14-Vivado时序约束中Tcl命令的对象及属性 - voiue&summary=Vivado时序约束中Tcl命令的对象及属性&emsp;&emsp;在前面的章节中，我们用了很多Tcl的指令，但有些指令并没有把所有的参数多列出来解释，这一节，我们就把约束中的Tcl指令详细讲一下。
-我们前面讲到过get_pins和get_ports的区别，而且我们也用过get_cells、get_clocks和get_nets这几个指令，下面就通过一张图直观展现它们的区别。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-07-1-6-xdc-priority/&title=1-6-FPGA时序约束理论篇之xdc约束优先级 - voiue&summary=xdc约束优先级&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。
+&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。
+时序例外的优先级从高到低为：
+
+Clock Groups (set_clock_groups)
+False Path (set_false_path)
+Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)
+Multicycle Paths (set_multicycle_path)
+"
           
           >
           
@@ -598,8 +525,15 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-14-tcl-commands/&title=1-14-Vivado时序约束中Tcl命令的对象及属性 - voiue&summary=Vivado时序约束中Tcl命令的对象及属性&emsp;&emsp;在前面的章节中，我们用了很多Tcl的指令，但有些指令并没有把所有的参数多列出来解释，这一节，我们就把约束中的Tcl指令详细讲一下。
-我们前面讲到过get_pins和get_ports的区别，而且我们也用过get_cells、get_clocks和get_nets这几个指令，下面就通过一张图直观展现它们的区别。"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-07-1-6-xdc-priority/&title=1-6-FPGA时序约束理论篇之xdc约束优先级 - voiue&summary=xdc约束优先级&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。
+&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。
+时序例外的优先级从高到低为：
+
+Clock Groups (set_clock_groups)
+False Path (set_false_path)
+Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)
+Multicycle Paths (set_multicycle_path)
+"
           
           >
           
@@ -611,8 +545,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpUlEQVR42u3aSZLjMAwEQP//0zMvcJAoQG64O3mTQwuVulQU/PpnReuFABw4cOAscOCWwL3C9fbGzXW67+3x6bx0X+DAgQMHDhw4cNvgrgPgYYO3ELfPr+7v3X6m3hccOHDgwIEDB24r3DEAhoGyGlxTwOrzyvsFBw4cOHDgwIH7ZXDpRk+/p0VpFRYcOHDgwIEDB+6vwnULzmowrn4QcODAgQMHDhy43w43VRRWi81q8P36ST44cODAgQMHDtwQXHVNF5ufPo7fFxw4cODAgQMHbglcd3U3Ui1ET0G2G3iP7wsOHDhw4MCBA7cErltETg+I0wF0+oFurwMHDhw4cODAgdsGlw5wq4Pl6QDbDbZxEAcHDhw4cODAgVsOlwba6geZ+v1TxSo4cODAgQMHDtx2uGrgrF6XFo1PDdKvC1Rw4MCBAwcOHLglcNXgWy0a0yJ0KvBOnQcOHDhw4MCBA7cNrloA3j6gGpTTwJ0G9zRQgwMHDhw4cODAbYErD2TDQNoN1GkBmu7zusgEBw4cOHDgwIH7Ybg4EF4CTQ240yCdDrrBgQMHDhw4cOC2wk09sBukpwfOTwVjcODAgQMHDhy4LXBpYdn9fSp4T+/veB04cODAgQMHDtwyuKkCcrqYnPqg3cE5OHDgwIEDBw7cNrjuYHn6xacL0fGgDQ4cOHDgwIEDtxSuOpjubnRqYPzUwPptkQkOHDhw4MCBA7cMrhtIp86bHpCPDbjBgQMHDhw4cOCWwKXF4W1wTANrCjId2K8n+eDAgQMHDhw4cB+GSwPhFET6AboFbPw8cODAgQMHDhy4JXBPbei2yKwG2+l9lI/BgQMHDhw4cOC+BK47eJ56sep+qoPr6/uBAwcOHDhw4MAtg+sG1m7x+dRzUtDrIhMcOHDgwIEDB24p3NOD4nRgXYXtDs7BgQMHDhw4cOC2w039ATAdBKcfLC1Cy4NtcODAgQMHDhy4JXDd1S0O0/PTAXk7wIMDBw4cOHDgwC2B6wbCLszthqsD6ceOwYEDBw4cOHDglsGlwXRqwDwVgNMPcV3AggMHDhw4cODALYW7HfDevkC5KHxooJwOsI9FJjhw4MCBAwcO3JfDdYPw1CD89kOOF5ngwIEDBw4cOHBfDtctLtMXS4vP8nuBAwcOHDhw4MAthasOpNP7dIvR6cB7XayCAwcOHDhw4MAtg5se4KbXTw28q5DX+wUHDhw4cODAgVsCZxUDOwJw4MCBs8CB+9n1H10BgnnnZNOsAAAAAElFTkSuQmCC">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpUlEQVR42u3aSZLjMAwEQP//0zMvcJAoQG64O3mTQwuVulQU/PpnReuFABw4cOAscOCWwL3C9fbGzXW67+3x6bx0X+DAgQMHDhw4cNvgrgPgYYO3ELfPr+7v3X6m3hccOHDgwIEDB24r3DEAhoGyGlxTwOrzyvsFBw4cOHDgwIH7ZXDpRk+/p0VpFRYcOHDgwIEDB+6vwnULzmowrn4QcODAgQMHDhy43w43VRRWi81q8P36ST44cODAgQMHDtwQXHVNF5ufPo7fFxw4cODAgQMHbglcd3U3Ui1ET0G2G3iP7wsOHDhw4MCBA7cErltETg+I0wF0+oFurwMHDhw4cODAgdsGlw5wq4Pl6QDbDbZxEAcHDhw4cODAgVsOlwba6geZ+v1TxSo4cODAgQMHDtx2uGrgrF6XFo1PDdKvC1Rw4MCBAwcOHLglcNXgWy0a0yJ0KvBOnQcOHDhw4MCBA7cNrloA3j6gGpTTwJ0G9zRQgwMHDhw4cODAbYErD2TDQNoN1GkBmu7zusgEBw4cOHDgwIH7Ybg4EF4CTQ240yCdDrrBgQMHDhw4cOC2wk09sBukpwfOTwVjcODAgQMHDhy4LXBpYdn9fSp4T+/veB04cODAgQMHDtwyuKkCcrqYnPqg3cE5OHDgwIEDBw7cNrjuYHn6xacL0fGgDQ4cOHDgwIEDtxSuOpjubnRqYPzUwPptkQkOHDhw4MCBA7cMrhtIp86bHpCPDbjBgQMHDhw4cOCWwKXF4W1wTANrCjId2K8n+eDAgQMHDhw4cB+GSwPhFET6AboFbPw8cODAgQMHDhy4JXBPbei2yKwG2+l9lI/BgQMHDhw4cOC+BK47eJ56sep+qoPr6/uBAwcOHDhw4MAtg+sG1m7x+dRzUtDrIhMcOHDgwIEDB24p3NOD4nRgXYXtDs7BgQMHDhw4cOC2w039ATAdBKcfLC1Cy4NtcODAgQMHDhy4JXDd1S0O0/PTAXk7wIMDBw4cOHDgwC2B6wbCLszthqsD6ceOwYEDBw4cOHDglsGlwXRqwDwVgNMPcV3AggMHDhw4cODALYW7HfDevkC5KHxooJwOsI9FJjhw4MCBAwcO3JfDdYPw1CD89kOOF5ngwIEDBw4cOHBfDtctLtMXS4vP8nuBAwcOHDhw4MAthasOpNP7dIvR6cB7XayCAwcOHDhw4MAtg5se4KbXTw28q5DX+wUHDhw4cODAgVsCZxUDOwJw4MCBs8CB+9n1H10BgnnnZNOsAAAAAElFTkSuQmCC">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqUlEQVR42u3aS3bjMAwEQN3/0pkT+IkNQDKSKe4cf0SWvOg0fP1YpXUhAAcOHDgLHLglcFdxxRf88P67z7+77unzU+cFBw4cOHDgwIHbBpcCnP59+jrpfj7BVfcBDhw4cODAgQO3Fe40kJ6+vwuSBu+pQAwOHDhw4MCBA/e/wE0VnGlxmQKDAwcOHDhw4MCBq71+qvg8vYHT+wcHDhw4cODAgdsKFw9oi2DVgXE1GK+b5IMDBw4cOHDgwA3BpSsNmNsel88LDhw4cODAgQO3BK677kC7AbRadE5fDxw4cODAgQMHbhtcNSBWC8qpH/5N7/N4f+DAgQMHDhw4cMvg7i7UHVRXIZ8KwOl+wYEDBw4cOHDgtsJNFZTpgHjqQNXAfHpdcODAgQMHDhy4rXDpgaqD6lOoqcFy91zgwIEDBw4cOHDb4Z4qJquD4rcG5nFQBgcOHDhw4MCBWwI3PSDuwqWPqwG3/D5w4MCBAwcOHLglcNXAWC0a08/tfv54oAcHDhw4cODAgVsCN73B9PnqQaYg42IVHDhw4MCBAwduCVx1sJwG6G5xmg6mp4LxcZEJDhw4cODAgQP3MtzpRqobSovP6sHSIvSxST44cODAgQMHDtxLcKcFYncD1eKyCvDUjQcHDhw4cODAgdsO1w2wU4G6O4hOB+23nwMOHDhw4MCBA7cErh0IiwViFTgN0t0gftsAgwMHDhw4cODAfQluejDcDaDHBwiDeRp0wYEDBw4cOHDgtsN1C8ryBoYCdbrPbmELDhw4cODAgQO3Ba77A7+3BszdorQatG//cwAHDhw4cODAgVsC1y38uiDVwHo11/EXCRw4cODAgQMHbhlcOkiOf5DXDMLpvqZedzzJBwcOHDhw4MCB+zJcNVD+PLTSGzsVwOMADA4cOHDgwIED92W4041MFZppgZruNx1Q336hwIEDBw4cOHDglsJV/149ePUGXQ+vj6DgwIEDBw4cOHBL4J4qGtOCsVpYdgvN+IaBAwcOHDhw4MAtgesGxC5st/Ds/iAxfgwOHDhw4MCBA7cM7qnA2y0k716X7jcNwODAgQMHDhw4cL8FLh7QDg2Mp4J09/q3hSs4cODAgQMHDtwfg6seoFo8VoP7Y0UmOHDgwIEDBw7cL4UbKwqLsNWBdrxvcODAgQMHDhy4pXBTA9402L5VgHafBwcOHDhw4MCB2wY3NcCtBtdq4ZkG4HYxCw4cOHDgwIEDtwTOyhY4cODAgbPAgfvy+gdtzXviwYjEwQAAAABJRU5ErkJggg==">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqUlEQVR42u3aS3bjMAwEQN3/0pkT+IkNQDKSKe4cf0SWvOg0fP1YpXUhAAcOHDgLHLglcFdxxRf88P67z7+77unzU+cFBw4cOHDgwIHbBpcCnP59+jrpfj7BVfcBDhw4cODAgQO3Fe40kJ6+vwuSBu+pQAwOHDhw4MCBA/e/wE0VnGlxmQKDAwcOHDhw4MCBq71+qvg8vYHT+wcHDhw4cODAgdsKFw9oi2DVgXE1GK+b5IMDBw4cOHDgwA3BpSsNmNsel88LDhw4cODAgQO3BK677kC7AbRadE5fDxw4cODAgQMHbhtcNSBWC8qpH/5N7/N4f+DAgQMHDhw4cMvg7i7UHVRXIZ8KwOl+wYEDBw4cOHDgtsJNFZTpgHjqQNXAfHpdcODAgQMHDhy4rXDpgaqD6lOoqcFy91zgwIEDBw4cOHDb4Z4qJquD4rcG5nFQBgcOHDhw4MCBWwI3PSDuwqWPqwG3/D5w4MCBAwcOHLglcNXAWC0a08/tfv54oAcHDhw4cODAgVsCN73B9PnqQaYg42IVHDhw4MCBAwduCVx1sJwG6G5xmg6mp4LxcZEJDhw4cODAgQP3MtzpRqobSovP6sHSIvSxST44cODAgQMHDtxLcKcFYncD1eKyCvDUjQcHDhw4cODAgdsO1w2wU4G6O4hOB+23nwMOHDhw4MCBA7cErh0IiwViFTgN0t0gftsAgwMHDhw4cODAfQluejDcDaDHBwiDeRp0wYEDBw4cOHDgtsN1C8ryBoYCdbrPbmELDhw4cODAgQO3Ba77A7+3BszdorQatG//cwAHDhw4cODAgVsC1y38uiDVwHo11/EXCRw4cODAgQMHbhlcOkiOf5DXDMLpvqZedzzJBwcOHDhw4MCB+zJcNVD+PLTSGzsVwOMADA4cOHDgwIED92W4041MFZppgZruNx1Q336hwIEDBw4cOHDglsJV/149ePUGXQ+vj6DgwIEDBw4cOHBL4J4qGtOCsVpYdgvN+IaBAwcOHDhw4MAtgesGxC5st/Ds/iAxfgwOHDhw4MCBA7cM7qnA2y0k716X7jcNwODAgQMHDhw4cL8FLh7QDg2Mp4J09/q3hSs4cODAgQMHDtwfg6seoFo8VoP7Y0UmOHDgwIEDBw7cL4UbKwqLsNWBdrxvcODAgQMHDhy4pXBTA9402L5VgHafBwcOHDhw4MCB2wY3NcCtBtdq4ZkG4HYxCw4cOHDgwIEDtwTOyhY4cODAgbPAgfvy+gdtzXviwYjEwQAAAABJRU5ErkJggg==">
           </a>
         </fancybox>
       
@@ -635,9 +569,9 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-13-vivado-timing-tools/" rel="prev" title="1-13-Vivado时序约束辅助工具">
+                                <a href="/blog/2020-06-08-1-7-clock-tree/" rel="prev" title="1-7-FPGA时序约束实战篇之梳理时钟树">
                                   
-                                      1-13-Vivado时序约束辅助工具
+                                      1-7-FPGA时序约束实战篇之梳理时钟树
                                   
                                 </a>
                             </h4>
@@ -655,9 +589,9 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-2-Timing-path/" rel="prev" title="1-2-FPGA时序约束理论篇之时序路径与时序模型">
+                                <a href="/blog/2020-06-06-1-5-Timing-Exceptions/" rel="prev" title="1-5-FPGA时序约束理论篇之两种时序例外">
                                     
-                                        1-2-FPGA时序约束理论篇之时序路径与时序模型
+                                        1-5-FPGA时序约束理论篇之两种时序例外
                                     
                                 </a>
                             </h4>
@@ -709,7 +643,7 @@
 
   <script>
     window.subData = {
-      title: '1-14-Vivado时序约束中Tcl命令的对象及属性',
+      title: '1-6-FPGA时序约束理论篇之xdc约束优先级',
       tools: true
     }
   </script>
@@ -735,7 +669,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-port"><span class="toc-text">1. port</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-cell"><span class="toc-text">2. cell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-pin"><span class="toc-text">3. pin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-net"><span class="toc-text">4. net</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xdc约束优先级"><span class="toc-text">xdc约束优先级</span></a></li></ol>
     </div>
   </section>
 

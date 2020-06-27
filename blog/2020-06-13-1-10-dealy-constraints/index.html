@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-2-FPGA时序约束理论篇之时序路径与时序模型 | voiue</title>
+  <title>1-10-FPGA时序约束实战篇之延迟约束 | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-2-Timing-path/">
-        1-2-FPGA时序约束理论篇之时序路径与时序模型
+      <a href="/blog/2020-06-13-1-10-dealy-constraints/">
+        1-10-FPGA时序约束实战篇之延迟约束
       </a>
     </h1>
   
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月13日</p>
   </a>
 </div>
 
@@ -357,108 +357,88 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h3 id="时序路径"><a href="#时序路径" class="headerlink" title="时序路径"></a>时序路径</h3><p>&emsp;&emsp;典型的时序路径有4类，如下图所示，这4类路径可分为片间路径（标记①和标记③)和片内路径（标记②和标记④）。</p>
+          <h2 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h2><p>&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial2.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial45.png"  alt="" /></fancybox>
 </center>
-
 <a id="more"></a>
 
-<p>&emsp;&emsp;对于所有的时序路径，我们都要明确其起点和终点，这4类时序路径的起点和终点分别如下表。</p>
+
+<p>&emsp;&emsp;但其实这种想法是不对的，比如在很多ADC的设计中，输出的时钟的边沿刚好是数据的中心位置，而如果我们不加延迟约束，则Vivado会默认时钟和数据是对齐的。</p>
+<center>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial46.png"  alt="" /></fancybox>
+</center>
+
+<p>&emsp;&emsp;对于输入管脚，首先判断捕获时钟是主时钟还是衍生时钟，如果是主时钟，直接用<code>set_input_delay</code>即可，如果是衍生时钟，要先创建虚拟时钟，然后再设置delay。对于输出管脚，判断有没有输出随路时钟，若有，则直接使用<code>set_output_delay</code>，若没有，则需要创建虚拟时钟。</p>
+<p>&emsp;&emsp;在本工程中，输入输出数据管脚的捕获时钟如下表所示：</p>
 <table>
 <thead>
 <tr>
-<th>时序路径</th>
-<th>起点</th>
-<th>终点</th>
-<th>应用约束</th>
+<th>管脚</th>
+<th>输入输出</th>
+<th>捕获时钟</th>
+<th>时钟类型</th>
+<th>是否有随路时钟</th>
+<th>是否需要虚拟时钟</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>①输入端口到FPGA内部第一级触发器的路径</td>
-<td>ChipA/clk</td>
-<td>rega/D</td>
-<td>set_input_delay</td>
+<td>rxd_pin</td>
+<td>输入</td>
+<td>clk_pin_p</td>
+<td>主时钟</td>
+<td>x</td>
+<td>No</td>
 </tr>
 <tr>
-<td>②FPGA内部触发器之间的路径</td>
-<td>rega/clk</td>
-<td>regb/D</td>
-<td>create_clock</td>
+<td>txd_pin</td>
+<td>输出</td>
+<td>clk_tx</td>
+<td>x</td>
+<td>无</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td>③FPGA内部末级触发器到输出端口的路径</td>
-<td>regb/clk</td>
-<td>ChipB/D</td>
-<td>set_output_delay</td>
+<td>lb_sel_pin</td>
+<td>输入</td>
+<td>clk_tx</td>
+<td>衍生时钟</td>
+<td>x</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td>④FPGA输入端口到输出端口的路径</td>
-<td>输入端口</td>
-<td>输出端口</td>
-<td>set_max_delay</td>
+<td>led_pins[7:0]</td>
+<td>输出</td>
+<td>clk_tx</td>
+<td>衍生时钟</td>
+<td>无</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>spi_mosi_pin</td>
+<td>输出</td>
+<td>spi_clk</td>
+<td>衍生时钟</td>
+<td>有</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dac_*</td>
+<td>输出</td>
+<td>spi_clk</td>
+<td>衍生时钟</td>
+<td>有</td>
+<td>No</td>
 </tr>
 </tbody></table>
-<p>&emsp;&emsp;这4类路径中，我们最为关心是②的同步时序路径，也就是FPGA内部的时序逻辑。</p>
-<h3 id="时序模型"><a href="#时序模型" class="headerlink" title="时序模型"></a>时序模型</h3><p>&emsp;&emsp;典型的时序模型如下图所示，一个完整的时序路径包括源时钟路径、数据路径和目的时钟路径，也可以表示为触发器+组合逻辑+触发器的模型。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial64.png" width = "600" height = "350" alt="" />
+<p>&emsp;&emsp;根据上表，我们创建的延迟约束如下，其中的具体数字在实际工程中要根据上下游器件的时序关系（在各个器件手册中可以找到）和PCB走线延迟来决定。未避免有些约束有歧义，我们把前面的所有约束也加进来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 主时钟约束</span><br><span class="line">create_clock -period 25.000 -name clk2 [get_ports clk_in2]</span><br><span class="line"></span><br><span class="line"># 衍生时钟约束</span><br><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br><span class="line">create_generated_clock -name clk_tx -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKIN1] [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKOUT1]</span><br><span class="line">create_generated_clock -name clk_rx -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKIN1] [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKOUT0]</span><br><span class="line"></span><br><span class="line"># 设置异步时钟</span><br><span class="line">set_clock_groups -asynchronous -group [get_clocks clk_samp] -group [get_clocks clk2]</span><br><span class="line"></span><br><span class="line"># 延迟约束</span><br><span class="line">create_clock -period 6.000 -name virtual_clock</span><br><span class="line">set_input_delay -clock [get_clocks -of_objects [get_ports clk_pin_p]] 0.000 [get_ports rxd_pin]</span><br><span class="line">set_input_delay -clock [get_clocks -of_objects [get_ports clk_pin_p]] -min -0.500 [get_ports rxd_pin]</span><br><span class="line">set_input_delay -clock virtual_clock -max 0.000 [get_ports lb_sel_pin]</span><br><span class="line">set_input_delay -clock virtual_clock -min -0.500 [get_ports lb_sel_pin]</span><br><span class="line">set_output_delay -clock virtual_clock -max 0.000 [get_ports &#123;txd_pin &#123;led_pins[*]&#125;&#125;]</span><br><span class="line">set_output_delay -clock virtual_clock -min -0.500 [get_ports &#123;txd_pin &#123;led_pins[*]&#125;&#125;]</span><br><span class="line">set_output_delay -clock spi_clk -max 1.000 [get_ports &#123;spi_mosi_pin dac_cs_n_pin dac_clr_n_pin&#125;]</span><br><span class="line">set_output_delay -clock spi_clk -min -1.000 [get_ports &#123;spi_mosi_pin dac_cs_n_pin dac_clr_n_pin&#125;]</span><br></pre></td></tr></table></figure>
 
-
-</center>
-
-<p>&emsp;&emsp;该时序模型的要求为(公式1)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tclk ≥ Tco + Tlogic + Trouting + Tsetup - Tskew</span><br></pre></td></tr></table></figure>
-
-
-
-<p>其中，Tco为发端寄存器时钟到输出时间；Tlogic为组合逻辑延迟；Trouting为两级寄存器之间的布线延迟；Tsetup为收端寄存器建立时间；Tskew为两级寄存器的时钟歪斜，其值等于时钟同边沿到达两个寄存器时钟端口的时间差；Tclk为系统所能达到的最小时钟周期。</p>
-<p>&emsp;&emsp;这里我们多说一下这个Tskew，skew分为两种，positive skew和negative skew，其中positive skew见下图，这相当于增加了后一级寄存器的触发时间。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial65.png" width = "500" height = "300" alt="" />
-
-</center>
-
-<p>但对于negative skew，则相当于减少了后一级寄存器的触发时间，如下图所示。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial66.png" width = "500" height = "300" alt="" />
-
-</center>
-
-<p>&emsp;&emsp;当系统稳定后，都会是positive skew的状态，但即便是positive skew，综合工具在计算时序时，也不会把多出来的Tskew算进去。</p>
-<p>&emsp;&emsp;用下面这个图来表示时序关系就更加容易理解了。为什么要减去Tskew，下面这个图也更加直观。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial3.png"  alt="" />
-
-
-</center>
-
-<p>发送端寄存器产生的数据，数据经过Tco、Tlogic、Trouting后到达接收端，同时还要给接收端留出Tsetup的时间。而时钟延迟了Tskew的时间，因此有：<br>（公式2）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tdata\_path + Tsetup &lt;&#x3D; Tskew + Tclk</span><br></pre></td></tr></table></figure>
-
-<p>对于同步设计Tskew可忽略(认为其值为0)，因为FPGA中的时钟树会尽量保证到每个寄存器的延迟相同。</p>
-<p>公式中提到了建立时间，那保持时间在什么地方体现呢？</p>
-<p>&emsp;&emsp;保持时间比较难理解，它的意思是reg1的输出不能太快到达reg2，这是为了防止采到的新数据太快而冲掉了原来的数据。保持时间约束的是同一个时钟边沿，而不是对下一个时钟边沿的约束。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial4.png"  alt="" />
-</center>
-
-
-<p>&emsp;&emsp;reg2在边沿2时刻刚刚捕获reg1在边沿1时刻发出的数据，若reg1在边沿2时刻发出的数据过快到达reg2，则会冲掉前面的数据。因此保持时间约束的是同一个边沿。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial5.png"  alt="" />
-
-</center>
-
-<p>在时钟沿到达之后，数据要保持Thold的时间，因此，要满足：（公式3）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tdata\_path &#x3D;  Tco + Tlogic + Trouting ≥ Tskew + Thold</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;这两个公式是FPGA的面试和笔试中经常问到的问题，因为这种问题能反映出应聘者对时序的理解。</p>
-<p>&emsp;&emsp;在公式1中，Tco跟Tsu一样，也取决于芯片工艺，因此，一旦芯片型号选定就只能通过Tlogic和Trouting来改善Tclk。其中，Tlogic和代码风格有很大关系，Trouting和布局布线的策略有很大关系。</p>
-<p>&emsp;&emsp;关于时序约束的基本理论就讲这么多，下面讲具体的约束。</p>
 <br>
 
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=2" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=10" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
           
             <br>
             
@@ -491,7 +471,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-2-Timing-path/>https://voiue.github.io/blog/2020-06-25-1-2-Timing-path/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/>https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/</a></p>
           
         
       </blockquote>
@@ -520,10 +500,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-13T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月13日</p>
   </a>
 </div>
 
@@ -545,7 +525,8 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-2-Timing-path/&title=1-2-FPGA时序约束理论篇之时序路径与时序模型 - voiue&summary=时序路径&emsp;&emsp;典型的时序路径有4类，如下图所示，这4类路径可分为片间路径（标记①和标记③)和片内路径（标记②和标记④）。
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/&title=1-10-FPGA时序约束实战篇之延迟约束 - voiue&summary=延迟约束&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。
+
 
 
 "
@@ -560,7 +541,8 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-2-Timing-path/&title=1-2-FPGA时序约束理论篇之时序路径与时序模型 - voiue&summary=时序路径&emsp;&emsp;典型的时序路径有4类，如下图所示，这4类路径可分为片间路径（标记①和标记③)和片内路径（标记②和标记④）。
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/&title=1-10-FPGA时序约束实战篇之延迟约束 - voiue&summary=延迟约束&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。
+
 
 
 "
@@ -575,7 +557,8 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-2-Timing-path/&title=1-2-FPGA时序约束理论篇之时序路径与时序模型 - voiue&summary=时序路径&emsp;&emsp;典型的时序路径有4类，如下图所示，这4类路径可分为片间路径（标记①和标记③)和片内路径（标记②和标记④）。
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/&title=1-10-FPGA时序约束实战篇之延迟约束 - voiue&summary=延迟约束&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。
+
 
 
 "
@@ -590,8 +573,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqUlEQVR42u3aQXLjMAwEQP//07v3VKVEDCAJcTVvii2KbPqADPT5Z0TjgwAcOHDgDHDglsB9wnF1/+n8vy6wuI6f93Xn/XU/4MCBAwcOHDhwy+COC8DD76eAV/el657aLzhw4MCBAwcO3Fa47saqBe7UvNMHCg4cOHDgwIED9+1wU4VyGkCefg4OHDhw4MCBAwdudoNV2K8tgMGBAwcOHDhw4JpwTzWa00I4DUTXdfLBgQMHDhw4cOCG4KpjauFvXcf7BQcOHDhw4MCBWwJ390jBp4LNasF7+Xxw4MCBAwcOHLglcFOBY/dFwumANG1gtzv54MCBAwcOHDhwD8FVF54CpoXoacF7el96cODAgQMHDhw4cFvhqgViN6CsHkR6sFM/EHDgwIEDBw4cuG1w3QdWr7uBZ7ewPi2IxxrS4MCBAwcOHDhwS+DSoLLbYE7hukHrWAEMDhw4cODAgQN3M1y1ETz9ImI3IO0Go5frAwcOHDhw4MCBWwJXLTynX/BLA8ZqcHo6X7mTDw4cOHDgwIED9xLcXY3k6Ub01AuHp98r/+cADhw4cODAgQP3MFy18VtdaHXh6Tx3HSQ4cODAgQMHDtxWuLs33g0k06Cyup9jD3DgwIEDBw4cuKVw043oKagUMi30jxvS4MCBAwcOHDhwL8N1C9DTDXcDxaeD0riTDw4cOHDgwIED9xBctzAdW9hQod098MsXC8GBAwcOHDhw4F6G6waB1fu6C08L3OoBXgaZ4MCBAwcOHDhwL8NdbaTa+D29noapfl59Hjhw4MCBAwcO3F+BqzaC0yBzOrisFtzVghkcOHDgwIEDB24bXBzsNcGrBzF1gHHgCg4cOHDgwIEDtwRuuuCcgkthpkHBgQMHDhw4cOC2wp0WmmkD+27Qqcb5cWALDhw4cODAgQO3BK4a5E01rE+fm764eFshDQ4cOHDgwIEDtwQuDQSnNpw2uLsHEQeb4MCBAwcOHDhwS+C6I23wpkFpt4BNg1Jw4MCBAwcOHLhtcJ9wPBUsVjeWBqzgwIEDBw4cOHB/Fa5a8KYFZRUwbXCnsJd/BwcOHDhw4MCBWwpXLXirDeBq4d094OpzLucFBw4cOHDgwIH7MriphnC3UJ6aFxw4cODAgQMH7tvh0kZyCpIGnlP3gwMHDhw4cODAbYVLG9JTAWe3IV5tTFfXAQ4cOHDgwIEDtw0ubeCOL2yogE4b5JfPAwcOHDhw4MCBWwJn1AY4cODAgTPAgXt5/AefXngeyFbpnAAAAABJRU5ErkJggg==">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqUlEQVR42u3aQXLjMAwEQP//07v3VKVEDCAJcTVvii2KbPqADPT5Z0TjgwAcOHDgDHDglsB9wnF1/+n8vy6wuI6f93Xn/XU/4MCBAwcOHDhwy+COC8DD76eAV/el657aLzhw4MCBAwcO3Fa47saqBe7UvNMHCg4cOHDgwIED9+1wU4VyGkCefg4OHDhw4MCBAwdudoNV2K8tgMGBAwcOHDhw4JpwTzWa00I4DUTXdfLBgQMHDhw4cOCG4KpjauFvXcf7BQcOHDhw4MCBWwJ390jBp4LNasF7+Xxw4MCBAwcOHLglcFOBY/dFwumANG1gtzv54MCBAwcOHDhwD8FVF54CpoXoacF7el96cODAgQMHDhw4cFvhqgViN6CsHkR6sFM/EHDgwIEDBw4cuG1w3QdWr7uBZ7ewPi2IxxrS4MCBAwcOHDhwS+DSoLLbYE7hukHrWAEMDhw4cODAgQN3M1y1ETz9ImI3IO0Go5frAwcOHDhw4MCBWwJXLTynX/BLA8ZqcHo6X7mTDw4cOHDgwIED9xLcXY3k6Ub01AuHp98r/+cADhw4cODAgQP3MFy18VtdaHXh6Tx3HSQ4cODAgQMHDtxWuLs33g0k06Cyup9jD3DgwIEDBw4cuKVw043oKagUMi30jxvS4MCBAwcOHDhwL8N1C9DTDXcDxaeD0riTDw4cOHDgwIED9xBctzAdW9hQod098MsXC8GBAwcOHDhw4F6G6waB1fu6C08L3OoBXgaZ4MCBAwcOHDhwL8NdbaTa+D29noapfl59Hjhw4MCBAwcO3F+BqzaC0yBzOrisFtzVghkcOHDgwIEDB24bXBzsNcGrBzF1gHHgCg4cOHDgwIEDtwRuuuCcgkthpkHBgQMHDhw4cOC2wp0WmmkD+27Qqcb5cWALDhw4cODAgQO3BK4a5E01rE+fm764eFshDQ4cOHDgwIEDtwQuDQSnNpw2uLsHEQeb4MCBAwcOHDhwS+C6I23wpkFpt4BNg1Jw4MCBAwcOHLhtcJ9wPBUsVjeWBqzgwIEDBw4cOHB/Fa5a8KYFZRUwbXCnsJd/BwcOHDhw4MCBWwpXLXirDeBq4d094OpzLucFBw4cOHDgwIH7MriphnC3UJ6aFxw4cODAgQMH7tvh0kZyCpIGnlP3gwMHDhw4cODAbYVLG9JTAWe3IV5tTFfXAQ4cOHDgwIEDtw0ubeCOL2yogE4b5JfPAwcOHDhw4MCBWwJn1AY4cODAgTPAgXt5/AefXngeyFbpnAAAAABJRU5ErkJggg==">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqElEQVR42u3aS24jMQwFQN//0sl+BkHrkWybnZR2MWR9Slk8kH59GaXxQgAOHDhwBjhwS+BexfHfgv98/tP8q+9frVNdd+q+4MCBAwcOHDhw2+COA2Dx4qfzq+fqnuf0vuDAgQMHDhw4cFvh0qCZHqwKe3rhblC/vB84cODAgQMHDtwfgXs1R7cwCQ4cOHDgwIEDB67WeK4G5mqQnnpYcODAgQMHDhy4p8HFDdowyN4F+bhOPjhw4MCBAwcO3BBctcD41L/L9wUHDhw4cODAgVsC1x0pbHefNChP7Q8OHDhw4MCBA7cNrluYvL1weLhf9Zyn3wMHDhw4cODAgdsGV73A6Q/70oZxFTidl/4DgAMHDhw4cODAbYXrBt3TgFl9sLQhnq5zHOjBgQMHDhw4cOCWwJULeuHG3QbyeGO5eE9w4MCBAwcOHLhtcGmAPP28W0BMA28agNMGNThw4MCBAwcO3Ba4d110Kgh31+0GanDgwIEDBw4cuC1waaN4qiA51bDuNtTje4EDBw4cOHDgwC2FqxYU7yo0VgNytQALDhw4cODAgQP3NLgqRBqU03lpgJ1+EHDgwIEDBw4cuKfD3R2Up4N2u/H8077gwIEDBw4cOHBL4aqN3CpweuGpead/HwdgcODAgQMHDhy4D8GlQXCqUTz1QKfrtO8HDhw4cODAgQO3DO6uwuDdgfruIB5XgMGBAwcOHDhw4D4ElwbY9KDputUH6TagxxrS4MCBAwcOHDhwN8F1Nxhv+DZBukH6uJAJDhw4cODAgQO3HG6qYd0NyCloN6Bf/rAQHDhw4MCBAwfuw3BpoE0DZjXAVgNudRwHd3DgwIEDBw4cuGVwpwunhchqQK3Ony6Mxp18cODAgQMHDhy4N8N1D5w2hKcb4tXzxgVYcODAgQMHDhy4pXDlAl9Y+JyC6AbusYY0OHDgwIEDBw7ccrjTz9MA273YXQ3q40ImOHDgwIEDBw7cm+GmCovTDeJq0E0fNA3m4MCBAwcOHDhwW+CmA+Jd61YD+FRBFhw4cODAgQMHbitcGning+t047kblOOGNDhw4MCBAwcO3Ifh3nWBNFCnjetq8L4M1ODAgQMHDhw4cL8M7jRodoNwN7i3C6HgwIEDBw4cOHC/FK4aTKcKoacPV4YGBw4cOHDgwIFbCpc2pKvz0nVOg/EpQPWc4MCBAwcOHDhw2+C6DdxqgzrdLy14dh8GHDhw4MCBAwduK5wRQiMABw4cOAMcuM+Ob4Tt/FPatwTxAAAAAElFTkSuQmCC">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqElEQVR42u3aS24jMQwFQN//0sl+BkHrkWybnZR2MWR9Slk8kH59GaXxQgAOHDhwBjhwS+BexfHfgv98/tP8q+9frVNdd+q+4MCBAwcOHDhw2+COA2Dx4qfzq+fqnuf0vuDAgQMHDhw4cFvh0qCZHqwKe3rhblC/vB84cODAgQMHDtwfgXs1R7cwCQ4cOHDgwIEDB67WeK4G5mqQnnpYcODAgQMHDhy4p8HFDdowyN4F+bhOPjhw4MCBAwcO3BBctcD41L/L9wUHDhw4cODAgVsC1x0pbHefNChP7Q8OHDhw4MCBA7cNrluYvL1weLhf9Zyn3wMHDhw4cODAgdsGV73A6Q/70oZxFTidl/4DgAMHDhw4cODAbYXrBt3TgFl9sLQhnq5zHOjBgQMHDhw4cOCWwJULeuHG3QbyeGO5eE9w4MCBAwcOHLhtcGmAPP28W0BMA28agNMGNThw4MCBAwcO3Ba4d110Kgh31+0GanDgwIEDBw4cuC1waaN4qiA51bDuNtTje4EDBw4cOHDgwC2FqxYU7yo0VgNytQALDhw4cODAgQP3NLgqRBqU03lpgJ1+EHDgwIEDBw4cuKfD3R2Up4N2u/H8077gwIEDBw4cOHBL4aqN3CpweuGpead/HwdgcODAgQMHDhy4D8GlQXCqUTz1QKfrtO8HDhw4cODAgQO3DO6uwuDdgfruIB5XgMGBAwcOHDhw4D4ElwbY9KDputUH6TagxxrS4MCBAwcOHDhwN8F1Nxhv+DZBukH6uJAJDhw4cODAgQO3HG6qYd0NyCloN6Bf/rAQHDhw4MCBAwfuw3BpoE0DZjXAVgNudRwHd3DgwIEDBw4cuGVwpwunhchqQK3Ony6Mxp18cODAgQMHDhy4N8N1D5w2hKcb4tXzxgVYcODAgQMHDhy4pXDlAl9Y+JyC6AbusYY0OHDgwIEDBw7ccrjTz9MA273YXQ3q40ImOHDgwIEDBw7cm+GmCovTDeJq0E0fNA3m4MCBAwcOHDhwW+CmA+Jd61YD+FRBFhw4cODAgQMHbitcGning+t047kblOOGNDhw4MCBAwcO3Ifh3nWBNFCnjetq8L4M1ODAgQMHDhw4cL8M7jRodoNwN7i3C6HgwIEDBw4cOHC/FK4aTKcKoacPV4YGBw4cOHDgwIFbCpc2pKvz0nVOg/EpQPWc4MCBAwcOHDhw2+C6DdxqgzrdLy14dh8GHDhw4MCBAwduK5wRQiMABw4cOAMcuM+Ob4Tt/FPatwTxAAAAAElFTkSuQmCC">
           </a>
         </fancybox>
       
@@ -614,9 +597,9 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-14-tcl-commands/" rel="prev" title="1-14-Vivado时序约束中Tcl命令的对象及属性">
+                                <a href="/blog/2020-06-15-1-11-false-path/" rel="prev" title="1-11-FPGA时序约束实战篇之伪路径约束">
                                   
-                                      1-14-Vivado时序约束中Tcl命令的对象及属性
+                                      1-11-FPGA时序约束实战篇之伪路径约束
                                   
                                 </a>
                             </h4>
@@ -634,9 +617,9 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-3-IO-constraints/" rel="prev" title="1-3-FPGA时序约束理论篇之IO约束">
+                                <a href="/blog/2020-06-12-1-9-generated-clock/" rel="prev" title="1-9-FPGA时序约束实战篇之衍生时钟约束">
                                     
-                                        1-3-FPGA时序约束理论篇之IO约束
+                                        1-9-FPGA时序约束实战篇之衍生时钟约束
                                     
                                 </a>
                             </h4>
@@ -688,7 +671,7 @@
 
   <script>
     window.subData = {
-      title: '1-2-FPGA时序约束理论篇之时序路径与时序模型',
+      title: '1-10-FPGA时序约束实战篇之延迟约束',
       tools: true
     }
   </script>
@@ -714,7 +697,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#时序路径"><span class="toc-text">时序路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时序模型"><span class="toc-text">时序模型</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟约束"><span class="toc-text">延迟约束</span></a></li></ol>
     </div>
   </section>
 

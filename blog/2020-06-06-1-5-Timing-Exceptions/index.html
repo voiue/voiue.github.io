@@ -295,7 +295,7 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-5-Timing-Exceptions/">
+      <a href="/blog/2020-06-06-1-5-Timing-Exceptions/">
         1-5-FPGA时序约束理论篇之两种时序例外
       </a>
     </h1>
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月6日</p>
   </a>
 </div>
 
@@ -359,8 +359,9 @@
           
           <h2 id="两种时序例外"><a href="#两种时序例外" class="headerlink" title="两种时序例外"></a>两种时序例外</h2><h3 id="多周期路径"><a href="#多周期路径" class="headerlink" title="多周期路径"></a>多周期路径</h3><p>&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial20.png"  alt="" />
-
+</fancybox>
 </center>
 
 <a id="more"></a>
@@ -411,20 +412,23 @@
 <p><strong>1. 单时钟域</strong></p>
 <p>&emsp;&emsp;即发起时钟和捕获时钟是同一个时钟，其多周期路径模型如下图所示。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial21.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>&emsp;&emsp;单时钟域的多周期路径常见于带有使能的电路中，我们以双时钟周期路径为例，其实现电路如下：</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial22.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>&emsp;&emsp;若我们没有指定任何的约束，默认的建立/保持时间的分析就像我们上面所讲的单周期路径，如下图所示。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial23.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>&emsp;&emsp;但由于我们的的数据经过了两个时钟周期才被捕获，因此建立时间的分析时需要再延迟一个周期的时间。</p>
@@ -433,8 +437,9 @@
 
 <p>在建立时间被修改后，保持时间也会自动调整到捕获时钟沿的前一个时钟沿，如下图所示。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial24.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>很明显，这个保持时间检查是不对的，因为保持时间的检查针对的是同一个时钟沿，因此我们要把保持时间往回调一个周期，需要再增加一句约束：</p>
@@ -445,7 +450,8 @@
 
 <p>约束完成后，建立保持时间检查如下图所示。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial25.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial25.png"  alt="" /></fancybox>
 </center>
 
 <p>&emsp;&emsp;在单时钟域下，若数据经过N个周期到达，则约束示例如下：</p>
@@ -453,14 +459,16 @@
 
 <p><strong>2. 时钟相移</strong></p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial26.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>&emsp;&emsp;前面我们讨论的是在单时钟域下，发送端和接收端时钟是同频同相的，如果两个时钟同频不同相怎么处理？</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial27.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>&emsp;&emsp;如上图所示，时钟周期为4ns，接收端的时钟沿比发送端晚了0.3ns，若不进行约束，建立时间只有0.3ns，时序基本不可能收敛；而保持时间则为3.7ns，过于丰富。可能有的同学对保持时间会有疑惑，3.7ns是怎么来的？还记得我们上面讲的保持时间的定义么，在0ns时刻，接收端捕获到发送的数据后，要再过3.7ns的时间发送端才会发出下一个数据，因此本次捕获的数据最短可持续3.7ns，即保持时间为3.7ns。</p>
@@ -468,25 +476,29 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_multicycle_path 2 -setup -from [get_clocks CLK1] -to [get_clocks CLK2]</span><br></pre></td></tr></table></figure>
 <p>对setup约束后，hold会自动向后移动一个周期，此时的建立保持时间检查如下：</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial28.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial28.png"  alt="" /></fancybox>
 </center>
 
 <p>&emsp;&emsp;那如果接收端的时钟比发送端的时钟超前了怎么处理？</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial29.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial29.png"  alt="" /></fancybox>
 </center>
 
 <p>&emsp;&emsp;同样的，时钟周期为4ns，但接收端时钟超前了0.3ns，从图中可以看出，此时setup是3.7ns，而保持时间是0.3ns。这两个时间基本已经满足了Xilinx器件的要求，因此无需进行约束。</p>
 <p><strong>3. 慢时钟到快时钟的多周期</strong></p>
 <p>&emsp;&emsp;当发起时钟慢于捕获时钟时，我们应该如何处理？</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial30.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial30.png"  alt="" /></fancybox>
 </center>
 
 
 <p>&emsp;&emsp;假设捕获时钟频率是发起时钟频率的3倍，在没有任何约束的情况下，Vivado默认会按照如下图所示的建立保持时间进行分析。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial31.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial31.png"  alt="" /></fancybox>
 </center>
 
 
@@ -497,7 +509,8 @@
 
 <p>这里由于发起和捕获是两个时钟，因此<code>-end</code>参数是不可省的。加上时序约束后，Vivado会按照下面的方式进行时序分析。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial32.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial32.png"  alt="" /></fancybox>
 </center>
 
 
@@ -508,24 +521,28 @@
 <p><strong>4. 快时钟到慢时钟的多周期</strong></p>
 <p>&emsp;&emsp;当发起时钟快于捕获时钟时，我们应该如何处理？</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial33.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial33.png"  alt="" /></fancybox>
 </center>
 
 <p>&emsp;&emsp;假设发起时钟频率是捕获时钟频率的3倍，在没有任何约束的情况下，Vivado默认会按照如下图所示的建立保持时间进行分析。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial34.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial34.png"  alt="" /></fancybox>
 </center>
 
 <p>&emsp;&emsp;同理，我们可以通过约束，让时序条件更加宽裕。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_multicycle_path 3 -setup -start -from [get_clocks CLK1] -to [get_clocks CLK2]</span><br><span class="line">set_multicycle_path 2 -hold -from [get_clocks CLK1] -to [get_clocks CLK2]</span><br></pre></td></tr></table></figure>
 <p>这里的hold约束中没有加<code>-end</code>参数，这样的话默认就是<code>-start</code>，是因为我们把发起时钟回调2个周期，如下图所示。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial35.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial35.png"  alt="" /></fancybox>
 </center>
 
 <p>针对上面讲的几种多周期路径，总结如下：</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial36.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial36.png"  alt="" /></fancybox>
 </center>
 
 
@@ -594,7 +611,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-5-Timing-Exceptions/>https://voiue.github.io/blog/2020-06-25-1-5-Timing-Exceptions/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-06-1-5-Timing-Exceptions/>https://voiue.github.io/blog/2020-06-06-1-5-Timing-Exceptions/</a></p>
           
         
       </blockquote>
@@ -623,10 +640,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-06T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月6日</p>
   </a>
 </div>
 
@@ -648,7 +665,8 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-5-Timing-Exceptions/&title=1-5-FPGA时序约束理论篇之两种时序例外 - voiue&summary=两种时序例外多周期路径&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-06-1-5-Timing-Exceptions/&title=1-5-FPGA时序约束理论篇之两种时序例外 - voiue&summary=两种时序例外多周期路径&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。
+
 
 
 
@@ -664,7 +682,8 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-5-Timing-Exceptions/&title=1-5-FPGA时序约束理论篇之两种时序例外 - voiue&summary=两种时序例外多周期路径&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-06-1-5-Timing-Exceptions/&title=1-5-FPGA时序约束理论篇之两种时序例外 - voiue&summary=两种时序例外多周期路径&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。
+
 
 
 
@@ -680,7 +699,8 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-5-Timing-Exceptions/&title=1-5-FPGA时序约束理论篇之两种时序例外 - voiue&summary=两种时序例外多周期路径&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-06-1-5-Timing-Exceptions/&title=1-5-FPGA时序约束理论篇之两种时序例外 - voiue&summary=两种时序例外多周期路径&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。
+
 
 
 
@@ -696,8 +716,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADrklEQVR42u3ay24jMQwEQP//T2fvAQKpSc6aTkq32PNSTQ6Npl9fVmm9EIADBw6cBQ7cErhXcX0//3jDH447Xbd73u331/sFBw4cOHDgwIFbBncdAMON3J53+vz2vqfzuvsFBw4cOHDgwIHbClcNvNXAfDp++rjufsGBAwcOHDhw4H4LXLXITIPo7fXT5wUHDhw4cODAgfvrcNUBcXdgPQUJDhw4cODAgQP36XDVIHv7eRd86nnfPskHBw4cOHDgwIEbgktXWhRu+7u8X3DgwIEDBw4cuCVwU4Pg20KxGminB+Tl/YIDBw4cOHDgwC2Bu914FSIdNE+Dd69XboDBgQMHDhw4cOAehqsOgLvg00G3W7xev3Bw4MCBAwcOHLjlcE+BPjVYPj3v2IsFBw4cOHDgwIFbBlcNqun3aVAdKyCL9wUHDhw4cODAgdsOl260e1x3QF0N3GmRej2QBgcOHDhw4MCBWw5XLUC7hed0kVm+Pjhw4MCBAwcO3BK4buCsbiANsq/mqhaqPxaZ4MCBAwcOHDhwb4ZrX2h4sFwNvF/hql4PHDhw4MCBAwduG1x6o25g7RaL3YBbLUDBgQMHDhw4cOC2wKUP8tRgubvxbjC/HqSDAwcOHDhw4MAtg+sOkrsbTAfV00E6LjLBgQMHDhw4cOCWwlUfvDsgToFvA3T3PHDgwIEDBw4cuG1w6YamAnB3YNwtUsvBGhw4cODAgQMHbhnc9OC2+wLSoB0XkuHzgwMHDhw4cODAbYVLB7bxDYd/wPjU4LxcZIIDBw4cOHDgwP1nuLRorEJ3B9fV55kK3ODAgQMHDhw4cFvhpoLkVJFYDard5z0eBw4cOHDgwIEDtwwuDaZThWQacLtA7fuCAwcOHDhw4MAtgUsLxupguHpc+pzpIL1cZIIDBw4cOHDgwC2DS9d0UE2D7C1QFxgcOHDgwIEDB24bXHfg+9QA+img9iAdHDhw4MCBAwduCdxTAbhbGKYFZLmYTAfn4MCBAwcOHDhwS+C6heLt3+3gGd6n+wLBgQMHDhw4cOA+BW5qAJ0Wiafjng7a8Q8awYEDBw4cOHDglsJNBd50cDwVyKeuFwdgcODAgQMHDhy4D4PrBuVTsE1fYDVgX/8jgAMHDhw4cODA/TK4qQF2tyBNIdIXDg4cOHDgwIEDtxVuOrBWB8unIjQFSGHjIhMcOHDgwIEDB+5NcNVB7VThWA2y6eftAhUcOHDgwIEDB24JnBUWqAjAgQMHzgIH7r3rHyStAgiHMPhLAAAAAElFTkSuQmCC">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADrklEQVR42u3ay24jMQwEQP//T2fvAQKpSc6aTkq32PNSTQ6Npl9fVmm9EIADBw6cBQ7cErhXcX0//3jDH447Xbd73u331/sFBw4cOHDgwIFbBncdAMON3J53+vz2vqfzuvsFBw4cOHDgwIHbClcNvNXAfDp++rjufsGBAwcOHDhw4H4LXLXITIPo7fXT5wUHDhw4cODAgfvrcNUBcXdgPQUJDhw4cODAgQP36XDVIHv7eRd86nnfPskHBw4cOHDgwIEbgktXWhRu+7u8X3DgwIEDBw4cuCVwU4Pg20KxGminB+Tl/YIDBw4cOHDgwC2Bu914FSIdNE+Dd69XboDBgQMHDhw4cOAehqsOgLvg00G3W7xev3Bw4MCBAwcOHLjlcE+BPjVYPj3v2IsFBw4cOHDgwIFbBlcNqun3aVAdKyCL9wUHDhw4cODAgdsOl260e1x3QF0N3GmRej2QBgcOHDhw4MCBWw5XLUC7hed0kVm+Pjhw4MCBAwcO3BK4buCsbiANsq/mqhaqPxaZ4MCBAwcOHDhwb4ZrX2h4sFwNvF/hql4PHDhw4MCBAwduG1x6o25g7RaL3YBbLUDBgQMHDhw4cOC2wKUP8tRgubvxbjC/HqSDAwcOHDhw4MAtg+sOkrsbTAfV00E6LjLBgQMHDhw4cOCWwlUfvDsgToFvA3T3PHDgwIEDBw4cuG1w6YamAnB3YNwtUsvBGhw4cODAgQMHbhnc9OC2+wLSoB0XkuHzgwMHDhw4cODAbYVLB7bxDYd/wPjU4LxcZIIDBw4cOHDgwP1nuLRorEJ3B9fV55kK3ODAgQMHDhw4cFvhpoLkVJFYDard5z0eBw4cOHDgwIEDtwwuDaZThWQacLtA7fuCAwcOHDhw4MAtgUsLxupguHpc+pzpIL1cZIIDBw4cOHDgwC2DS9d0UE2D7C1QFxgcOHDgwIEDB24bXHfg+9QA+img9iAdHDhw4MCBAwduCdxTAbhbGKYFZLmYTAfn4MCBAwcOHDhwS+C6heLt3+3gGd6n+wLBgQMHDhw4cOA+BW5qAJ0Wiafjng7a8Q8awYEDBw4cOHDglsJNBd50cDwVyKeuFwdgcODAgQMHDhy4D4PrBuVTsE1fYDVgX/8jgAMHDhw4cODA/TK4qQF2tyBNIdIXDg4cOHDgwIEDtxVuOrBWB8unIjQFSGHjIhMcOHDgwIEDB+5NcNVB7VThWA2y6eftAhUcOHDgwIEDB24JnBUWqAjAgQMHzgIH7r3rHyStAgiHMPhLAAAAAElFTkSuQmCC">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADoUlEQVR42u3aQXKEMAwEwP3/p5MXbOGRRCGS9i3JAnaTw9RoPz9WaX0QgAMHDpwFDtwSuE9xfbv+6wO//L1639PrTv9+fF5w4MCBAwcOHLhlcMcBMPz81fVXMCn81XXd84IDBw4cOHDgwG2FSzcydZA08E5DHn8eHDhw4MCBAwfuj8BNFYftQXExAIMDBw4cOHDgwIHLBsvVorIaxMGBAwcOHDhw4P46XHWgXD1YeqCp/T4+yQcHDhw4cODAgRuCS1cKsO3n8nnBgQMHDhw4cOCWwE0NgtMvGlaDaLUQHTsvOHDgwIEDBw7cErhq4VgNyFcQ1eek8Kf3KzfA4MCBAwcOHDhwN8Nd3bgbfE+hukG3W7wev3Bw4MCBAwcOHLhlcNVicqoA7UKl/wDlFwsOHDhw4MCBA7cMrvsFwmqATQGmYE6fCw4cOHDgwIEDtx1uOqimQTkdUJ8G9m6RejmQBgcOHDhw4MCBWwI3vbHTgFq9b/fFxfcHBw4cOHDgwIFbAjddSE4Xo9ViMw3U8UAaHDhw4MCBAwfuYbgUpLqB7oG7ReZUMQoOHDhw4MCBA7cNLn3QFGi1WOwG3GoBCg4cOHDgwIEDtw0uDZ7VAJoOrKdeQLWABQcOHDhw4MCB2wpXDZbTBWUVdipIx0UmOHDgwIEDBw7cErh0o+mBukG6GsynrgMHDhw4cODAgdsGNw02NbBOi8epgfpxAAYHDhw4cODAgVsCl0J1wbsw1QL0NOiCAwcOHDhw4MC9Fa460L0rgHYHy93BOThw4MCBAwcO3Da4ajGZDnrTwrALPx24wYEDBw4cOHDgtsJ1g+d0kVgNqt39Xn4OHDhw4MCBAwduGVwaTLvg1YDbBWo/Fxw4cODAgQMHbgnc9OB3qlhM4U6fd7oPcODAgQMHDhy4t8FNFY7pQdLCsjsYT/cLDhw4cODAgQO3Da57gGogvrsYTc8XB2Bw4MCBAwcOHLiH4borHWBPDb5T4OqLBAcOHDhw4MCB2wp3VwCuFpdV+GpABwcOHDhw4MCBezvcXYE3HSxPB95q0XncAIMDBw4cOHDgwC2B6w6gqwF3KpBP3S8OwODAgQMHDhw4cC+Dmx5Ud19gWqTGgRocOHDgwIEDB+6fwKUBNS1UuxDpCwcHDhw4cODAgdsKNx1Yq4PlK9gUIIWNi0xw4MCBAwcOHLiH4KqD2qkNVoNs+vt2gQoOHDhw4MCBA7cEzsoWOHDgwIGzwIF7eP0CafmAl5Oc03UAAAAASUVORK5CYII=">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADoUlEQVR42u3aQXKEMAwEwP3/p5MXbOGRRCGS9i3JAnaTw9RoPz9WaX0QgAMHDpwFDtwSuE9xfbv+6wO//L1639PrTv9+fF5w4MCBAwcOHLhlcMcBMPz81fVXMCn81XXd84IDBw4cOHDgwG2FSzcydZA08E5DHn8eHDhw4MCBAwfuj8BNFYftQXExAIMDBw4cOHDgwIHLBsvVorIaxMGBAwcOHDhw4P46XHWgXD1YeqCp/T4+yQcHDhw4cODAgRuCS1cKsO3n8nnBgQMHDhw4cOCWwE0NgtMvGlaDaLUQHTsvOHDgwIEDBw7cErhq4VgNyFcQ1eek8Kf3KzfA4MCBAwcOHDhwN8Nd3bgbfE+hukG3W7wev3Bw4MCBAwcOHLhlcNVicqoA7UKl/wDlFwsOHDhw4MCBA7cMrvsFwmqATQGmYE6fCw4cOHDgwIEDtx1uOqimQTkdUJ8G9m6RejmQBgcOHDhw4MCBWwI3vbHTgFq9b/fFxfcHBw4cOHDgwIFbAjddSE4Xo9ViMw3U8UAaHDhw4MCBAwfuYbgUpLqB7oG7ReZUMQoOHDhw4MCBA7cNLn3QFGi1WOwG3GoBCg4cOHDgwIEDtw0uDZ7VAJoOrKdeQLWABQcOHDhw4MCB2wpXDZbTBWUVdipIx0UmOHDgwIEDBw7cErh0o+mBukG6GsynrgMHDhw4cODAgdsGNw02NbBOi8epgfpxAAYHDhw4cODAgVsCl0J1wbsw1QL0NOiCAwcOHDhw4MC9Fa460L0rgHYHy93BOThw4MCBAwcO3Da4ajGZDnrTwrALPx24wYEDBw4cOHDgtsJ1g+d0kVgNqt39Xn4OHDhw4MCBAwduGVwaTLvg1YDbBWo/Fxw4cODAgQMHbgnc9OB3qlhM4U6fd7oPcODAgQMHDhy4t8FNFY7pQdLCsjsYT/cLDhw4cODAgQO3Da57gGogvrsYTc8XB2Bw4MCBAwcOHLiH4borHWBPDb5T4OqLBAcOHDhw4MCB2wp3VwCuFpdV+GpABwcOHDhw4MCBezvcXYE3HSxPB95q0XncAIMDBw4cOHDgwC2B6w6gqwF3KpBP3S8OwODAgQMHDhw4cC+Dmx5Ud19gWqTGgRocOHDgwIEDB+6fwKUBNS1UuxDpCwcHDhw4cODAgdsKNx1Yq4PlK9gUIIWNi0xw4MCBAwcOHLiH4KqD2qkNVoNs+vt2gQoOHDhw4MCBA7cEzsoWOHDgwIGzwIF7eP0CafmAl5Oc03UAAAAASUVORK5CYII=">
           </a>
         </fancybox>
       
@@ -720,9 +740,9 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-3-IO-constraints/" rel="prev" title="1-3-FPGA时序约束理论篇之IO约束">
+                                <a href="/blog/2020-06-07-1-6-xdc-priority/" rel="prev" title="1-6-FPGA时序约束理论篇之xdc约束优先级">
                                   
-                                      1-3-FPGA时序约束理论篇之IO约束
+                                      1-6-FPGA时序约束理论篇之xdc约束优先级
                                   
                                 </a>
                             </h4>
@@ -740,7 +760,7 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-4-clock-period-constraints/" rel="prev" title="1-4-FPGA时序约束理论篇之时钟周期约束">
+                                <a href="/blog/2020-06-05-1-4-clock-period-constraints/" rel="prev" title="1-4-FPGA时序约束理论篇之时钟周期约束">
                                     
                                         1-4-FPGA时序约束理论篇之时钟周期约束
                                     

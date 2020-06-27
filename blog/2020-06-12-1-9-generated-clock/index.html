@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-3-FPGA时序约束理论篇之IO约束 | voiue</title>
+  <title>1-9-FPGA时序约束实战篇之衍生时钟约束 | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-3-IO-constraints/">
-        1-3-FPGA时序约束理论篇之IO约束
+      <a href="/blog/2020-06-12-1-9-generated-clock/">
+        1-9-FPGA时序约束实战篇之衍生时钟约束
       </a>
     </h1>
   
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月12日</p>
   </a>
 </div>
 
@@ -357,61 +357,32 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h2><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
-<h3 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h3><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
-<p>&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]</span><br></pre></td></tr></table></figure>
+          <h2 id="约束衍生时钟"><a href="#约束衍生时钟" class="headerlink" title="约束衍生时钟"></a>约束衍生时钟</h2><p>&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对<code>clk_samp</code>和<code>spi_clk</code>进行约束即可。约束如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<p>&emsp;&emsp;在Vivado规定，必须要指定管脚电平，不然在最后一步生成比特流时会出错。</p>
-<p>&emsp;&emsp;除了管脚位置和电平，还有一个大家容易忽略但很容易引起错误的就是端接，当我们使用差分电平时比如LVDS，在在V6中我们使用<code>IBUFDS</code>来处理输入的差分信号时，可以指定端接为TRUE。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">IBUFDS #(</span><br><span class="line">   .DIFF_TERM(&quot;TRUE&quot;),       &#x2F;&#x2F; Differential Termination</span><br><span class="line">   .IOSTANDARD(&quot;DEFAULT&quot;)     &#x2F;&#x2F; Specify the input I&#x2F;O standard</span><br><span class="line">) IBUFDS_inst (</span><br><span class="line">   .O(O),  &#x2F;&#x2F; Buffer output</span><br><span class="line">   .I(I),  &#x2F;&#x2F; Diff_p buffer input (connect directly to top-level port)</span><br><span class="line">   .IB(IB) &#x2F;&#x2F; Diff_n buffer input (connect directly to top-level port)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<p>但在Ultrascale中的IBUFDS，却把端接这个选项去掉了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">IBUFDS #(</span><br><span class="line">   .DQS_BIAS(&quot;FALSE&quot;)  &#x2F;&#x2F; (FALSE, TRUE)</span><br><span class="line">)</span><br><span class="line">IBUFDS_inst (</span><br><span class="line">   .O(O),   &#x2F;&#x2F; 1-bit output: Buffer output</span><br><span class="line">   .I(I),   &#x2F;&#x2F; 1-bit input: Diff_p buffer input (connect directly to top-level port)</span><br><span class="line">   .IB(IB)  &#x2F;&#x2F; 1-bit input: Diff_n buffer input (connect directly to top-level port)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<p>我们必须要在xdc或I/O Pors界面中，手动指定，否则可能会出错。</p>
+<p>&emsp;&emsp;我们再运行<code>report_clocks</code>，显示如下：</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial6.png"  alt="" />
-
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial43.png"  alt="" /></fancybox>
 </center>
 
-<p>笔者之前就采过一个坑，差分端口输入，当连续输入的数据为11101111这种时，中间那个0拉不下来，还是1，同样也会发生在000010000，这样就导致数据传输错误，后来才发现是端接忘记加。因为端接会影响信号的实际电平，导致FPGA判断错误。</p>
-<p>&emsp;&emsp;当综合完成后，我们可以点击DRC，进行设计规则检查，这一步可以报出一些关键问题，比如时钟端口未分配在时钟引脚上等。</p>
+<p>我们在理论篇的“create_generated_clock”一节中讲到，我们可以重新设置Vivado自动生成的衍生时钟的名字，这样可以更方便我们后续的使用。按照前文所讲，只需设置<code>name</code>和<code>source</code>参数即可，其中这个<code>source</code>可以直接从<code>report_clocks</code>中得到，因此我们的约束如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create_generated_clock -name clk_tx -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKIN1] [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKOUT1]</span><br><span class="line">create_generated_clock -name clk_rx -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKIN1] [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKOUT0]</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;大家可以对比下<code>report_clocks</code>的内容和约束指令，很容易就能看出它们之间的关系。</p>
+<p>把上述的约束指令在tcl中运行后，我们再运行一遍<code>report_clocks</code>，显示如下：</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial7.png"  alt="" />
-
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial44.png"  alt="" /></fancybox>
 </center>
 
+<p>在时序树的分析中，我们看到，<code>clk_samp</code>和<code>clk2</code>两个异步时钟之间存在数据交互，因此要进行约束，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_clock_groups -asynchronous -group [get_clocks clk_samp] -group [get_clocks clk2]</span><br></pre></td></tr></table></figure>
 
-
-
-<h3 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h3><p>&emsp;&emsp;延迟约束用的是<code>set_input_delay</code>和<code>set_output_delay</code>，分别用于input端和output端，其时钟源可以是时钟输入管脚，也可以是虚拟时钟。<strong>但需要注意的是，这个两个约束并不是起延迟的作用</strong>，具体原因下面分析。</p>
-<ul>
-<li>set_input_delay</li>
-</ul>
-<p>&emsp;&emsp;这个约束跟ISE中的<code>OFFSET=IN</code>功能相同，但设置方式不同。下图所示即为input delay的约束说明图。</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial8.png"  alt="" />
-
-</center>
-
-<p>从图中很容易理解，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T\_inputdelay &#x3D; Tco + TD</span><br></pre></td></tr></table></figure>
-
-<p>当满足图中的时序时，最大延迟为2ns，最小延迟为1ns。</p>
-<p>因此，需要加的时序约束为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name sysclk -period 10 [get_ports clkin]</span><br><span class="line">set_input_delay 2 -max -clock sysclk [get_ports Datain]</span><br><span class="line">set_input_delay 1 -min -clock sysclk [get_ports Datain]</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>set_output_delay</li>
-</ul>
-<p>&emsp;&emsp;set_output_delay的用法跟set_input_delay十分相似，这里就不再展开讲了。我们上面讲set_input_delay的描述中，大家可以看到，这个约束是告诉vivado我们的输入信号和输入时钟之间的延迟关系，跟下面要讲的时钟周期约束是一个原理，让vivado在这个前提下去Place and Route。<strong>并不是调节输入信号的延迟</strong>，因为身边有不少的FPGA工程师在没用过这个约束指令之前，都以为这是调节延迟的约束。</p>
-<p>&emsp;&emsp;如果要调整输入信号的延迟，只能使用IDELAY，在V6中，IDELAY模块有32个tap值，每个tap可延迟78ps，这样总共差不多是2.5ns。</p>
 <br>
 
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=3" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=9" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
           
             <br>
             
@@ -444,7 +415,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-3-IO-constraints/>https://voiue.github.io/blog/2020-06-25-1-3-IO-constraints/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-12-1-9-generated-clock/>https://voiue.github.io/blog/2020-06-12-1-9-generated-clock/</a></p>
           
         
       </blockquote>
@@ -473,10 +444,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-12T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月12日</p>
   </a>
 </div>
 
@@ -498,10 +469,8 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-3-IO-constraints/&title=1-3-FPGA时序约束理论篇之IO约束 - voiue&summary=I/O约束&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。
-管脚约束&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。
-&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。
-1set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-12-1-9-generated-clock/&title=1-9-FPGA时序约束实战篇之衍生时钟约束 - voiue&summary=约束衍生时钟&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对clk_samp和spi_clk进行约束即可。约束如下：
+12create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]"
           
           >
           
@@ -513,10 +482,8 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-3-IO-constraints/&title=1-3-FPGA时序约束理论篇之IO约束 - voiue&summary=I/O约束&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。
-管脚约束&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。
-&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。
-1set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-12-1-9-generated-clock/&title=1-9-FPGA时序约束实战篇之衍生时钟约束 - voiue&summary=约束衍生时钟&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对clk_samp和spi_clk进行约束即可。约束如下：
+12create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]"
           
           >
           
@@ -528,10 +495,8 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-3-IO-constraints/&title=1-3-FPGA时序约束理论篇之IO约束 - voiue&summary=I/O约束&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。
-管脚约束&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。
-&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。
-1set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-12-1-9-generated-clock/&title=1-9-FPGA时序约束实战篇之衍生时钟约束 - voiue&summary=约束衍生时钟&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对clk_samp和spi_clk进行约束即可。约束如下：
+12create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]"
           
           >
           
@@ -543,8 +508,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpElEQVR42u3aQXLjMAwEQP3/09l7tlIiBpANu5o3xxIFti7IwNePFa0LAThw4MBZ4MAtgbvC9fv+7n53z/nvAH98f3d/+7zgwIEDBw4cOHDL4I4bwOb1d5+nINLn3dYPDhw4cODAgQO3FK5ayOl96f1TDfnUecGBAwcOHDhw4L4FbirgrDba6f7gwIEDBw4cOHDgZgfA1SBz6j5w4MCBAwcOHLhvgesOmNMCu0Fqt96XT/LBgQMHDhw4cOCG4F49AH735/i84MCBAwcOHDhwS+C6Kx0wTw2ouw1u+bzgwIEDBw4cOHBL4KZ/wPf0APp0n7TesQQYHDhw4MCBAwfuYbhToG7jWx0wpwFqG+buenDgwIEDBw4cuCVwp4WnAWT6nNM6pl7o8T8E4MCBAwcOHDhwy+DSoLA6GK7+PQ0yq41t3ACDAwcOHDhw4MC9CS5tWKsFpkHk1Aueuh4cOHDgwIEDB24rXDoArjbKaTCZBq1xwwsOHDhw4MCBA/dhcOnBqw1mt/GeGnQfQ4MDBw4cOHDgwC2BSwfE3YOWG88wIO3uBw4cOHDgwIEDtxWu2/hWB85V+Fc1uMfXgQMHDhw4cODALYE7BfsJV7nBHGp0u2DgwIEDBw4cOHCfChcHfcUf9E3fP/UC2gkwOHDgwIEDBw7cw3BTqwt8OsDuNuhXcYEDBw4cOHDgwH0KXFro6Q/3qoDdgHL6RYADBw4cOHDgwG2Da294WNjUC3gq6CwHmeDAgQMHDhw4cEvgTg+WBpEpRBpIVhvicpAJDhw4cODAgQO3DC49UHeA/dQPF7vA4MCBAwcOHDhwW+GmBrlpQdVAtRpEVht2cODAgQMHDhy47XDTByg3lMWDVIPI8UE6OHDgwIEDBw7cErjuwLfbqKaD6uoLnxqMgwMHDhw4cODAbYWbKvSpALO6TwoMDhw4cODAgQO3Ha4b/HUHwFPXTzXwt9+DAwcOHDhw4MAtgeuutGGdCizbDW31ueDAgQMHDhw4cEvgrnB1A8huYPq2FwYOHDhw4MCBA7cMrtvwVgPKdJ9uPekLAQcOHDhw4MCB2w731GA4DRLTfbsNfrkBBgcOHDhw4MCB+zC4dJ/Tg1brSr8/bsTBgQMHDhw4cOC+DG5qoDwdQFbrv4UEBw4cOHDgwIFbCpcOpKtg0w3t1EA7DjLBgQMHDhw4cODeBDd1wLTwdABdref0OX/uAw4cOHDgwIEDtwTOCoNMCxw4cOAscODes/4Bzo78U/k//aMAAAAASUVORK5CYII=">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpElEQVR42u3aQXLjMAwEQP3/09l7tlIiBpANu5o3xxIFti7IwNePFa0LAThw4MBZ4MAtgbvC9fv+7n53z/nvAH98f3d/+7zgwIEDBw4cOHDL4I4bwOb1d5+nINLn3dYPDhw4cODAgQO3FK5ayOl96f1TDfnUecGBAwcOHDhw4L4FbirgrDba6f7gwIEDBw4cOHDgZgfA1SBz6j5w4MCBAwcOHLhvgesOmNMCu0Fqt96XT/LBgQMHDhw4cOCG4F49AH735/i84MCBAwcOHDhwS+C6Kx0wTw2ouw1u+bzgwIEDBw4cOHBL4KZ/wPf0APp0n7TesQQYHDhw4MCBAwfuYbhToG7jWx0wpwFqG+buenDgwIEDBw4cuCVwp4WnAWT6nNM6pl7o8T8E4MCBAwcOHDhwy+DSoLA6GK7+PQ0yq41t3ACDAwcOHDhw4MC9CS5tWKsFpkHk1Aueuh4cOHDgwIEDB24rXDoArjbKaTCZBq1xwwsOHDhw4MCBA/dhcOnBqw1mt/GeGnQfQ4MDBw4cOHDgwC2BSwfE3YOWG88wIO3uBw4cOHDgwIEDtxWu2/hWB85V+Fc1uMfXgQMHDhw4cODALYE7BfsJV7nBHGp0u2DgwIEDBw4cOHCfChcHfcUf9E3fP/UC2gkwOHDgwIEDBw7cw3BTqwt8OsDuNuhXcYEDBw4cOHDgwH0KXFro6Q/3qoDdgHL6RYADBw4cOHDgwG2Da294WNjUC3gq6CwHmeDAgQMHDhw4cEvgTg+WBpEpRBpIVhvicpAJDhw4cODAgQO3DC49UHeA/dQPF7vA4MCBAwcOHDhwW+GmBrlpQdVAtRpEVht2cODAgQMHDhy47XDTByg3lMWDVIPI8UE6OHDgwIEDBw7cErjuwLfbqKaD6uoLnxqMgwMHDhw4cODAbYWbKvSpALO6TwoMDhw4cODAgQO3Ha4b/HUHwFPXTzXwt9+DAwcOHDhw4MAtgeuutGGdCizbDW31ueDAgQMHDhw4cEvgrnB1A8huYPq2FwYOHDhw4MCBA7cMrtvwVgPKdJ9uPekLAQcOHDhw4MCB2w731GA4DRLTfbsNfrkBBgcOHDhw4MCB+zC4dJ/Tg1brSr8/bsTBgQMHDhw4cOC+DG5qoDwdQFbrv4UEBw4cOHDgwIFbCpcOpKtg0w3t1EA7DjLBgQMHDhw4cODeBDd1wLTwdABdref0OX/uAw4cOHDgwIEDtwTOCoNMCxw4cOAscODes/4Bzo78U/k//aMAAAAASUVORK5CYII=">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADs0lEQVR42u3aQXLbQAwEQP//08k9KZUxABhBTu+NlsRdNHUYA/r6ZbXWFwJw4MCBs8CBOwL31VyvPv/n36v7/HXA4vtefe6719v1ggMHDhw4cODAHYMrB8AiXLew7/ZJgav3KZ8DHDhw4MCBAwfuKFz3IGlA3npAU7j48+DAgQMHDhw4cD8EbhqQp43S6v3BgQMHDhw4cODAzQLwVoOy2iAFBw4cOHDgwIH7X+C6A+X04N0G53TQfGaSDw4cOHDgwIEDtwSXrjRgXrtu1wsOHDhw4MCBA3cEbmt1G5/VgqYNyrU6wYEDBw4cOHDgjsClA+FucEwLqr4+HWjHA2pw4MCBAwcOHLjjcN0NtgbWU4gUvnx/cODAgQMHDhy4I3DdRmQKvR2su4Dja3DgwIEDBw4cuCNw08HuUw3HauFpYJ8GenDgwIEDBw4cuCtw2wPeakFTmPTBpQ3V8X8O4MCBAwcOHDhwD8OlDcK1hmAYZKvBvFtH+TzgwIEDBw4cOHAfBjcdAKdBdAs6rSvuAIMDBw4cOHDgwL0Z7rHG3/D+00F42kAFBw4cOHDgwIH7FLjugdLB9TRgV0G6jdFy/eDAgQMHDhw4cMfg0gNvNR6nD6y6f/UaHDhw4MCBAwfuU+DSjdPgOx1MTwfP3UD98hocOHDgwIEDB+4I3DSgTn+w1x0cbz2wtLEJDhw4cODAgQN3BS69wfTg3UF2t4G6FZTBgQMHDhw4cOCuwnUDcdoI7BY0DcbdRiY4cODAgQMHDtxVuGmQbQfJsLBpkN4awIMDBw4cOHDgwF2B2wqS3fdv/aBwO3CXB9LgwIEDBw4cOHBvgksL6AbSdL/tgJ3e52U94MCBAwcOHDhwR+Cmg+UufBpsn4KO3w8OHDhw4MCBA/chcNsD3u6D6AbeaUP02w4wOHDgwIEDBw7cm+HSgXS3QTkNylPI6hekHIDBgQMHDhw4cOCOwKUNwzTgVgfY2wH28V9kggMHDhw4cODA/WO4pxqIKVA3iE+DdBrswYEDBw4cOHDgrsBtBcS0sO5+3aC8FdTBgQMHDhw4cOCuwaWBtxuAqwV3G6fxgBkcOHDgwIEDB+6HwHUbjGsHGz6AaaD/9tzgwIEDBw4cOHA/DK4K2A3c00F3tzH6eAAGBw4cOHDgwIF7E9zTA+AtmDSggwMHDhw4cODAfRrc9kbdoDk9x1bABgcOHDhw4MCBuw7XHeBOB8hpEJ4OzNOgDA4cOHDgwIEDdxXOCgMzAnDgwIGzwIF77/oNZpMCCLSwB8EAAAAASUVORK5CYII=">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADs0lEQVR42u3aQXLbQAwEQP//08k9KZUxABhBTu+NlsRdNHUYA/r6ZbXWFwJw4MCBs8CBOwL31VyvPv/n36v7/HXA4vtefe6719v1ggMHDhw4cODAHYMrB8AiXLew7/ZJgav3KZ8DHDhw4MCBAwfuKFz3IGlA3npAU7j48+DAgQMHDhw4cD8EbhqQp43S6v3BgQMHDhw4cODAzQLwVoOy2iAFBw4cOHDgwIH7X+C6A+X04N0G53TQfGaSDw4cOHDgwIEDtwSXrjRgXrtu1wsOHDhw4MCBA3cEbmt1G5/VgqYNyrU6wYEDBw4cOHDgjsClA+FucEwLqr4+HWjHA2pw4MCBAwcOHLjjcN0NtgbWU4gUvnx/cODAgQMHDhy4I3DdRmQKvR2su4Dja3DgwIEDBw4cuCNw08HuUw3HauFpYJ8GenDgwIEDBw4cuCtw2wPeakFTmPTBpQ3V8X8O4MCBAwcOHDhwD8OlDcK1hmAYZKvBvFtH+TzgwIEDBw4cOHAfBjcdAKdBdAs6rSvuAIMDBw4cOHDgwL0Z7rHG3/D+00F42kAFBw4cOHDgwIH7FLjugdLB9TRgV0G6jdFy/eDAgQMHDhw4cMfg0gNvNR6nD6y6f/UaHDhw4MCBAwfuU+DSjdPgOx1MTwfP3UD98hocOHDgwIEDB+4I3DSgTn+w1x0cbz2wtLEJDhw4cODAgQN3BS69wfTg3UF2t4G6FZTBgQMHDhw4cOCuwnUDcdoI7BY0DcbdRiY4cODAgQMHDtxVuGmQbQfJsLBpkN4awIMDBw4cOHDgwF2B2wqS3fdv/aBwO3CXB9LgwIEDBw4cOHBvgksL6AbSdL/tgJ3e52U94MCBAwcOHDhwR+Cmg+UufBpsn4KO3w8OHDhw4MCBA/chcNsD3u6D6AbeaUP02w4wOHDgwIEDBw7cm+HSgXS3QTkNylPI6hekHIDBgQMHDhw4cOCOwKUNwzTgVgfY2wH28V9kggMHDhw4cODA/WO4pxqIKVA3iE+DdBrswYEDBw4cOHDgrsBtBcS0sO5+3aC8FdTBgQMHDhw4cOCuwaWBtxuAqwV3G6fxgBkcOHDgwIEDB+6HwHUbjGsHGz6AaaD/9tzgwIEDBw4cOHA/DK4K2A3c00F3tzH6eAAGBw4cOHDgwIF7E9zTA+AtmDSggwMHDhw4cODAfRrc9kbdoDk9x1bABgcOHDhw4MCBuw7XHeBOB8hpEJ4OzNOgDA4cOHDgwIEDdxXOCgMzAnDgwIGzwIF77/oNZpMCCLSwB8EAAAAASUVORK5CYII=">
           </a>
         </fancybox>
       
@@ -567,9 +532,9 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-2-Timing-path/" rel="prev" title="1-2-FPGA时序约束理论篇之时序路径与时序模型">
+                                <a href="/blog/2020-06-13-1-10-dealy-constraints/" rel="prev" title="1-10-FPGA时序约束实战篇之延迟约束">
                                   
-                                      1-2-FPGA时序约束理论篇之时序路径与时序模型
+                                      1-10-FPGA时序约束实战篇之延迟约束
                                   
                                 </a>
                             </h4>
@@ -587,9 +552,9 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-5-Timing-Exceptions/" rel="prev" title="1-5-FPGA时序约束理论篇之两种时序例外">
+                                <a href="/blog/2020-06-10-1-8-primiry-clock/" rel="prev" title="1-8-FPGA时序约束实战篇之主时钟约束">
                                     
-                                        1-5-FPGA时序约束理论篇之两种时序例外
+                                        1-8-FPGA时序约束实战篇之主时钟约束
                                     
                                 </a>
                             </h4>
@@ -641,7 +606,7 @@
 
   <script>
     window.subData = {
-      title: '1-3-FPGA时序约束理论篇之IO约束',
+      title: '1-9-FPGA时序约束实战篇之衍生时钟约束',
       tools: true
     }
   </script>
@@ -667,7 +632,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-O约束"><span class="toc-text">I&#x2F;O约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#管脚约束"><span class="toc-text">管脚约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟约束"><span class="toc-text">延迟约束</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#约束衍生时钟"><span class="toc-text">约束衍生时钟</span></a></li></ol>
     </div>
   </section>
 

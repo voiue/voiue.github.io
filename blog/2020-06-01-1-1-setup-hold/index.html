@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-8-FPGA时序约束实战篇之主时钟约束 | voiue</title>
+  <title>1-1-FPGA时序约束理论篇之建立保持时间 | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-8-primiry-clock/">
-        1-8-FPGA时序约束实战篇之主时钟约束
+      <a href="/blog/2020-06-01-1-1-setup-hold/">
+        1-1-FPGA时序约束理论篇之建立保持时间
       </a>
     </h1>
   
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月1日</p>
   </a>
 </div>
 
@@ -357,34 +357,39 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="约束主时钟"><a href="#约束主时钟" class="headerlink" title="约束主时钟"></a>约束主时钟</h2><p>&emsp;&emsp;在这一节开讲之前，我们先把<code>wave_gen</code>工程的<code>wave_gen_timing.xdc</code>中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？</p>
+          <h1 id="读万卷书–时序约束理论篇"><a href="#读万卷书–时序约束理论篇" class="headerlink" title="读万卷书–时序约束理论篇"></a>读万卷书–时序约束理论篇</h1><h2 id="周期约束理论"><a href="#周期约束理论" class="headerlink" title="周期约束理论"></a>周期约束理论</h2><p>&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。</p>
+<p>&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。</p>
+<p>&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：</p>
+<ul>
+<li>发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端</li>
+<li>接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端</li>
+</ul>
 <a id="more"></a>
 
-<p>对工程综合并Implementation后，Open Implemented Design，会看到下图所示内容。</p>
+<h3 id="建立-保持时间"><a href="#建立-保持时间" class="headerlink" title="建立/保持时间"></a>建立/保持时间</h3><p>&emsp;&emsp;讲时序约束，这两个概念要首先介绍，因为我们做时序约束其实就是为了满足建立/保持时间。对于DFF的输入而言，</p>
+<ul>
+<li>在clk上升沿到来之前，数据提前一个最小时间量“预先准备好”，这个最小时间量就是建立时间；</li>
+<li>在clk上升沿来之后，数据必须保持一个最小时间量“不能变化”，这个最小时间量就是保持时间。</li>
+</ul>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial40.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial0.png"  alt="" />
+</fancybox></fancybox>
 </center>
 
-<p>&emsp;&emsp;可以看到，时序并未收敛。可能到这里有的同学就会有疑问，我们都已经把时序约束的内容都删了，按我们第一讲中提到的“因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的”，这是因为在该工程中，用了一个MMCM，并在里面设置了输入信号频率，因此这个时钟软件会自动加上约束。</p>
-<p>&emsp;&emsp;接下来，我们在tcl命令行中输入<code>report_clock_networks -name main</code>，显示如下：</p>
+<p>建立和保持时间是由器件特性决定了，当我们决定了使用哪个FPGA，就意味着建立和保持时间也就确定了。Xilinx FPGA的setup time基本都在0.04ns的量级，hold time基本在0.2ns的量级，不同器件会有所差异，具体可以查对应器件的DC and AC Switching Characteristics，下图列出K7系列的建立保持时间。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial41.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial1.png"  alt="" />
+</fancybox>
 </center>
 
-<p>&emsp;&emsp;可以看出，Vivado会自动设别出两个主时钟，其中clk_pin_p是200MHz，这个是直接输入到了MMCM中，因此会自动约束；另一个输入时钟clk_in2没有约束，需要我们手动进行约束。</p>
-<p>或者可以使用<code>check_timing -override_defaults no_clock</code>指令，这个指令我们之前的内容讲过，这里不再重复讲了。</p>
-<p>&emsp;&emsp;在tcl中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name clk2 -period 25 [get_ports clk_in2]</span><br></pre></td></tr></table></figure>
-<p>注：在Vivado中，可以直接通过tcl直接运行时序约束脚本，运行后Vivado会自动把这些约束加入到xdc文件中。</p>
-<p>再执行<code>report_clock_networks -name main</code>，显示如下：</p>
-<center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial42.png"  alt="" />
-</center>
-
-<p>可以看到，主时钟都已被正确约束。</p>
 <br>
 
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=8" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+
+
+
           
             <br>
             
@@ -417,7 +422,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-8-primiry-clock/>https://voiue.github.io/blog/2020-06-25-1-8-primiry-clock/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/>https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/</a></p>
           
         
       </blockquote>
@@ -446,10 +451,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-01T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月1日</p>
   </a>
 </div>
 
@@ -471,7 +476,13 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-8-primiry-clock/&title=1-8-FPGA时序约束实战篇之主时钟约束 - voiue&summary=约束主时钟&emsp;&emsp;在这一节开讲之前，我们先把wave_gen工程的wave_gen_timing.xdc中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/&title=1-1-FPGA时序约束理论篇之建立保持时间 - voiue&summary=读万卷书–时序约束理论篇周期约束理论&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。
+&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。
+&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：
+
+发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端
+接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端
+"
           
           >
           
@@ -483,7 +494,13 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-8-primiry-clock/&title=1-8-FPGA时序约束实战篇之主时钟约束 - voiue&summary=约束主时钟&emsp;&emsp;在这一节开讲之前，我们先把wave_gen工程的wave_gen_timing.xdc中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/&title=1-1-FPGA时序约束理论篇之建立保持时间 - voiue&summary=读万卷书–时序约束理论篇周期约束理论&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。
+&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。
+&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：
+
+发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端
+接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端
+"
           
           >
           
@@ -495,7 +512,13 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-8-primiry-clock/&title=1-8-FPGA时序约束实战篇之主时钟约束 - voiue&summary=约束主时钟&emsp;&emsp;在这一节开讲之前，我们先把wave_gen工程的wave_gen_timing.xdc中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/&title=1-1-FPGA时序约束理论篇之建立保持时间 - voiue&summary=读万卷书–时序约束理论篇周期约束理论&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。
+&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。
+&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：
+
+发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端
+接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端
+"
           
           >
           
@@ -507,8 +530,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqklEQVR42u3aQVbjQAwFQO5/aeYE86IvyUSE6h3EabfKLD6Sv76t1vpCAA4cOHAWOHBH4L6a69X3Xx4g3Pd/35/uG9cLDhw4cODAgQN3DK4cAF9c3y3o1T7V6199b1ovOHDgwIEDBw7cVbhqgKwWOv19Nbh2H2y6Hzhw4MCBAwcO3KfAdRuN3UC6HYDBgQMHDhw4cOD+OtxTgNOgCw4cOHDgwIED91fg4gFt80XD7ouFU+Azk3xw4MCBAwcOHLgluHSlkNd+btcLDhw4cODAgQN3BG5rELwVoLcHztsLHDhw4MCBAwfuClx1sNttVKYQW59XG6dpHeDAgQMHDhw4cFfgugPgrcC6FXSrEOmDefmfAzhw4MCBAwcO3Jvgtl7se3nDhwfNaTCu1gsOHDhw4MCBA/fb4LqBNW0QVh9cun96n7IHOHDgwIEDBw7cMbjpgbtA0wF0GrjTc5Yn+eDAgQMHDhw4cG+GSxuU6YC6e9+00TodTMcBGBw4cODAgQMH7ofh0sDYBdiC3Arq7cYoOHDgwIEDBw7cMbhu8O0G2ekge+vBpfuBAwcOHDhw4MBdgXuqoG6h08F1GujTBig4cODAgQMHDtw1uPRgVfgUtlrIFKB9LnDgwIEDBw4cuCNwTw180+CZBuYtkPgPBRw4cODAgQMH7ghcdzD7U0F4Ooheb6SCAwcOHDhw4MAdgesG325gnQbrtFEZD5yrLxaCAwcOHDhw4MAdg+s2+LaCcTcwbwddcODAgQMHDhy43w7XDaDVINz93vQBpAEcHDhw4MCBAwfuGty0wO513YF3d4BdPTc4cODAgQMHDtxvgVvbMAy2W/t1B9Ld/cCBAwcOHDhw4K7AVRt83YbndHBdLbAbtONgDQ4cOHDgwIEDdwSuW1AKPv18OvCeDtLBgQMHDhw4cOCuw20H1zSopkE2DbDjBis4cODAgQMHDtwRuGkBXbifHmiv1QMOHDhw4MCBA3cEbrqqgTNtVFYbk+l1aUO03QEGBw4cOHDgwIF7GG4rAHcH2FsNyOq+aSAHBw4cOHDgwIG7Drd14G3wp2C6wRwcOHDgwIEDB+4q3LTgacDtDppTmPRBgwMHDhw4cODAfRrcdBDdBdoO2OV9wIEDBw4cOHDgPgxuq8CtwfO0sfl4IxMcOHDgwIEDB24Zbmsg/R2utKCnwNuNTHDgwIEDBw4cuDfBdQe10wK690kbklsDb3DgwIEDBw4cuCtwVhjUEYADBw6cBQ7ce9c/evn6cfPviCMAAAAASUVORK5CYII=">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqklEQVR42u3aQVbjQAwFQO5/aeYE86IvyUSE6h3EabfKLD6Sv76t1vpCAA4cOHAWOHBH4L6a69X3Xx4g3Pd/35/uG9cLDhw4cODAgQN3DK4cAF9c3y3o1T7V6199b1ovOHDgwIEDBw7cVbhqgKwWOv19Nbh2H2y6Hzhw4MCBAwcO3KfAdRuN3UC6HYDBgQMHDhw4cOD+OtxTgNOgCw4cOHDgwIED91fg4gFt80XD7ouFU+Azk3xw4MCBAwcOHLgluHSlkNd+btcLDhw4cODAgQN3BG5rELwVoLcHztsLHDhw4MCBAwfuClx1sNttVKYQW59XG6dpHeDAgQMHDhw4cFfgugPgrcC6FXSrEOmDefmfAzhw4MCBAwcO3Jvgtl7se3nDhwfNaTCu1gsOHDhw4MCBA/fb4LqBNW0QVh9cun96n7IHOHDgwIEDBw7cMbjpgbtA0wF0GrjTc5Yn+eDAgQMHDhw4cG+GSxuU6YC6e9+00TodTMcBGBw4cODAgQMH7ofh0sDYBdiC3Arq7cYoOHDgwIEDBw7cMbhu8O0G2ekge+vBpfuBAwcOHDhw4MBdgXuqoG6h08F1GujTBig4cODAgQMHDtw1uPRgVfgUtlrIFKB9LnDgwIEDBw4cuCNwTw180+CZBuYtkPgPBRw4cODAgQMH7ghcdzD7U0F4Ooheb6SCAwcOHDhw4MAdgesG325gnQbrtFEZD5yrLxaCAwcOHDhw4MAdg+s2+LaCcTcwbwddcODAgQMHDhy43w7XDaDVINz93vQBpAEcHDhw4MCBAwfuGty0wO513YF3d4BdPTc4cODAgQMHDtxvgVvbMAy2W/t1B9Ld/cCBAwcOHDhw4K7AVRt83YbndHBdLbAbtONgDQ4cOHDgwIEDdwSuW1AKPv18OvCeDtLBgQMHDhw4cOCuw20H1zSopkE2DbDjBis4cODAgQMHDtwRuGkBXbifHmiv1QMOHDhw4MCBA3cEbrqqgTNtVFYbk+l1aUO03QEGBw4cOHDgwIF7GG4rAHcH2FsNyOq+aSAHBw4cOHDgwIG7Drd14G3wp2C6wRwcOHDgwIEDB+4q3LTgacDtDppTmPRBgwMHDhw4cODAfRrcdBDdBdoO2OV9wIEDBw4cOHDgPgxuq8CtwfO0sfl4IxMcOHDgwIEDB24Zbmsg/R2utKCnwNuNTHDgwIEDBw4cuDfBdQe10wK690kbklsDb3DgwIEDBw4cuCtwVhjUEYADBw6cBQ7ce9c/evn6cfPviCMAAAAASUVORK5CYII=">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqklEQVR42u3aQW7jQAwEQP3/08l9gcDTJCXT3pqbsI6kqdlDg63rxyqtCwE4cODAWeDALYG7iit+4D9/d3r/9N+7z335PHDgwIEDBw4cuGVwVYBXG0ghqu+Vvmf5wMGBAwcOHDhw4JbCnQbO0+v0d13g6vsf/x4cOHDgwIEDB+7L4E6DcXWg2R2IggMHDhw4cODAgesNJk8HiacBOQ3a4MCBAwcOHDhw3woXF7Q3v2gVtHr/x5p8cODAgQMHDhy4Ibh0TUM+fV3eLzhw4MCBAwcO3BK47kofnAba6UFme7/gwIEDBw4cOHBL4KoBcWpjpxvvBtexgwYHDhw4cODAgVsC1w2m1cFnehBThXl1AAoOHDhw4MCBA7cVLn1g9fd3BeDT9zt9/nEhDQ4cOHDgwIED9ya46SCaFsJTgbUa5OP3AwcOHDhw4MCBWwo3Vfh2g+dUIJ7eJzhw4MCBAwcO3Ba4qQ1MDTzT6/Qgu8EYHDhw4MCBAwduC1w3oJaL3WZR3R2olottcODAgQMHDhy4JXDpjaYK4O5GqgfYDvDgwIEDBw4cOHBL4KZeuFsIVwPt3YX38SATHDhw4MCBAwfuTXB3F9JPFdOPF9LgwIEDBw4cOHBvhusG17sK6xR2ajDbbvLBgQMHDhw4cOAehqsG4urG0oPqDj7TgwYHDhw4cODAgfs0uBQw3egVrunnpQcNDhw4cODAgQO3DS4NpN0PDqsDxPRDw59wHQdrcODAgQMHDhy4JXCnG+8OMNOAm25wKkiXB5ngwIEDBw4cOHAPw1WL46mitxpYnw7u4MCBAwcOHDhw2+C6ATgNst2DmCqy0/2BAwcOHDhw4MB9Klz3g710oFkdqFaL5uPADQ4cOHDgwIEDtwyuOqDsBs504+mAtAp8PMgEBw4cOHDgwIFbAtcNslOFcrXArhbQ5UIaHDhw4MCBAwduOVz1g7z2h3zNgWi1uP7zGhw4cODAgQMHbglcu6ANYaoDy+p1Ovh8eWDgwIEDBw4cOHBL4K7iSl+get+0OL/9QMCBAwcOHDhw4JbBVQvkNGCmwFPFcjUAgwMHDhw4cODAfQpctbC9K/hWi/Lq818GfXDgwIEDBw4cuP8ErjuYjDdWHLQeHxg4cODAgQMHDtyXw6UfJFZhuoV2/H7gwIEDBw4cOHBL4Z4qeE+Danfwmf5HKAdgcODAgQMHDhy4N8FNFbhTMGmwPQVJAz04cODAgQMHDtxWOCtb4MCBAwfOAgfuzesXQaQAJhYRorgAAAAASUVORK5CYII=">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqklEQVR42u3aQW7jQAwEQP3/08l9gcDTJCXT3pqbsI6kqdlDg63rxyqtCwE4cODAWeDALYG7iit+4D9/d3r/9N+7z335PHDgwIEDBw4cuGVwVYBXG0ghqu+Vvmf5wMGBAwcOHDhw4JbCnQbO0+v0d13g6vsf/x4cOHDgwIEDB+7L4E6DcXWg2R2IggMHDhw4cODAgesNJk8HiacBOQ3a4MCBAwcOHDhw3woXF7Q3v2gVtHr/x5p8cODAgQMHDhy4Ibh0TUM+fV3eLzhw4MCBAwcO3BK47kofnAba6UFme7/gwIEDBw4cOHBL4KoBcWpjpxvvBtexgwYHDhw4cODAgVsC1w2m1cFnehBThXl1AAoOHDhw4MCBA7cVLn1g9fd3BeDT9zt9/nEhDQ4cOHDgwIED9ya46SCaFsJTgbUa5OP3AwcOHDhw4MCBWwo3Vfh2g+dUIJ7eJzhw4MCBAwcO3Ba4qQ1MDTzT6/Qgu8EYHDhw4MCBAwduC1w3oJaL3WZR3R2olottcODAgQMHDhy4JXDpjaYK4O5GqgfYDvDgwIEDBw4cOHBL4KZeuFsIVwPt3YX38SATHDhw4MCBAwfuTXB3F9JPFdOPF9LgwIEDBw4cOHBvhusG17sK6xR2ajDbbvLBgQMHDhw4cOAehqsG4urG0oPqDj7TgwYHDhw4cODAgfs0uBQw3egVrunnpQcNDhw4cODAgQO3DS4NpN0PDqsDxPRDw59wHQdrcODAgQMHDhy4JXCnG+8OMNOAm25wKkiXB5ngwIEDBw4cOHAPw1WL46mitxpYnw7u4MCBAwcOHDhw2+C6ATgNst2DmCqy0/2BAwcOHDhw4MB9Klz3g710oFkdqFaL5uPADQ4cOHDgwIEDtwyuOqDsBs504+mAtAp8PMgEBw4cOHDgwIFbAtcNslOFcrXArhbQ5UIaHDhw4MCBAwduOVz1g7z2h3zNgWi1uP7zGhw4cODAgQMHbglcu6ANYaoDy+p1Ovh8eWDgwIEDBw4cOHBL4K7iSl+get+0OL/9QMCBAwcOHDhw4JbBVQvkNGCmwFPFcjUAgwMHDhw4cODAfQpctbC9K/hWi/Lq818GfXDgwIEDBw4cuP8ErjuYjDdWHLQeHxg4cODAgQMHDtyXw6UfJFZhuoV2/H7gwIEDBw4cOHBL4Z4qeE+Danfwmf5HKAdgcODAgQMHDhy4N8FNFbhTMGmwPQVJAz04cODAgQMHDtxWOCtb4MCBAwfOAgfuzesXQaQAJhYRorgAAAAASUVORK5CYII=">
           </a>
         </fancybox>
       
@@ -531,9 +554,9 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-6-xdc-priority/" rel="prev" title="1-6-FPGA时序约束理论篇之xdc约束优先级">
+                                <a href="/blog/2020-06-02-1-2-Timing-path/" rel="prev" title="1-2-FPGA时序约束理论篇之时序路径与时序模型">
                                   
-                                      1-6-FPGA时序约束理论篇之xdc约束优先级
+                                      1-2-FPGA时序约束理论篇之时序路径与时序模型
                                   
                                 </a>
                             </h4>
@@ -551,16 +574,16 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-7-clock-tree/" rel="prev" title="1-7-FPGA时序约束实战篇之梳理时钟树">
+                                <a href="/blog/2020-05-03-networks-http-status-code/" rel="prev" title="HTTP状态码">
                                     
-                                        1-7-FPGA时序约束实战篇之梳理时钟树
+                                        HTTP状态码
                                     
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
-                                    <a class="tag" href="/blog/tags/timing-analysis/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> timing-analysis</a>
+                                    <a class="tag" href="/blog/tags/others/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> others</a>
                                 </h6>
                             
                         </span>
@@ -605,7 +628,7 @@
 
   <script>
     window.subData = {
-      title: '1-8-FPGA时序约束实战篇之主时钟约束',
+      title: '1-1-FPGA时序约束理论篇之建立保持时间',
       tools: true
     }
   </script>
@@ -631,7 +654,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#约束主时钟"><span class="toc-text">约束主时钟</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#周期约束理论"><span class="toc-text">周期约束理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立-保持时间"><span class="toc-text">建立&#x2F;保持时间</span></a></li></ol></li></ol>
     </div>
   </section>
 

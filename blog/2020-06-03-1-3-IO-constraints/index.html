@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-6-FPGA时序约束理论篇之xdc约束优先级 | voiue</title>
+  <title>1-3-FPGA时序约束理论篇之IO约束 | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-6-xdc-priority/">
-        1-6-FPGA时序约束理论篇之xdc约束优先级
+      <a href="/blog/2020-06-03-1-3-IO-constraints/">
+        1-3-FPGA时序约束理论篇之IO约束
       </a>
     </h1>
   
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月3日</p>
   </a>
 </div>
 
@@ -357,48 +357,64 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h2><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
-<p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
-<p>时序例外的优先级从高到低为：</p>
-<ol>
-<li>Clock Groups (set_clock_groups)</li>
-<li>False Path (set_false_path)</li>
-<li>Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)</li>
-<li>Multicycle Paths (set_multicycle_path)</li>
-</ol>
+          <h2 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h2><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
+<h3 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h3><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
+<p>&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 
-<p><code>set_bus_skew</code>约束并不影响上述优先级且不与上述约束冲突。原因在于set_bus_skew并不是某条路径上的约束，而是路径与路径之间的约束。</p>
-<p>&emsp;&emsp;对于同样的约束，定义的越精细，优先级越高。各对象的约束优先级从高到低为：</p>
-<ol>
-<li>ports-&gt;pins-&gt;cells</li>
-<li>clocks。</li>
-</ol>
-<p>&emsp;&emsp;路径声明的优先级从高到低为：</p>
-<ol>
-<li>-from -through -to</li>
-<li>-from -to</li>
-<li>-from -through</li>
-<li>-from</li>
-<li>-through -to</li>
-<li>-to</li>
-<li>-through</li>
-</ol>
-<p><strong><em>优先考虑对象，再考虑路径。</em></strong></p>
-<p>&emsp;&emsp;Example1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 12 -from [get_clocks clk1] -to [get_clocks clk2]</span><br><span class="line">set_max_delay 15 -from [get_clocks clk1]</span><br></pre></td></tr></table></figure>
-<p>该约束中，第一条约束会覆盖第二条约束。</p>
-<p>&emsp;&emsp;Example2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 12 -from [get_cells inst0] -to [get_cells inst1]</span><br><span class="line">set_max_delay 15 -from [get_clocks clk1] -through [get_pins hier0&#x2F;p0] -to</span><br><span class="line">[get_cells inst1]</span><br></pre></td></tr></table></figure>
-<p>该约束中，第一条约束会覆盖第二条约束。</p>
-<p>&emsp;&emsp;Example3：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 4 -through [get_pins inst0&#x2F;I0]</span><br><span class="line">set_max_delay 5 -through [get_pins inst0&#x2F;I0] -through [get_pins inst1&#x2F;I3]</span><br></pre></td></tr></table></figure>
-<p>这个约束中，两条都会存在，这也使得时序收敛的难度更大，因为这两条语句合并成了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_max_delay 4 -through [get_pins inst0&#x2F;I0] -through [get_pins inst1&#x2F;I3]</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在Vivado规定，必须要指定管脚电平，不然在最后一步生成比特流时会出错。</p>
+<p>&emsp;&emsp;除了管脚位置和电平，还有一个大家容易忽略但很容易引起错误的就是端接，当我们使用差分电平时比如LVDS，在在V6中我们使用<code>IBUFDS</code>来处理输入的差分信号时，可以指定端接为TRUE。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">IBUFDS #(</span><br><span class="line">   .DIFF_TERM(&quot;TRUE&quot;),       &#x2F;&#x2F; Differential Termination</span><br><span class="line">   .IOSTANDARD(&quot;DEFAULT&quot;)     &#x2F;&#x2F; Specify the input I&#x2F;O standard</span><br><span class="line">) IBUFDS_inst (</span><br><span class="line">   .O(O),  &#x2F;&#x2F; Buffer output</span><br><span class="line">   .I(I),  &#x2F;&#x2F; Diff_p buffer input (connect directly to top-level port)</span><br><span class="line">   .IB(IB) &#x2F;&#x2F; Diff_n buffer input (connect directly to top-level port)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
+<p>但在Ultrascale中的IBUFDS，却把端接这个选项去掉了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">IBUFDS #(</span><br><span class="line">   .DQS_BIAS(&quot;FALSE&quot;)  &#x2F;&#x2F; (FALSE, TRUE)</span><br><span class="line">)</span><br><span class="line">IBUFDS_inst (</span><br><span class="line">   .O(O),   &#x2F;&#x2F; 1-bit output: Buffer output</span><br><span class="line">   .I(I),   &#x2F;&#x2F; 1-bit input: Diff_p buffer input (connect directly to top-level port)</span><br><span class="line">   .IB(IB)  &#x2F;&#x2F; 1-bit input: Diff_n buffer input (connect directly to top-level port)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们必须要在xdc或I/O Pors界面中，手动指定，否则可能会出错。</p>
+<center>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial6.png"  alt="" />
+</fancybox>
+</center>
+
+<p>笔者之前就采过一个坑，差分端口输入，当连续输入的数据为11101111这种时，中间那个0拉不下来，还是1，同样也会发生在000010000，这样就导致数据传输错误，后来才发现是端接忘记加。因为端接会影响信号的实际电平，导致FPGA判断错误。</p>
+<p>&emsp;&emsp;当综合完成后，我们可以点击DRC，进行设计规则检查，这一步可以报出一些关键问题，比如时钟端口未分配在时钟引脚上等。</p>
+<center>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial7.png"  alt="" />
+</fancybox>
+</center>
+
+
+
+
+<h3 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h3><p>&emsp;&emsp;延迟约束用的是<code>set_input_delay</code>和<code>set_output_delay</code>，分别用于input端和output端，其时钟源可以是时钟输入管脚，也可以是虚拟时钟。<strong>但需要注意的是，这个两个约束并不是起延迟的作用</strong>，具体原因下面分析。</p>
+<ul>
+<li>set_input_delay</li>
+</ul>
+<p>&emsp;&emsp;这个约束跟ISE中的<code>OFFSET=IN</code>功能相同，但设置方式不同。下图所示即为input delay的约束说明图。</p>
+<center>
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial8.png"  alt="" />
+</fancybox>
+</center>
+
+<p>从图中很容易理解，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T_inputdelay &#x3D; Tco + TD</span><br></pre></td></tr></table></figure>
+
+<p>当满足图中的时序时，最大延迟为2ns，最小延迟为1ns。</p>
+<p>因此，需要加的时序约束为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name sysclk -period 10 [get_ports clkin]</span><br><span class="line">set_input_delay 2 -max -clock sysclk [get_ports Datain]</span><br><span class="line">set_input_delay 1 -min -clock sysclk [get_ports Datain]</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>set_output_delay</li>
+</ul>
+<p>&emsp;&emsp;set_output_delay的用法跟set_input_delay十分相似，这里就不再展开讲了。我们上面讲set_input_delay的描述中，大家可以看到，这个约束是告诉vivado我们的输入信号和输入时钟之间的延迟关系，跟下面要讲的时钟周期约束是一个原理，让vivado在这个前提下去Place and Route。<strong>并不是调节输入信号的延迟</strong>，因为身边有不少的FPGA工程师在没用过这个约束指令之前，都以为这是调节延迟的约束。</p>
+<p>&emsp;&emsp;如果要调整输入信号的延迟，只能使用IDELAY，在V6中，IDELAY模块有32个tap值，每个tap可延迟78ps，这样总共差不多是2.5ns。</p>
 <br>
 
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=6" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=3" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
           
             <br>
             
@@ -431,7 +447,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-6-xdc-priority/>https://voiue.github.io/blog/2020-06-25-1-6-xdc-priority/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-03-1-3-IO-constraints/>https://voiue.github.io/blog/2020-06-03-1-3-IO-constraints/</a></p>
           
         
       </blockquote>
@@ -460,10 +476,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-03T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月3日</p>
   </a>
 </div>
 
@@ -485,15 +501,10 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-6-xdc-priority/&title=1-6-FPGA时序约束理论篇之xdc约束优先级 - voiue&summary=xdc约束优先级&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。
-&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。
-时序例外的优先级从高到低为：
-
-Clock Groups (set_clock_groups)
-False Path (set_false_path)
-Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)
-Multicycle Paths (set_multicycle_path)
-"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-03-1-3-IO-constraints/&title=1-3-FPGA时序约束理论篇之IO约束 - voiue&summary=I/O约束&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。
+管脚约束&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。
+&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。
+1set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]"
           
           >
           
@@ -505,15 +516,10 @@ Multicycle Paths (set_multicycle_path)
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-6-xdc-priority/&title=1-6-FPGA时序约束理论篇之xdc约束优先级 - voiue&summary=xdc约束优先级&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。
-&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。
-时序例外的优先级从高到低为：
-
-Clock Groups (set_clock_groups)
-False Path (set_false_path)
-Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)
-Multicycle Paths (set_multicycle_path)
-"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-03-1-3-IO-constraints/&title=1-3-FPGA时序约束理论篇之IO约束 - voiue&summary=I/O约束&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。
+管脚约束&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。
+&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。
+1set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]"
           
           >
           
@@ -525,15 +531,10 @@ Multicycle Paths (set_multicycle_path)
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-6-xdc-priority/&title=1-6-FPGA时序约束理论篇之xdc约束优先级 - voiue&summary=xdc约束优先级&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。
-&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。
-时序例外的优先级从高到低为：
-
-Clock Groups (set_clock_groups)
-False Path (set_false_path)
-Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)
-Multicycle Paths (set_multicycle_path)
-"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-03-1-3-IO-constraints/&title=1-3-FPGA时序约束理论篇之IO约束 - voiue&summary=I/O约束&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。
+管脚约束&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。
+&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。
+1set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]"
           
           >
           
@@ -545,8 +546,8 @@ Multicycle Paths (set_multicycle_path)
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADsklEQVR42u3aS3LjMAwFQN//0jMHSKkMPMAy5WruEsX8NL14AfT6Z0TjhQAcOHDgDHDgDoF7hePq8+UNNNd5N8+7edfOCw4cOHDgwIEDdxhc98Dd51cH6AJXL2C67uXnwYEDBw4cOHDgDoXrbqT6++1A2p1v67zgwIEDBw4cOHC/AlctbG4H7WpQBgcOHDhw4MCBA5cVBtOG9fQiHheAwYEDBw4cOHDghnDtBu2wAZ0WNrf3e3snHxw4cODAgQMHbglu2gB+2s/xecGBAwcOHDhw4A6Bm44UOg2400A7Pi84cODAgQMHDtwhcOlGqzDVeaufTwub6YXFFWBw4MCBAwcOHLib4boTpkG3CzgtUKZfjHIABgcOHDhw4MCB+zJcGlC7B0sD73S+FAwcOHDgwIEDB+4pcOuN3LCwOQ246YXHARgcOHDgwIEDB+4muE8HzmkhMoWbBuPLfYADBw4cOHDgwB0GlwbUNEB3G9PdQJxCvV0XHDhw4MCBAwfuMLithnS60SnUVpAuN6TBgQMHDhw4cOC+DDdt0E6DbbcQOQ3gVVhw4MCBAwcOHLinwKWN5TS4bsGmDenuc3DgwIEDBw4cuNPgthvI3cJjWihNC60fb0iDAwcOHDhw4MDdBJeCTAuMabDdmr97IeDAgQMHDhw4cKfBpYF168XCrRcEp8G2PC84cODAgQMHDtwhcNUDVw/+bqN3FyjTdcr/OYADBw4cOHDgwB0C191IWuCcBut0/fQLAw4cOHDgwIEDdypct4BYXii8iG4QT6HbBVxw4MCBAwcOHLhD4LqBsVrYnDag44bx8j7+PAcHDhw4cODAgTsErtuY3WooTwud0wZ6t9EODhw4cODAgQN3KlwaSLcD9LRxnQbqcScfHDhw4MCBAwfuZrjtwuX236UBvdtoBgcOHDhw4MCBezrcVuDdLlB2Qbf297aTDw4cOHDgwIED9yW4bgCdBsz4hb6lFxHTdcCBAwcOHDhw4E6Dm47pi37TgmUalOP5wYEDBw4cOHDgDoF7hSMNpt2CZbfB3YUEBw4cOHDgwIF7Olw38H6qobx1wO7zcmEUHDhw4MCBAwfuULitwNttGKcXsdVArwKCAwcOHDhw4MD9Clw1uG41rO96fnkecODAgQMHDhy4H4dLG8GfLnSO1wUHDhw4cODAgTsULm1ITwuR3Qvc2k83sIMDBw4cOHDgwJ0GlzZqqwesHqgbZNPfdxvX4MCBAwcOHDhwp8EZvQEOHDhw4Axw4L48/gOyv3oAdTft9QAAAABJRU5ErkJggg==">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADsklEQVR42u3aS3LjMAwFQN//0jMHSKkMPMAy5WruEsX8NL14AfT6Z0TjhQAcOHDgDHDgDoF7hePq8+UNNNd5N8+7edfOCw4cOHDgwIEDdxhc98Dd51cH6AJXL2C67uXnwYEDBw4cOHDgDoXrbqT6++1A2p1v67zgwIEDBw4cOHC/AlctbG4H7WpQBgcOHDhw4MCBA5cVBtOG9fQiHheAwYEDBw4cOHDghnDtBu2wAZ0WNrf3e3snHxw4cODAgQMHbglu2gB+2s/xecGBAwcOHDhw4A6Bm44UOg2400A7Pi84cODAgQMHDtwhcOlGqzDVeaufTwub6YXFFWBw4MCBAwcOHLib4boTpkG3CzgtUKZfjHIABgcOHDhw4MCB+zJcGlC7B0sD73S+FAwcOHDgwIEDB+4pcOuN3LCwOQ246YXHARgcOHDgwIEDB+4muE8HzmkhMoWbBuPLfYADBw4cOHDgwB0GlwbUNEB3G9PdQJxCvV0XHDhw4MCBAwfuMLithnS60SnUVpAuN6TBgQMHDhw4cOC+DDdt0E6DbbcQOQ3gVVhw4MCBAwcOHLinwKWN5TS4bsGmDenuc3DgwIEDBw4cuNPgthvI3cJjWihNC60fb0iDAwcOHDhw4MDdBJeCTAuMabDdmr97IeDAgQMHDhw4cKfBpYF168XCrRcEp8G2PC84cODAgQMHDtwhcNUDVw/+bqN3FyjTdcr/OYADBw4cOHDgwB0C191IWuCcBut0/fQLAw4cOHDgwIEDdypct4BYXii8iG4QT6HbBVxw4MCBAwcOHLhD4LqBsVrYnDag44bx8j7+PAcHDhw4cODAgTsErtuY3WooTwud0wZ6t9EODhw4cODAgQN3KlwaSLcD9LRxnQbqcScfHDhw4MCBAwfuZrjtwuX236UBvdtoBgcOHDhw4MCBezrcVuDdLlB2Qbf297aTDw4cOHDgwIED9yW4bgCdBsz4hb6lFxHTdcCBAwcOHDhw4E6Dm47pi37TgmUalOP5wYEDBw4cOHDgDoF7hSMNpt2CZbfB3YUEBw4cOHDgwIF7Olw38H6qobx1wO7zcmEUHDhw4MCBAwfuULitwNttGKcXsdVArwKCAwcOHDhw4MD9Clw1uG41rO96fnkecODAgQMHDhy4H4dLG8GfLnSO1wUHDhw4cODAgTsULm1ITwuR3Qvc2k83sIMDBw4cOHDgwJ0GlzZqqwesHqgbZNPfdxvX4MCBAwcOHDhwp8EZvQEOHDhw4Axw4L48/gOyv3oAdTft9QAAAABJRU5ErkJggg==">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADmElEQVR42u3aQXLjMAwEQP//07svcIkYQBHkat7s0CLZukwAfv4Z0fggAAcOHDgDHLglcJ9wfH3w8Pyr7799rq53el5w4MCBAwcOHLhtcMcB8BCiutHqOlfzTsGrzwcHDhw4cODAgdsKdxpIrzaYQqdBevrFggMHDhw4cODAgcsC8dTzwIEDBw4cOHDgwJ01gtMAOh1kq/sFBw4cOHDgwIF7O1y5QTtcyKw2mKtBeE0nHxw4cODAgQMHbgguLTC+9XN8XnDgwIEDBw4cuCVw3VENptWAXL1o2A28l/sABw4cOHDgwIFbApcGxG5hMv39VRA/Dezx+cCBAwcOHDhw4JbDpUG4+v30eqfrVC8YggMHDhw4cODAbYOrBtHbA2bxQNMB+fI54MCBAwcOHDhwS+DSC3bVoJleTHwqYH/dHzhw4MCBAwcO3MvgpqDLgXNo/e58cODAgQMHDhy4bXB3NYhPg213fvdFxQEYHDhw4MCBAwfuYbi7AufphrqF0qmGevyfAzhw4MCBAwcO3ENwpwdKG8fdQmO3cV1dBxw4cODAgQMH7lfgqgDVxvNdgXY6+IIDBw4cOHDgwG2FS2HiIBkG2HRedz44cODAgQMHDtx2uPRC3l2Fzb+CPS6oggMHDhw4cODALYG7KiSmhcbTjVWDeFoA7TamwYEDBw4cOHDgtsGdjqlCZzrSBvMUIDhw4MCBAwcO3FvgpoPx9PxqsO6eFxw4cODAgQMHbhtc9wLhXQE3LZh291uuAIMDBw4cOHDgwC2BOz1QevCpwFqFTP9+HIDBgQMHDhw4cOD+GO4UpguaBty7GtlX610GYHDgwIEDBw4cuIfhTgt6aSCtFhSnG9DlgHv1PHDgwIEDBw4cuGVw1QbvFHT6IqqBearQCQ4cOHDgwIEDtxUuveiXXhjsNrC7gRscOHDgwIEDB+5X4E5hqsF1CiZ9YWONbXDgwIEDBw4cuCVwU4XG6SA8HczHXhg4cODAgQMHDtwSuG4g7DaCqwecBi9/BgcOHDhw4MCBWwZXDbzpgVL4uwqqp+uBAwcOHDhw4MBth6sWItOg2wWYbjwfv2Bw4MCBAwcOHLgfg0sP0gVKG+fVYA4OHDhw4MCBA/ercFMBuHqQasGyCgwOHDhw4MCBA/cWuG6DN30h3eBcDbwpODhw4MCBAwcO3Da46cBa/V0K1Z1XPi84cODAgQMHDtwSOKM2wIEDBw6cAQ7cw+M/LMEC+VyooqwAAAAASUVORK5CYII=">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADmElEQVR42u3aQXLjMAwEQP//07svcIkYQBHkat7s0CLZukwAfv4Z0fggAAcOHDgDHLglcJ9wfH3w8Pyr7799rq53el5w4MCBAwcOHLhtcMcB8BCiutHqOlfzTsGrzwcHDhw4cODAgdsKdxpIrzaYQqdBevrFggMHDhw4cODAgcsC8dTzwIEDBw4cOHDgwJ01gtMAOh1kq/sFBw4cOHDgwIF7O1y5QTtcyKw2mKtBeE0nHxw4cODAgQMHbgguLTC+9XN8XnDgwIEDBw4cuCVw3VENptWAXL1o2A28l/sABw4cOHDgwIFbApcGxG5hMv39VRA/Dezx+cCBAwcOHDhw4JbDpUG4+v30eqfrVC8YggMHDhw4cODAbYOrBtHbA2bxQNMB+fI54MCBAwcOHDhwS+DSC3bVoJleTHwqYH/dHzhw4MCBAwcO3MvgpqDLgXNo/e58cODAgQMHDhy4bXB3NYhPg213fvdFxQEYHDhw4MCBAwfuYbi7AufphrqF0qmGevyfAzhw4MCBAwcO3ENwpwdKG8fdQmO3cV1dBxw4cODAgQMH7lfgqgDVxvNdgXY6+IIDBw4cOHDgwG2FS2HiIBkG2HRedz44cODAgQMHDtx2uPRC3l2Fzb+CPS6oggMHDhw4cODALYG7KiSmhcbTjVWDeFoA7TamwYEDBw4cOHDgtsGdjqlCZzrSBvMUIDhw4MCBAwcO3FvgpoPx9PxqsO6eFxw4cODAgQMHbhtc9wLhXQE3LZh291uuAIMDBw4cOHDgwC2BOz1QevCpwFqFTP9+HIDBgQMHDhw4cOD+GO4UpguaBty7GtlX610GYHDgwIEDBw4cuIfhTgt6aSCtFhSnG9DlgHv1PHDgwIEDBw4cuGVw1QbvFHT6IqqBearQCQ4cOHDgwIEDtxUuveiXXhjsNrC7gRscOHDgwIEDB+5X4E5hqsF1CiZ9YWONbXDgwIEDBw4cuCVwU4XG6SA8HczHXhg4cODAgQMHDtwSuG4g7DaCqwecBi9/BgcOHDhw4MCBWwZXDbzpgVL4uwqqp+uBAwcOHDhw4MBth6sWItOg2wWYbjwfv2Bw4MCBAwcOHLgfg0sP0gVKG+fVYA4OHDhw4MCBA/ercFMBuHqQasGyCgwOHDhw4MCBA/cWuG6DN30h3eBcDbwpODhw4MCBAwcO3Da46cBa/V0K1Z1XPi84cODAgQMHDtwSOKM2wIEDBw6cAQ7cw+M/LMEC+VyooqwAAAAASUVORK5CYII=">
           </a>
         </fancybox>
       
@@ -569,7 +570,7 @@ Multicycle Paths (set_multicycle_path)
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-4-clock-period-constraints/" rel="prev" title="1-4-FPGA时序约束理论篇之时钟周期约束">
+                                <a href="/blog/2020-06-05-1-4-clock-period-constraints/" rel="prev" title="1-4-FPGA时序约束理论篇之时钟周期约束">
                                   
                                       1-4-FPGA时序约束理论篇之时钟周期约束
                                   
@@ -589,9 +590,9 @@ Multicycle Paths (set_multicycle_path)
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-8-primiry-clock/" rel="prev" title="1-8-FPGA时序约束实战篇之主时钟约束">
+                                <a href="/blog/2020-06-02-1-2-Timing-path/" rel="prev" title="1-2-FPGA时序约束理论篇之时序路径与时序模型">
                                     
-                                        1-8-FPGA时序约束实战篇之主时钟约束
+                                        1-2-FPGA时序约束理论篇之时序路径与时序模型
                                     
                                 </a>
                             </h4>
@@ -643,7 +644,7 @@ Multicycle Paths (set_multicycle_path)
 
   <script>
     window.subData = {
-      title: '1-6-FPGA时序约束理论篇之xdc约束优先级',
+      title: '1-3-FPGA时序约束理论篇之IO约束',
       tools: true
     }
   </script>
@@ -669,7 +670,7 @@ Multicycle Paths (set_multicycle_path)
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xdc约束优先级"><span class="toc-text">xdc约束优先级</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-O约束"><span class="toc-text">I&#x2F;O约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#管脚约束"><span class="toc-text">管脚约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟约束"><span class="toc-text">延迟约束</span></a></li></ol></li></ol>
     </div>
   </section>
 

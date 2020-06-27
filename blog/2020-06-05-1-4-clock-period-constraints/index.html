@@ -295,7 +295,7 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-4-clock-period-constraints/">
+      <a href="/blog/2020-06-05-1-4-clock-period-constraints/">
         1-4-FPGA时序约束理论篇之时钟周期约束
       </a>
     </h1>
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月5日</p>
   </a>
 </div>
 
@@ -394,14 +394,16 @@
 <p>&emsp;&emsp;如何确定主时钟是时钟周期约束的关键，除了根据主时钟的两种情形判断之外，还可以借助Tcl脚本判断。</p>
 <p>&emsp;&emsp;在vivado自带的example project里面，打开CPU(HDL)的工程，如下图所示。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial10.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>把工程的xdc文件中，<code>create_clock</code>的几项都注释掉。这里解释下端口（Port）和管脚（Pin）。get_ports获取的是FPGA的IO端口，get_pins获取的是FPGA内部子模块的Pin，具体的我们在第14讲的Tcl命令中会讲到。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial11.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>再<code>Open Synthesized Design</code>或者<code>Open Implementation Design</code>，并通过以下两种方式查看主时钟。</p>
@@ -410,16 +412,18 @@
 </ul>
 <p>运行tcl指令<code>report_clock_networks -name mainclock</code>，显示结果如下：</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial12.png"  alt="" />
-
+</fancybox>
 </center>
 
 <ul>
 <li>方式二<br>运行tcl指令<code>check_timing -override_defaults no_clock</code>，显示结果如下：</li>
 </ul>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial13.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p><strong><em>Vivado中的tcl命令行相当好用，有很多的功能，大家可以开始习惯用起来了。</em></strong></p>
@@ -433,8 +437,9 @@
 
 <p>&emsp;&emsp;当系统中有多个主时钟，且这几个主时钟之间存在确定的相位关系时，需要用到<code>-waveform</code>参数。如果有两个主时钟，如下图所示。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial14.png"  alt="" />
-
+</fancybox>
 </center>
 
 
@@ -494,15 +499,17 @@
 <p>&emsp;&emsp;首先来看第一种，如果使用PLL或者MMCM，则Vivado会自动推导出一个约束。大家可以打开Vivado中有个叫<code>wavegen</code>的工程，在这个工程中，输入时钟经过PLL输出了2个时钟，如下图所示。<br>（补充：关于DCM/DLL/PLL/MMCM的区别，可参考我写的另一篇文章<a href="https://mp.weixin.qq.com/s?__biz=MzU4ODY5ODU5Ng==&mid=2247484106&idx=1&sn=82983a8086732717298436e067a64d4d&chksm=fdd98441caae0d57c99c5b22cf72bfaee2372824406014680be9df1f8d85b3071182fe43656c&mpshare=1&scene=1&srcid=0928ySJ3ud0vfaGS85Teu5Xw&sharer_sharetime=1571051171309&sharer_shareid=296cfe717a7da125d89d5a7bcdf65c18&key=6234e09828e71f223a5bbb62942587523cffdc550c50d6713403e50f0f1a03c87c5b1a6fae054a425e6f27eabfd6e48eb8fd421c5841d8d8b3b054113d8e8650ff4a65e51fa211ebe10dc0a436635167&ascene=1&uin=MzkzMzM2Nzc1&devicetype=Windows+7&version=62070141&lang=zh_CN&pass_ticket=b15xLCDB%2FBp7ALLPd%2FcqR3Z4qIXNCYrUowj5c4g9AzKzb29vj6R%2F%2BP8z8RJvomTk" target="_blank" rel="noopener">DCM/DLL/PLL/MMCM区别</a></p>
 <p>（在微信公证号Quant_Times中搜索就能看到）</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial15.png"  alt="" />
-
+</fancybox>
 </center>
 
 
 <p>&emsp;&emsp;但在xdc文件中，并未对这2个输出时钟进行约束，只对输入的时钟进行了约束，若我们使用<code>report_clocks</code>指令，则会看到：</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial16.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p><em>注：有三个约束是因为PLL会自动输出一个反馈时钟</em></p>
@@ -520,7 +527,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name clk1A -period 20.0 [get_ports clk1]</span><br><span class="line">create_clock -name clk1B -period 10.0 [get_ports clk1] -add</span><br><span class="line">create_clock -name clk1C -period 5.0  [get_ports clk1] -add </span><br><span class="line">create_clock -name clk2 -period 10.0 [get_ports clk2]</span><br><span class="line">set_clock_groups -physically_exclusive -group clk1A -group clk1B -group clk1C</span><br><span class="line">set_clock_groups -asynchronous -group &quot;clk1A clk1B clk1C&quot; -group clk2</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;第三种用法就是当我们使用BUFGMUX时，会有两个输入时钟，但只会有一个时钟被使用。比如MMCM输入100MHz时钟，两个输出分别为50MHz和200MHz，这两个时钟进入了BUFGMUX，如下图所示。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial17.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial17.png"  alt="" /></fancybox>
 </center>
 
 <p>在这种情况下，我们需要设置的时序约束如下：</p>
@@ -537,8 +545,9 @@
 <p>&emsp;&emsp;简而言之，之所以要创建虚拟时钟，对于输入来说，是因为输入到FPGA数据的捕获时钟是FPGA内部产生的，与主时钟频率不同；或者PCB上有Clock Buffer导致时钟延迟不同。对于输出来说，下游器件只接收到FPGA发送过去的数据，并没有随路时钟，用自己内部的时钟去捕获数据。</p>
 <p>&emsp;&emsp;如下图所示，在FPGA的A和B端口分别有两个输入，其中捕获A端口的时钟是主时钟，而捕获B端口的时钟是MMCM输出的衍生时钟，而且该衍生时钟与主时钟的频率不是整数倍关系。</p>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial18.png"  alt="" />
-
+</fancybox>
 </center>
 
 
@@ -556,8 +565,9 @@
 <li>异步电路之间的最大最小延迟</li>
 </ul>
 <center>
+<fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial19.png"  alt="" />
-
+</fancybox>
 </center>
 
 <p>设置方式为：</p>
@@ -619,7 +629,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-4-clock-period-constraints/>https://voiue.github.io/blog/2020-06-25-1-4-clock-period-constraints/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/>https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/</a></p>
           
         
       </blockquote>
@@ -648,10 +658,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-05T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月5日</p>
   </a>
 </div>
 
@@ -673,7 +683,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
 &emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。
  1. Create_clock
 &emsp;&emsp;在Vivado中使用create_clock来创建时钟周期约束。使用方法为：
@@ -715,7 +725,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
 &emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。
  1. Create_clock
 &emsp;&emsp;在Vivado中使用create_clock来创建时钟周期约束。使用方法为：
@@ -757,7 +767,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
 &emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。
  1. Create_clock
 &emsp;&emsp;在Vivado中使用create_clock来创建时钟周期约束。使用方法为：
@@ -799,8 +809,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADjUlEQVR42u3aQVLDQAwEwPz/0/AAKuUdSQ4ytG4JxFn1cpiSeH2pUr0QgAMHDpwCB24J3KtYPx745ufvXl89Nz3H1bmm+gUHDhw4cODAgdsGdxwAL34/fV47kDYvMn0+OHDgwIEDBw7cVrg0aKbB+DRQVy8kvdi4X3DgwIEDBw4cuD8Glx70FLg7mAQHDhw4cODAgQPX+/32ALEYxKfODw4cOHDgwIEDtx2u2lA6oKyCnj5v/SYfHDhw4MCBAwduCC6tblD97dflfsGBAwcOHDhw4JbATQXPdMB4+ryphfVYv+DAgQMHDhw4cEvgqgHx7oanBqrpwPNyAAsOHDhw4MCBA7cc7hQkbSh9vwtdDcpvPwcOHDhw4MCBA7cUrjoYnGr49PnTAf60D3DgwIEDBw4cuG1w0w2ngfe08fQ83YU0OHDgwIEDBw7cdrjphW/aSApWXZhXCxw4cODAgQMHbhvc8QAvhKw2Vg243cX5cSAGBw4cOHDgwIFbBvepANwdNFYX4nHQPQ3A4MCBAwcOHDhwD4GrQk8tuFPwqcEnOHDgwIEDBw7cdrip4NsdhN4NkQZfcODAgQMHDhy4rXDdhfB0ML47cFe/Hxw4cODAgQMHbgtc9YDVRfBUAO4OYtO+wIEDBw4cOHDgngLXHfhVAeIF8c3nBwcOHDhw4MCBewrcpw6SVvXz00EcHDhw4MCBAwduC1w3YFaB0ovpBuixASk4cODAgQMHDtwSuLSRdLFbhaxeVDXwnl4EOHDgwIEDBw7cFripg6Wg3QVz9VxjC2lw4MCBAwcOHLhlcN0v6gbeKkx3IX38BwEOHDhw4MCBA7cELgWZWgy/ipV+b9rX5bnBgQMHDhw4cOCWwXUbnlo8dyG6g8w4AIMDBw4cOHDgwC2DmzpAdQF91+K7GqTBgQMHDhw4cOCeDldtPF1gfyqQx38o4MCBAwcOHDhwS+C6FQfIoUVyCjp1YeDAgQMHDhw4cFvgxoLhUHUX1Le/BgcOHDhw4MCBWwZXDbzVhXB3YFqFTgMwOHDgwIEDBw7cU+CqDVQXz9WLm67TfsCBAwcOHDhw4P4LXLzwDQen6fvV84MDBw4cOHDgwP1VuPQf+6qL6WoAnwro4MCBAwcOHDhwW+HuWvCWA2c4iJwGBQcOHDhw4MCB2w43vcBNB6DpwLMK1L0YcODAgQMHDhy4LXAqK3DgwIEDp8CB++X6BmKof6a4x+vhAAAAAElFTkSuQmCC">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADjUlEQVR42u3aQVLDQAwEwPz/0/AAKuUdSQ4ytG4JxFn1cpiSeH2pUr0QgAMHDpwCB24J3KtYPx745ufvXl89Nz3H1bmm+gUHDhw4cODAgdsGdxwAL34/fV47kDYvMn0+OHDgwIEDBw7cVrg0aKbB+DRQVy8kvdi4X3DgwIEDBw4cuD8Glx70FLg7mAQHDhw4cODAgQPX+/32ALEYxKfODw4cOHDgwIEDtx2u2lA6oKyCnj5v/SYfHDhw4MCBAwduCC6tblD97dflfsGBAwcOHDhw4JbATQXPdMB4+ryphfVYv+DAgQMHDhw4cEvgqgHx7oanBqrpwPNyAAsOHDhw4MCBA7cc7hQkbSh9vwtdDcpvPwcOHDhw4MCBA7cUrjoYnGr49PnTAf60D3DgwIEDBw4cuG1w0w2ngfe08fQ83YU0OHDgwIEDBw7cdrjphW/aSApWXZhXCxw4cODAgQMHbhvc8QAvhKw2Vg243cX5cSAGBw4cOHDgwIFbBvepANwdNFYX4nHQPQ3A4MCBAwcOHDhwD4GrQk8tuFPwqcEnOHDgwIEDBw7cdrip4NsdhN4NkQZfcODAgQMHDhy4rXDdhfB0ML47cFe/Hxw4cODAgQMHbgtc9YDVRfBUAO4OYtO+wIEDBw4cOHDgngLXHfhVAeIF8c3nBwcOHDhw4MCBewrcpw6SVvXz00EcHDhw4MCBAwduC1w3YFaB0ovpBuixASk4cODAgQMHDtwSuLSRdLFbhaxeVDXwnl4EOHDgwIEDBw7cFripg6Wg3QVz9VxjC2lw4MCBAwcOHLhlcN0v6gbeKkx3IX38BwEOHDhw4MCBA7cELgWZWgy/ipV+b9rX5bnBgQMHDhw4cOCWwXUbnlo8dyG6g8w4AIMDBw4cOHDgwC2DmzpAdQF91+K7GqTBgQMHDhw4cOCeDldtPF1gfyqQx38o4MCBAwcOHDhwS+C6FQfIoUVyCjp1YeDAgQMHDhw4cFvgxoLhUHUX1Le/BgcOHDhw4MCBWwZXDbzVhXB3YFqFTgMwOHDgwIEDBw7cU+CqDVQXz9WLm67TfsCBAwcOHDhw4P4LXLzwDQen6fvV84MDBw4cOHDgwP1VuPQf+6qL6WoAnwro4MCBAwcOHDhwW+HuWvCWA2c4iJwGBQcOHDhw4MCB2w43vcBNB6DpwLMK1L0YcODAgQMHDhy4LXAqK3DgwIEDp8CB++X6BmKof6a4x+vhAAAAAElFTkSuQmCC">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADlklEQVR42u3aQXLCQAwEQP7/afKAFMWOJAeZ9N4g4Fjty9SIx9MpnQcCcODAgXPAgVsC9yieXxd88fdXr99dN72Pd/c1NS84cODAgQMHDtw2uOMA+ObzKWw7kDYfZHp9cODAgQMHDhy4rXBp0EwDbxVy6nPtecGBAwcOHDhw4P4JXDrQaWGaFqPgwIEDBw4cOHDgap+fGrAatMGBAwcOHDhw4L4dLl7QhiBXLaiPfxi4ZZMPDhw4cODAgQM3BJeeblD99OvyvODAgQMHDhw4cEvgpoJnWjBWF9pT1yvPCw4cOHDgwIEDtwTu6gXynxWM4X2WC1hw4MCBAwcOHLglcN1AOhVou0H3dJ5qAQoOHDhw4MCBA7cVbupGuj8YrEKPBdx0IQ0OHDhw4MCBA7cELl0odxfB6eCn1+8+wJf3Bw4cOHDgwIEDtwyuG3TTgJpetxtwH80DDhw4cODAgQN3F7hqUE0fRDVAdxfX5aIVHDhw4MCBAwfupnDVgaoF6dRCvBrcxwIwOHDgwIEDBw7ch+GqBeVUIE7Bp4pPcODAgQMHDhy4u8F1C8OtENVgDg4cOHDgwIEDtw3u6oVwN3imD6I6Hzhw4MCBAwcO3N3gpgvMt4VgMwBP3/f4QhocOHDgwIEDB+5iuHKhN1RApgvsapCt/rARHDhw4MCBAwduO1w7GBYHThfMU9+rBnFw4MCBAwcOHLgtcFOL6bTIrAbk0wf1DM9xkAcHDhw4cODAgVsC1x2oWyxOLaK7gff4B4ngwIEDBw4cOHBL4KYKzenBqgvpFKS8kAYHDhw4cODAgVsKV/1H0wXlXy2kjwM/OHDgwIEDBw7cEri0yKsG07TYTAvU6kI9nhccOHDgwIEDB24ZXDdwVhfY6SDdBXp1YQ0OHDhw4MCBA3cXuNMBpxbNVYh2MRneFzhw4MCBAwcO3F3h0hv7VCHaLUzBgQMHDhw4cOC2w3XP6WBXFZbpg+g+MHDgwIEDBw4cuC1wY8FwKIB2gS9/DQ4cOHDgwIEDtwyuGnini8Pq4nk6KL98Hxw4cODAgQMHbilcdYDjIrAYfK96MPFCHhw4cODAgQMH7svgxha+YXGavh9DXR2AwYEDBw4cOHDglsBNLbDTIjX9XhqwwYEDBw4cOHDgtsNdteAtB86wiJwGBQcOHDhw4MCB2w43vcA9fT8N3F2g9v2AAwcOHDhw4MAtgXOyAw4cOHDgHHDgPnx+AGy+fNNKWjETAAAAAElFTkSuQmCC">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADlklEQVR42u3aQXLCQAwEQP7/afKAFMWOJAeZ9N4g4Fjty9SIx9MpnQcCcODAgXPAgVsC9yieXxd88fdXr99dN72Pd/c1NS84cODAgQMHDtw2uOMA+ObzKWw7kDYfZHp9cODAgQMHDhy4rXBp0EwDbxVy6nPtecGBAwcOHDhw4P4JXDrQaWGaFqPgwIEDBw4cOHDgap+fGrAatMGBAwcOHDhw4L4dLl7QhiBXLaiPfxi4ZZMPDhw4cODAgQM3BJeeblD99OvyvODAgQMHDhw4cEvgpoJnWjBWF9pT1yvPCw4cOHDgwIEDtwTu6gXynxWM4X2WC1hw4MCBAwcOHLglcN1AOhVou0H3dJ5qAQoOHDhw4MCBA7cVbupGuj8YrEKPBdx0IQ0OHDhw4MCBA7cELl0odxfB6eCn1+8+wJf3Bw4cOHDgwIEDtwyuG3TTgJpetxtwH80DDhw4cODAgQN3F7hqUE0fRDVAdxfX5aIVHDhw4MCBAwfupnDVgaoF6dRCvBrcxwIwOHDgwIEDBw7ch+GqBeVUIE7Bp4pPcODAgQMHDhy4u8F1C8OtENVgDg4cOHDgwIEDtw3u6oVwN3imD6I6Hzhw4MCBAwcO3N3gpgvMt4VgMwBP3/f4QhocOHDgwIEDB+5iuHKhN1RApgvsapCt/rARHDhw4MCBAwduO1w7GBYHThfMU9+rBnFw4MCBAwcOHLgtcFOL6bTIrAbk0wf1DM9xkAcHDhw4cODAgVsC1x2oWyxOLaK7gff4B4ngwIEDBw4cOHBL4KYKzenBqgvpFKS8kAYHDhw4cODAgVsKV/1H0wXlXy2kjwM/OHDgwIEDBw7cEri0yKsG07TYTAvU6kI9nhccOHDgwIEDB24ZXDdwVhfY6SDdBXp1YQ0OHDhw4MCBA3cXuNMBpxbNVYh2MRneFzhw4MCBAwcO3F3h0hv7VCHaLUzBgQMHDhw4cOC2w3XP6WBXFZbpg+g+MHDgwIEDBw4cuC1wY8FwKIB2gS9/DQ4cOHDgwIEDtwyuGnini8Pq4nk6KL98Hxw4cODAgQMHbilcdYDjIrAYfK96MPFCHhw4cODAgQMH7svgxha+YXGavh9DXR2AwYEDBw4cOHDglsBNLbDTIjX9XhqwwYEDBw4cOHDgtsNdteAtB86wiJwGBQcOHDhw4MCB2w43vcA9fT8N3F2g9v2AAwcOHDhw4MAtgXOyAw4cOHDgHHDgPnx+AGy+fNNKWjETAAAAAElFTkSuQmCC">
           </a>
         </fancybox>
       
@@ -823,7 +833,7 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-5-Timing-Exceptions/" rel="prev" title="1-5-FPGA时序约束理论篇之两种时序例外">
+                                <a href="/blog/2020-06-06-1-5-Timing-Exceptions/" rel="prev" title="1-5-FPGA时序约束理论篇之两种时序例外">
                                   
                                       1-5-FPGA时序约束理论篇之两种时序例外
                                   
@@ -843,9 +853,9 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-6-xdc-priority/" rel="prev" title="1-6-FPGA时序约束理论篇之xdc约束优先级">
+                                <a href="/blog/2020-06-03-1-3-IO-constraints/" rel="prev" title="1-3-FPGA时序约束理论篇之IO约束">
                                     
-                                        1-6-FPGA时序约束理论篇之xdc约束优先级
+                                        1-3-FPGA时序约束理论篇之IO约束
                                     
                                 </a>
                             </h4>

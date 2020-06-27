@@ -295,7 +295,7 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-25-1-7-clock-tree/">
+      <a href="/blog/2020-06-08-1-7-clock-tree/">
         1-7-FPGA时序约束实战篇之梳理时钟树
       </a>
     </h1>
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月25日</p>
+    <p>发布于：2020年6月8日</p>
   </a>
 </div>
 
@@ -361,7 +361,8 @@
 <a id="more"></a>
 
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial37.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial37.png"  alt="" /></fancybox>
 </center>
 
 
@@ -369,7 +370,8 @@
 <h2 id="1-梳理时钟树"><a href="#1-梳理时钟树" class="headerlink" title="1. 梳理时钟树"></a>1. 梳理时钟树</h2><p>&emsp;&emsp;我们首先要做的就是梳理时钟树，就是工程中用到了哪些时钟，各个时钟之间的关系又是什么样的，如果自己都没有把时钟关系理清楚，不要指望综合工具会把所有问题暴露出来。</p>
 <p>&emsp;&emsp;在我们这个工程中，有两个主时钟，四个衍生时钟，如下图所示。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial38.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial38.png"  alt="" /></fancybox>
 </center>
 
 <p>&emsp;&emsp;确定了主时钟和衍生时钟后，再看各个时钟是否有交互，即clka产生的数据是否在clkb的时钟域中被使用。</p>
@@ -380,7 +382,8 @@
 </ul>
 <p>其中，<code>clk_rx</code>和<code>clk_tx</code>都是从同一个MMCM输出的，两个频率虽然不同，但他们却是同步的时钟，因此他们都是从同一个时钟分频得到（可以在Clock Wizard的Port Renaming中看到VCO Freq的大小），因此它们之间需要用<code>set_false_path</code>来约束；而<code>clk_samp</code>和<code>clk2</code>是两个异步时钟，需要用<code>asynchronous</code>来约束。</p>
 <center>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial39.png"  alt="" />
+<fancybox>
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial39.png"  alt="" /></fancybox>
 </center>
 
 <p>完成以上两步，就可以进行具体的时钟约束操作了。</p>
@@ -419,7 +422,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-25-1-7-clock-tree/>https://voiue.github.io/blog/2020-06-25-1-7-clock-tree/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-08-1-7-clock-tree/>https://voiue.github.io/blog/2020-06-08-1-7-clock-tree/</a></p>
           
         
       </blockquote>
@@ -448,10 +451,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-25T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-08T23:57:14+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月25日</p>
+    <p>更新于：2020年6月8日</p>
   </a>
 </div>
 
@@ -473,7 +476,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-25-1-7-clock-tree/&title=1-7-FPGA时序约束实战篇之梳理时钟树 - voiue&summary=行万里路–时序约束实战篇&emsp;&emsp;我们以Vivado自带的wave_gen工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–clkin2，该时钟产生脉冲信号pulse，samp_gen中在pulse为高时才产生信号。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-08-1-7-clock-tree/&title=1-7-FPGA时序约束实战篇之梳理时钟树 - voiue&summary=行万里路–时序约束实战篇&emsp;&emsp;我们以Vivado自带的wave_gen工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–clkin2，该时钟产生脉冲信号pulse，samp_gen中在pulse为高时才产生信号。"
           
           >
           
@@ -485,7 +488,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-25-1-7-clock-tree/&title=1-7-FPGA时序约束实战篇之梳理时钟树 - voiue&summary=行万里路–时序约束实战篇&emsp;&emsp;我们以Vivado自带的wave_gen工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–clkin2，该时钟产生脉冲信号pulse，samp_gen中在pulse为高时才产生信号。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-08-1-7-clock-tree/&title=1-7-FPGA时序约束实战篇之梳理时钟树 - voiue&summary=行万里路–时序约束实战篇&emsp;&emsp;我们以Vivado自带的wave_gen工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–clkin2，该时钟产生脉冲信号pulse，samp_gen中在pulse为高时才产生信号。"
           
           >
           
@@ -497,7 +500,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-25-1-7-clock-tree/&title=1-7-FPGA时序约束实战篇之梳理时钟树 - voiue&summary=行万里路–时序约束实战篇&emsp;&emsp;我们以Vivado自带的wave_gen工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–clkin2，该时钟产生脉冲信号pulse，samp_gen中在pulse为高时才产生信号。"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-08-1-7-clock-tree/&title=1-7-FPGA时序约束实战篇之梳理时钟树 - voiue&summary=行万里路–时序约束实战篇&emsp;&emsp;我们以Vivado自带的wave_gen工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上由增加了另一个时钟–clkin2，该时钟产生脉冲信号pulse，samp_gen中在pulse为高时才产生信号。"
           
           >
           
@@ -509,8 +512,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADoElEQVR42u3aQVYjMQwFQO5/6ZkT8Fr6UogI5V3A3bbLLD5Svv4Z0fhCAA4cOHAGOHBH4L7C8d3z5Q18M/9pne68p/e3zwsOHDhw4MCBA3cMLj3w00LdeVXI6bz4vODAgQMHDhw4cEfhqoG3+rkbYLvg1eC6dl5w4MCBAwcOHLgPgZsWINOCYvUC0v2AAwcOHDhw4MB9OtyrYNJGNzhw4MCBAwcO3F+F626k+9y0od0tmJ7t5IMDBw4cOHDgwC3BTYPqb/scnxccOHDgwIEDB+4I3NboFia7jeYp0No5wYEDBw4cOHDgjsB1N7518DSgpoXR6frgwIEDBw4cOHDX4KaBswr3qmBdbiSH8I//OYADBw4cOHDgwL0Zrnrw9CDpetX9PMGtNbTBgQMHDhw4cOCOwqWN3fEX9prrbAXgdgEVHDhw4MCBAwfuGNy0MdwNstOLqkKuB2Zw4MCBAwcOHLjjcN0C4lYA3tpXGtwfLwocOHDgwIEDB+443FYgflWhMS3AphcODhw4cODAgQN3HW664Ks3ngbjtcItOHDgwIEDBw7cEbjpAum8LlD199PC5ePz4MCBAwcOHDhwR+C6D1bHTwXp7jrVz+DAgQMHDhw4cNfh0sZvN3imF5Tuo/v+8gWAAwcOHDhw4MAdg9sCmB4o/f24QFl8Dhw4cODAgQMH7gpcF7AaFKvA6Xu3v7gYV4DBgQMHDhw4cODeBNdt9G41rtMvHk6/2Ni9UHDgwIEDBw4cuOtwKdhW4XEK0p0XPw8OHDhw4MCBA3cEbhqEt4Jz+v60gR43zMGBAwcOHDhw4I7ApcGxGyTThnEK3g3A5UInOHDgwIEDBw7ccbjqQq+aP31P9fn1AAwOHDhw4MCBA/fDcN1RLWBuNazTAmU34K518sGBAwcOHDhw4H4I7lWFze6G03lbwfzxDwEcOHDgwIEDB+4o3DSYdgPwFGoK0g784MCBAwcOHDhwR+CmIwXsXsD2z9OLBgcOHDhw4MCBuwL3roZ09UBb++tCne3kgwMHDhw4cODALRUau43pKfx2gxwcOHDgwIEDB+5T4KaBcho8pxc0DcyP5wIHDhw4cODAgftQuGkATS+iWwhN9wMOHDhw4MCBA/cpcNUCY/f904A7LcyCAwcOHDhw4MD9NrjuQtXgmRYou4XG7YY6OHDgwIEDBw7cdbi0gdstEE5BtgN0u4AKDhw4cODAgQN3BM5oBmgE4MCBA2eAA/fe8R+dRAL543b10wAAAABJRU5ErkJggg==">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADoElEQVR42u3aQVYjMQwFQO5/6ZkT8Fr6UogI5V3A3bbLLD5Svv4Z0fhCAA4cOHAGOHBH4L7C8d3z5Q18M/9pne68p/e3zwsOHDhw4MCBA3cMLj3w00LdeVXI6bz4vODAgQMHDhw4cEfhqoG3+rkbYLvg1eC6dl5w4MCBAwcOHLgPgZsWINOCYvUC0v2AAwcOHDhw4MB9OtyrYNJGNzhw4MCBAwcO3F+F626k+9y0od0tmJ7t5IMDBw4cOHDgwC3BTYPqb/scnxccOHDgwIEDB+4I3NboFia7jeYp0No5wYEDBw4cOHDgjsB1N7518DSgpoXR6frgwIEDBw4cOHDX4KaBswr3qmBdbiSH8I//OYADBw4cOHDgwL0Zrnrw9CDpetX9PMGtNbTBgQMHDhw4cOCOwqWN3fEX9prrbAXgdgEVHDhw4MCBAwfuGNy0MdwNstOLqkKuB2Zw4MCBAwcOHLjjcN0C4lYA3tpXGtwfLwocOHDgwIEDB+443FYgflWhMS3AphcODhw4cODAgQN3HW664Ks3ngbjtcItOHDgwIEDBw7cEbjpAum8LlD199PC5ePz4MCBAwcOHDhwR+C6D1bHTwXp7jrVz+DAgQMHDhw4cNfh0sZvN3imF5Tuo/v+8gWAAwcOHDhw4MAdg9sCmB4o/f24QFl8Dhw4cODAgQMH7gpcF7AaFKvA6Xu3v7gYV4DBgQMHDhw4cODeBNdt9G41rtMvHk6/2Ni9UHDgwIEDBw4cuOtwKdhW4XEK0p0XPw8OHDhw4MCBA3cEbhqEt4Jz+v60gR43zMGBAwcOHDhw4I7ApcGxGyTThnEK3g3A5UInOHDgwIEDBw7ccbjqQq+aP31P9fn1AAwOHDhw4MCBA/fDcN1RLWBuNazTAmU34K518sGBAwcOHDhw4H4I7lWFze6G03lbwfzxDwEcOHDgwIEDB+4o3DSYdgPwFGoK0g784MCBAwcOHDhwR+CmIwXsXsD2z9OLBgcOHDhw4MCBuwL3roZ09UBb++tCne3kgwMHDhw4cODALRUau43pKfx2gxwcOHDgwIEDB+5T4KaBcho8pxc0DcyP5wIHDhw4cODAgftQuGkATS+iWwhN9wMOHDhw4MCBA/cpcNUCY/f904A7LcyCAwcOHDhw4MD9NrjuQtXgmRYou4XG7YY6OHDgwIEDBw7cdbi0gdstEE5BtgN0u4AKDhw4cODAgQN3BM5oBmgE4MCBA2eAA/fe8R+dRAL543b10wAAAABJRU5ErkJggg==">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADrklEQVR42u3aQW7DMAwEwPz/0+0DisJakk4YY3Rz4ljSKAeC69ePURovBODAgQNngAO3BO5VHH8eeHFf9fnp9/+ta2q/4MCBAwcOHDhw2+COC8Dw/nfPc/X77jrAgQMHDhw4cOC2wp0WnKfXV4Xy6X3dAnfsfnDgwIEDBw4cuIfBnYKcAk01JsehwYEDBw4cOHDgHgaXBr7dhmMKAw4cOHDgwIED93S4OKAtvnjYbYRWG6Brknxw4MCBAwcOHLghuHR0C85PX5f3Cw4cOHDgwIEDtwSuO64W9nPTqDYy2/OCAwcOHDhw4MAtgesGytWFT704WH2xsLw/cODAgQMHDhy4JXDVIDhdWBpg312QV4NxcODAgQMHDhy4rXDpxtNGY3fj1fWl6z4OpMGBAwcOHDhw4D4MlxaM6e+6AXI1aE4bqZfzggMHDhw4cODALYFLG43Vz9MG6HRgPhVsgwMHDhw4cODAbYGrForvCpKrB3zX+sGBAwcOHDhw4LbBVQPq9DnpxqsbrRbCl+sGBw4cOHDgwIFbBpc2GE8L07TgnYKe2hc4cODAgQMHDtxWuNMNdoPgdOFd6OnCFxw4cODAgQMHbhtc2nicalimBXW14J4+UHDgwIEDBw4cuK1wUxOmGz49qPS+dD1jST44cODAgQMHDtzNcFOFaLVhWG2cVhuf7eAcHDhw4MCBAwduCVw3+E0n7gbd3WC8HWyDAwcOHDhw4MAtgas2+lLwbrBdne90HBfW4MCBAwcOHDhwS+GqBeS3FdTpvsGBAwcOHDhw4LbBTRWQ3Q2+a54qGDhw4MCBAwcO3Da4aiCcbuy4UVgMoNMgu1yggwMHDhw4cODALYU7DaTThme3EK4eYPWgb0vywYEDBw4cOHDghuGmC86pBmk1sO4G7McFMDhw4MCBAwcO3BK4dIHVgLhayFYL5XR+cODAgQMHDhy4b4ObCnxPA+EqbHdd1QAeHDhw4MCBAwduC1x3VBeQNiyr12nj8/LAwIEDBw4cOHDglsBNB8/pc+9qnN52IODAgQMHDhw4cMvg0oI3LTzT36Xfp+Cn6wUHDhw4cODAgfsWuDigLTYQ04ObCprbwTk4cODAgQMHDtzD4LqNzKmDufq8+zxw4MCBAwcOHLinwnUbkt3ge6rQflsjExw4cODAgQMHbgiu2ng8hU6f0w2i0z9CuQAGBw4cOHDgwIH7EFw3wD2FrM5bfTFwuuEKDhw4cODAgQO3Bc7IBjhw4MCBM8CB+/D4BfyS/yZSUVgHAAAAAElFTkSuQmCC">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADrklEQVR42u3aQW7DMAwEwPz/0+0DisJakk4YY3Rz4ljSKAeC69ePURovBODAgQNngAO3BO5VHH8eeHFf9fnp9/+ta2q/4MCBAwcOHDhw2+COC8Dw/nfPc/X77jrAgQMHDhw4cOC2wp0WnKfXV4Xy6X3dAnfsfnDgwIEDBw4cuIfBnYKcAk01JsehwYEDBw4cOHDgHgaXBr7dhmMKAw4cOHDgwIED93S4OKAtvnjYbYRWG6Brknxw4MCBAwcOHLghuHR0C85PX5f3Cw4cOHDgwIEDtwSuO64W9nPTqDYy2/OCAwcOHDhw4MAtgesGytWFT704WH2xsLw/cODAgQMHDhy4JXDVIDhdWBpg312QV4NxcODAgQMHDhy4rXDpxtNGY3fj1fWl6z4OpMGBAwcOHDhw4D4MlxaM6e+6AXI1aE4bqZfzggMHDhw4cODALYFLG43Vz9MG6HRgPhVsgwMHDhw4cODAbYGrForvCpKrB3zX+sGBAwcOHDhw4LbBVQPq9DnpxqsbrRbCl+sGBw4cOHDgwIFbBpc2GE8L07TgnYKe2hc4cODAgQMHDtxWuNMNdoPgdOFd6OnCFxw4cODAgQMHbhtc2nicalimBXW14J4+UHDgwIEDBw4cuK1wUxOmGz49qPS+dD1jST44cODAgQMHDtzNcFOFaLVhWG2cVhuf7eAcHDhw4MCBAwduCVw3+E0n7gbd3WC8HWyDAwcOHDhw4MAtgas2+lLwbrBdne90HBfW4MCBAwcOHDhwS+GqBeS3FdTpvsGBAwcOHDhw4LbBTRWQ3Q2+a54qGDhw4MCBAwcO3Da4aiCcbuy4UVgMoNMgu1yggwMHDhw4cODALYU7DaTThme3EK4eYPWgb0vywYEDBw4cOHDghuGmC86pBmk1sO4G7McFMDhw4MCBAwcO3BK4dIHVgLhayFYL5XR+cODAgQMHDhy4b4ObCnxPA+EqbHdd1QAeHDhw4MCBAwduC1x3VBeQNiyr12nj8/LAwIEDBw4cOHDglsBNB8/pc+9qnN52IODAgQMHDhw4cMvg0oI3LTzT36Xfp+Cn6wUHDhw4cODAgfsWuDigLTYQ04ObCprbwTk4cODAgQMHDtzD4LqNzKmDufq8+zxw4MCBAwcOHLinwnUbkt3ge6rQflsjExw4cODAgQMHbgiu2ng8hU6f0w2i0z9CuQAGBw4cOHDgwIH7EFw3wD2FrM5bfTFwuuEKDhw4cODAgQO3Bc7IBjhw4MCBM8CB+/D4BfyS/yZSUVgHAAAAAElFTkSuQmCC">
           </a>
         </fancybox>
       
@@ -533,7 +536,7 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-8-primiry-clock/" rel="prev" title="1-8-FPGA时序约束实战篇之主时钟约束">
+                                <a href="/blog/2020-06-10-1-8-primiry-clock/" rel="prev" title="1-8-FPGA时序约束实战篇之主时钟约束">
                                   
                                       1-8-FPGA时序约束实战篇之主时钟约束
                                   
@@ -553,9 +556,9 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-25-1-9-generated-clock/" rel="prev" title="1-9-FPGA时序约束实战篇之衍生时钟约束">
+                                <a href="/blog/2020-06-07-1-6-xdc-priority/" rel="prev" title="1-6-FPGA时序约束理论篇之xdc约束优先级">
                                     
-                                        1-9-FPGA时序约束实战篇之衍生时钟约束
+                                        1-6-FPGA时序约束理论篇之xdc约束优先级
                                     
                                 </a>
                             </h4>
