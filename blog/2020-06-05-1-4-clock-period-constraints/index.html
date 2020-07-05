@@ -496,8 +496,7 @@
 <li>Vivado自动推导的衍生时钟</li>
 <li>用户自定义的衍生时钟</li>
 </ol>
-<p>&emsp;&emsp;首先来看第一种，如果使用PLL或者MMCM，则Vivado会自动推导出一个约束。大家可以打开Vivado中有个叫<code>wavegen</code>的工程，在这个工程中，输入时钟经过PLL输出了2个时钟，如下图所示。<br>（补充：关于DCM/DLL/PLL/MMCM的区别，可参考我写的另一篇文章<a href="https://mp.weixin.qq.com/s?__biz=MzU4ODY5ODU5Ng==&mid=2247484106&idx=1&sn=82983a8086732717298436e067a64d4d&chksm=fdd98441caae0d57c99c5b22cf72bfaee2372824406014680be9df1f8d85b3071182fe43656c&mpshare=1&scene=1&srcid=0928ySJ3ud0vfaGS85Teu5Xw&sharer_sharetime=1571051171309&sharer_shareid=296cfe717a7da125d89d5a7bcdf65c18&key=6234e09828e71f223a5bbb62942587523cffdc550c50d6713403e50f0f1a03c87c5b1a6fae054a425e6f27eabfd6e48eb8fd421c5841d8d8b3b054113d8e8650ff4a65e51fa211ebe10dc0a436635167&ascene=1&uin=MzkzMzM2Nzc1&devicetype=Windows+7&version=62070141&lang=zh_CN&pass_ticket=b15xLCDB%2FBp7ALLPd%2FcqR3Z4qIXNCYrUowj5c4g9AzKzb29vj6R%2F%2BP8z8RJvomTk" target="_blank" rel="noopener">DCM/DLL/PLL/MMCM区别</a></p>
-<p>（在微信公证号Quant_Times中搜索就能看到）</p>
+<p>&emsp;&emsp;首先来看第一种，如果使用PLL或者MMCM，则Vivado会自动推导出一个约束。大家可以打开Vivado中有个叫<code>wavegen</code>的工程，在这个工程中，输入时钟经过PLL输出了2个时钟，如下图所示。<br>（补充：关于DCM/DLL/PLL/MMCM的区别，可参考文章<a href="https://mp.weixin.qq.com/s?__biz=MzU4ODY5ODU5Ng==&mid=2247484106&idx=1&sn=82983a8086732717298436e067a64d4d&chksm=fdd98441caae0d57c99c5b22cf72bfaee2372824406014680be9df1f8d85b3071182fe43656c&mpshare=1&scene=1&srcid=0928ySJ3ud0vfaGS85Teu5Xw&sharer_sharetime=1571051171309&sharer_shareid=296cfe717a7da125d89d5a7bcdf65c18&key=6234e09828e71f223a5bbb62942587523cffdc550c50d6713403e50f0f1a03c87c5b1a6fae054a425e6f27eabfd6e48eb8fd421c5841d8d8b3b054113d8e8650ff4a65e51fa211ebe10dc0a436635167&ascene=1&uin=MzkzMzM2Nzc1&devicetype=Windows+7&version=62070141&lang=zh_CN&pass_ticket=b15xLCDB%2FBp7ALLPd%2FcqR3Z4qIXNCYrUowj5c4g9AzKzb29vj6R%2F%2BP8z8RJvomTk" target="_blank" rel="noopener">DCM/DLL/PLL/MMCM区别</a></p>
 <center>
 <fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial15.png"  alt="" />

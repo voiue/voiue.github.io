@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-1-FPGA时序约束理论篇之建立保持时间 | voiue</title>
+  <title>关于FPGA芯片命名规则的解释 | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-01-1-1-setup-hold/">
-        1-1-FPGA时序约束理论篇之建立保持时间
+      <a href="/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/">
+        关于FPGA芯片命名规则的解释
       </a>
     </h1>
   
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月1日</p>
+    <p>发布于：2020年7月5日</p>
   </a>
 </div>
 
@@ -357,39 +357,39 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="读万卷书–时序约束理论篇"><a href="#读万卷书–时序约束理论篇" class="headerlink" title="读万卷书–时序约束理论篇"></a>读万卷书–时序约束理论篇</h1><h2 id="周期约束理论"><a href="#周期约束理论" class="headerlink" title="周期约束理论"></a>周期约束理论</h2><p>&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。</p>
-<p>&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。</p>
-<p>&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：</p>
-<ul>
-<li>发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端</li>
-<li>接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端</li>
-</ul>
+          <h2 id="Xilinx的FPGA芯片"><a href="#Xilinx的FPGA芯片" class="headerlink" title="Xilinx的FPGA芯片"></a>Xilinx的FPGA芯片</h2><p>&emsp;&emsp;例如XC7VX485T-2FFG1761C:<br>&emsp;&emsp;<code>XC7VX485T</code>是芯片型号，表示属于Xilinx公司的V7系列的芯片，485T表示其有48.5万个逻辑单元。<br>&emsp;&emsp;<code>-2</code>表示速度等级，对于Xilinx FPGA来说，一般有-1，-2，-3三个等级，值越大，速度越高。<br>&emsp;&emsp;<code>FFG</code>表示封装方式，<code>1761</code>表示引脚数，<code>C</code>代表的是温度等级Temperature grade ，这里是商用(Commercial)，如果是<code>I</code> 就是工业用。<br>&emsp;&emsp;同一款芯片可以有多个速度等级，不同的速度等级代表着不同的性能，不同的性能又导致芯片价格的巨大差异。芯片的速度等级不是设计出来的，而是在芯片生产出来之后，实际测试标定出来的。速度快的芯片在总产量中的比率低，价格也就相应地高。那么是什么因素导致了同一批芯片的性能差异，主要有下面两点：<br>&emsp;&emsp;芯片的速度等级决定于芯片内部的门延时和线延时，这两个因素又决定于晶体管的长度L和容值C，这两个数值的差异最终决定于芯片的生产工艺。<br>&emsp;&emsp;在芯片生产过程中，有一个阶段叫做speed binning。就是采用一定的方法，按照一组标准对生产出来的芯片进行筛选和分类，进而划分不同的速度等级。</p>
 <a id="more"></a>
 
-<h3 id="建立-保持时间"><a href="#建立-保持时间" class="headerlink" title="建立/保持时间"></a>建立/保持时间</h3><p>&emsp;&emsp;讲时序约束，这两个概念要首先介绍，因为我们做时序约束其实就是为了满足建立/保持时间。对于DFF的输入而言，</p>
-<ul>
-<li>在clk上升沿到来之前，数据提前一个最小时间量“预先准备好”，这个最小时间量就是建立时间；</li>
-<li>在clk上升沿来之后，数据必须保持一个最小时间量“不能变化”，这个最小时间量就是保持时间。</li>
-</ul>
+<h2 id="Altera的FPGA芯片"><a href="#Altera的FPGA芯片" class="headerlink" title="Altera的FPGA芯片"></a>Altera的FPGA芯片</h2><p>以EP2C35F672C6N为例做一个说明：</p>
+<p><code>EP</code>：工艺；</p>
+<p><code>2C</code>：cyclone II（飓风）（S代表Stratix，A代表arria）；</p>
+<p><code>35</code>：逻辑单元数，35表示大约有35k的逻辑单元；</p>
+<p><code>F</code>：表示PCB封装类型，F是FBGA封装，E(EQFP)、Q(PQFP)、U(UBGA)、M(MBGA)；</p>
+<p><strong>Package Type：</strong></p>
+<p>E: PlasTIc Enhanced Quad Flat Pack (EQFP)</p>
+<p>Q: PlasTIc Quad Flat Pack (PQFP)</p>
+<p>F: FineLine Ball-Grid Array (FBGA)</p>
+<p>U: Ultra FineLine Ball-Grid Array (UBGA)</p>
+<p>M: Micro FineLine Ball-Grid Array (MBGA)</p>
+<p><code>672</code>：表示引脚数量；</p>
+<p><code>C</code>：工作温度，C表示可以工作在0°C到85°C，I表示可以工作在-40°到100°C，A表示可以工作在-40°C到125°C；</p>
+<p><strong>OperaTIng Temperature：</strong></p>
+<p>C: Commercial temperature (TJ = 0°C to 85°C)</p>
+<p>I: Industrial temperature (TJ = -40°C to 100°C)</p>
+<p>A: AutomoTIve temperature (TJ = -40°C to 125°C)</p>
+<p><code>6</code>：速度等级，6约最大是500Mhz，7约最大是430Mhz，8约最大是400Mhz；</p>
+<p><code>N</code>：后缀，N表示无铅，ES工程样片。</p>
+<p>以下是cyclone iv的手册参考</p>
 <center>
 <fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial0.png"  alt="" />
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/fpga_naming_rules0.png" />
 </fancybox>
 </center>
-
-
-<p>建立和保持时间是由器件特性决定了，当我们决定了使用哪个FPGA，就意味着建立和保持时间也就确定了。Xilinx FPGA的setup time基本都在0.04ns的量级，hold time基本在0.2ns的量级，不同器件会有所差异，具体可以查对应器件的DC and AC Switching Characteristics，下图列出K7系列的建立保持时间。</p>
 <center>
 <fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial1.png"  alt="" />
+<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/fpga_naming_rules.png" />
 </fancybox>
 </center>
-
-<br>
-
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
-
-
 
           
             <br>
@@ -423,7 +423,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/>https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/>https://voiue.github.io/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/</a></p>
           
         
       </blockquote>
@@ -452,10 +452,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-01T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-05T12:46:38+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月1日</p>
+    <p>更新于：2020年7月5日</p>
   </a>
 </div>
 
@@ -464,7 +464,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>timing-analysis</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>命名规则</p></a></div>
 
 
         
@@ -477,13 +477,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/&title=1-1-FPGA时序约束理论篇之建立保持时间 - voiue&summary=读万卷书–时序约束理论篇周期约束理论&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。
-&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。
-&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：
-
-发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端
-接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端
-"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/&title=关于FPGA芯片命名规则的解释 - voiue&summary=Xilinx的FPGA芯片&emsp;&emsp;例如XC7VX485T-2FFG1761C:&emsp;&emsp;XC7VX485T是芯片型号，表示属于Xilinx公司的V7系列的芯片，485T表示其有48.5万个逻辑单元。&emsp;&emsp;-2表示速度等级，对于Xilinx FPGA来说，一般有-1，-2，-3三个等级，值越大，速度越高。&emsp;&emsp;FFG表示封装方式，1761表示引脚数，C代表的是温度等级Temperature grade ，这里是商用(Commercial)，如果是I 就是工业用。&emsp;&emsp;同一款芯片可以有多个速度等级，不同的速度等级代表着不同的性能，不同的性能又导致芯片价格的巨大差异。芯片的速度等级不是设计出来的，而是在芯片生产出来之后，实际测试标定出来的。速度快的芯片在总产量中的比率低，价格也就相应地高。那么是什么因素导致了同一批芯片的性能差异，主要有下面两点：&emsp;&emsp;芯片的速度等级决定于芯片内部的门延时和线延时，这两个因素又决定于晶体管的长度L和容值C，这两个数值的差异最终决定于芯片的生产工艺。&emsp;&emsp;在芯片生产过程中，有一个阶段叫做speed binning。就是采用一定的方法，按照一组标准对生产出来的芯片进行筛选和分类，进而划分不同的速度等级。"
           
           >
           
@@ -495,13 +489,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/&title=1-1-FPGA时序约束理论篇之建立保持时间 - voiue&summary=读万卷书–时序约束理论篇周期约束理论&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。
-&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。
-&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：
-
-发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端
-接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端
-"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/&title=关于FPGA芯片命名规则的解释 - voiue&summary=Xilinx的FPGA芯片&emsp;&emsp;例如XC7VX485T-2FFG1761C:&emsp;&emsp;XC7VX485T是芯片型号，表示属于Xilinx公司的V7系列的芯片，485T表示其有48.5万个逻辑单元。&emsp;&emsp;-2表示速度等级，对于Xilinx FPGA来说，一般有-1，-2，-3三个等级，值越大，速度越高。&emsp;&emsp;FFG表示封装方式，1761表示引脚数，C代表的是温度等级Temperature grade ，这里是商用(Commercial)，如果是I 就是工业用。&emsp;&emsp;同一款芯片可以有多个速度等级，不同的速度等级代表着不同的性能，不同的性能又导致芯片价格的巨大差异。芯片的速度等级不是设计出来的，而是在芯片生产出来之后，实际测试标定出来的。速度快的芯片在总产量中的比率低，价格也就相应地高。那么是什么因素导致了同一批芯片的性能差异，主要有下面两点：&emsp;&emsp;芯片的速度等级决定于芯片内部的门延时和线延时，这两个因素又决定于晶体管的长度L和容值C，这两个数值的差异最终决定于芯片的生产工艺。&emsp;&emsp;在芯片生产过程中，有一个阶段叫做speed binning。就是采用一定的方法，按照一组标准对生产出来的芯片进行筛选和分类，进而划分不同的速度等级。"
           
           >
           
@@ -513,13 +501,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-01-1-1-setup-hold/&title=1-1-FPGA时序约束理论篇之建立保持时间 - voiue&summary=读万卷书–时序约束理论篇周期约束理论&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。
-&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。
-&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：
-
-发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端
-接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端
-"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/&title=关于FPGA芯片命名规则的解释 - voiue&summary=Xilinx的FPGA芯片&emsp;&emsp;例如XC7VX485T-2FFG1761C:&emsp;&emsp;XC7VX485T是芯片型号，表示属于Xilinx公司的V7系列的芯片，485T表示其有48.5万个逻辑单元。&emsp;&emsp;-2表示速度等级，对于Xilinx FPGA来说，一般有-1，-2，-3三个等级，值越大，速度越高。&emsp;&emsp;FFG表示封装方式，1761表示引脚数，C代表的是温度等级Temperature grade ，这里是商用(Commercial)，如果是I 就是工业用。&emsp;&emsp;同一款芯片可以有多个速度等级，不同的速度等级代表着不同的性能，不同的性能又导致芯片价格的巨大差异。芯片的速度等级不是设计出来的，而是在芯片生产出来之后，实际测试标定出来的。速度快的芯片在总产量中的比率低，价格也就相应地高。那么是什么因素导致了同一批芯片的性能差异，主要有下面两点：&emsp;&emsp;芯片的速度等级决定于芯片内部的门延时和线延时，这两个因素又决定于晶体管的长度L和容值C，这两个数值的差异最终决定于芯片的生产工艺。&emsp;&emsp;在芯片生产过程中，有一个阶段叫做speed binning。就是采用一定的方法，按照一组标准对生产出来的芯片进行筛选和分类，进而划分不同的速度等级。"
           
           >
           
@@ -531,8 +513,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqklEQVR42u3aQW7jQAwEQP3/08l9gcDTJCXT3pqbsI6kqdlDg63rxyqtCwE4cODAWeDALYG7iit+4D9/d3r/9N+7z335PHDgwIEDBw4cuGVwVYBXG0ghqu+Vvmf5wMGBAwcOHDhw4JbCnQbO0+v0d13g6vsf/x4cOHDgwIEDB+7L4E6DcXWg2R2IggMHDhw4cODAgesNJk8HiacBOQ3a4MCBAwcOHDhw3woXF7Q3v2gVtHr/x5p8cODAgQMHDhy4Ibh0TUM+fV3eLzhw4MCBAwcO3BK47kofnAba6UFme7/gwIEDBw4cOHBL4KoBcWpjpxvvBtexgwYHDhw4cODAgVsC1w2m1cFnehBThXl1AAoOHDhw4MCBA7cVLn1g9fd3BeDT9zt9/nEhDQ4cOHDgwIED9ya46SCaFsJTgbUa5OP3AwcOHDhw4MCBWwo3Vfh2g+dUIJ7eJzhw4MCBAwcO3Ba4qQ1MDTzT6/Qgu8EYHDhw4MCBAwduC1w3oJaL3WZR3R2olottcODAgQMHDhy4JXDpjaYK4O5GqgfYDvDgwIEDBw4cOHBL4KZeuFsIVwPt3YX38SATHDhw4MCBAwfuTXB3F9JPFdOPF9LgwIEDBw4cOHBvhusG17sK6xR2ajDbbvLBgQMHDhw4cOAehqsG4urG0oPqDj7TgwYHDhw4cODAgfs0uBQw3egVrunnpQcNDhw4cODAgQO3DS4NpN0PDqsDxPRDw59wHQdrcODAgQMHDhy4JXCnG+8OMNOAm25wKkiXB5ngwIEDBw4cOHAPw1WL46mitxpYnw7u4MCBAwcOHDhw2+C6ATgNst2DmCqy0/2BAwcOHDhw4MB9Klz3g710oFkdqFaL5uPADQ4cOHDgwIEDtwyuOqDsBs504+mAtAp8PMgEBw4cOHDgwIFbAtcNslOFcrXArhbQ5UIaHDhw4MCBAwduOVz1g7z2h3zNgWi1uP7zGhw4cODAgQMHbglcu6ANYaoDy+p1Ovh8eWDgwIEDBw4cOHBL4K7iSl+get+0OL/9QMCBAwcOHDhw4JbBVQvkNGCmwFPFcjUAgwMHDhw4cODAfQpctbC9K/hWi/Lq818GfXDgwIEDBw4cuP8ErjuYjDdWHLQeHxg4cODAgQMHDtyXw6UfJFZhuoV2/H7gwIEDBw4cOHBL4Z4qeE+Danfwmf5HKAdgcODAgQMHDhy4N8FNFbhTMGmwPQVJAz04cODAgQMHDtxWOCtb4MCBAwfOAgfuzesXQaQAJhYRorgAAAAASUVORK5CYII=">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqklEQVR42u3aQW7jQAwEQP3/08l9gcDTJCXT3pqbsI6kqdlDg63rxyqtCwE4cODAWeDALYG7iit+4D9/d3r/9N+7z335PHDgwIEDBw4cuGVwVYBXG0ghqu+Vvmf5wMGBAwcOHDhw4JbCnQbO0+v0d13g6vsf/x4cOHDgwIEDB+7L4E6DcXWg2R2IggMHDhw4cODAgesNJk8HiacBOQ3a4MCBAwcOHDhw3woXF7Q3v2gVtHr/x5p8cODAgQMHDhy4Ibh0TUM+fV3eLzhw4MCBAwcO3BK47kofnAba6UFme7/gwIEDBw4cOHBL4KoBcWpjpxvvBtexgwYHDhw4cODAgVsC1w2m1cFnehBThXl1AAoOHDhw4MCBA7cVLn1g9fd3BeDT9zt9/nEhDQ4cOHDgwIED9ya46SCaFsJTgbUa5OP3AwcOHDhw4MCBWwo3Vfh2g+dUIJ7eJzhw4MCBAwcO3Ba4qQ1MDTzT6/Qgu8EYHDhw4MCBAwduC1w3oJaL3WZR3R2olottcODAgQMHDhy4JXDpjaYK4O5GqgfYDvDgwIEDBw4cOHBL4KZeuFsIVwPt3YX38SATHDhw4MCBAwfuTXB3F9JPFdOPF9LgwIEDBw4cOHBvhusG17sK6xR2ajDbbvLBgQMHDhw4cOAehqsG4urG0oPqDj7TgwYHDhw4cODAgfs0uBQw3egVrunnpQcNDhw4cODAgQO3DS4NpN0PDqsDxPRDw59wHQdrcODAgQMHDhy4JXCnG+8OMNOAm25wKkiXB5ngwIEDBw4cOHAPw1WL46mitxpYnw7u4MCBAwcOHDhw2+C6ATgNst2DmCqy0/2BAwcOHDhw4MB9Klz3g710oFkdqFaL5uPADQ4cOHDgwIEDtwyuOqDsBs504+mAtAp8PMgEBw4cOHDgwIFbAtcNslOFcrXArhbQ5UIaHDhw4MCBAwduOVz1g7z2h3zNgWi1uP7zGhw4cODAgQMHbglcu6ANYaoDy+p1Ovh8eWDgwIEDBw4cOHBL4K7iSl+get+0OL/9QMCBAwcOHDhw4JbBVQvkNGCmwFPFcjUAgwMHDhw4cODAfQpctbC9K/hWi/Lq818GfXDgwIEDBw4cuP8ErjuYjDdWHLQeHxg4cODAgQMHDtyXw6UfJFZhuoV2/H7gwIEDBw4cOHBL4Z4qeE+Danfwmf5HKAdgcODAgQMHDhy4N8FNFbhTMGmwPQVJAz04cODAgQMHDtxWOCtb4MCBAwfOAgfuzesXQaQAJhYRorgAAAAASUVORK5CYII=">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVgAAAFYCAAAAAAzB7ucAAAEZ0lEQVR42u3aQXbbMAwFQN//0s6+fXkiPkDSbgc7J7JEDrUAYLzeYku8EIAFK8CCBSvAHoF9hfHXDf/4e/X66vd++//T9U/76XqABQsWLFiwYMGCPQu7nAAXr1+FTD9XQaf3BxYsWLBgwYIFC/YzYFcT6KlEf9cBVguWMQ+wYMGCBQsWLFiw/yRs9f6rDej04Fb3BxYsWLBgwYIFC/b/gK3CTK0jvQ4sWLBgwYIFCxbsd8OWBxSKDeSpwqB7cB8/CQMWLFiwYMGCBQt2CbYaqwXDt36OPcCCBQsWLFiwYMEege1GteHcLSimBkbemwIsWLBgwYIFCxbsGdg0QU4hqge02oiuDmJM7x8sWLBgwYIFCxbsWdjpBacJe1pApAXNauFRLXTAggULFixYsGDB3oVNG8vVDaUJfJrgTxc25QIBLFiwYMGCBQsW7Cjsrg1VE/wUprqOaoGw/CKABQsWLFiwYMGCPQK7e8ChenBVkCmotGACCxYsWLBgwYIF+x2wuwcjqht6hdEFfRzYAAsWLFiwYMGCBbsVdroB3G1odw+2u5524x0sWLBgwYIFCxbsUdg0MV9tRE8PVKSDJVPfXy4QwIIFCxYsWLBgwV6BPT2wsdpg3n0A6Q8AYMGCBQsWLFiwYM/ApoMS0wMcU9EtZLrPBQsWLFiwYMGCBfsZsNMN7m5jPB006Tb0V18wsGDBggULFixYsGdgqwDdA6kWJMuJeXig3ULpcWADLFiwYMGCBQsW7BbYqUR6d6SDGLv3BRYsWLBgwYIFC/YObDWBX/3eauN59/2qB1AtSMCCBQsWLFiwYMHegd014JAm+mnCnx5EdSDk8QDBggULFixYsGDBHoFNN7yaeKcFQryxYiHR3RdYsGDBggULFizYu7DVBU8D7yoM2lDV54AFCxYsWLBgwYI9AjvW4B0a6JiCWn1+96DAggULFixYsGDB3oGdahxXr0sLgakG/fSLBRYsWLBgwYIFC/YO7FQjuztAkQKn+6leVy4QwIIFCxYsWLBgwW6B7RYA3QS+OuCRNqirBxyvByxYsGDBggULFuxR2HcYqw9MFz6d8G8f5AALFixYsGDBggV7BTZ9QPWgqoVDWpikBUY8AAIWLFiwYMGCBQv2CuzqA6fgqwcxVUik+3y8H1iwYMGCBQsWLNgrsOnn7sBEF3iqYd1dN1iwYMGCBQsWLNgzsN1IG9tpYTJdWKwWAMs/CIAFCxYsWLBgwYI9AttNkNONjDWWm436boH0OLABFixYsGDBggULditsWhB0wauQKejUi/L4fLBgwYIFCxYsWLBXYMsDCkODEdXGcvdgugMgjwMbYMGCBQsWLFiwYL8CtlpoVBP9bqHSfWHajW6wYMGCBQsWLFiwHw2bQnUb7bca4WDBggULFixYsGA/AzZN6LuN8OrAxFTBUr3/sUkYsGDBggULFixYsEuw3QGLp4Wufn+qMd4d7EjXCxYsWLBgwYIFC/YMrJgNsGDBCrBgwQqwW+MHgcKW6zLdctAAAAAASUVORK5CYII=">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVgAAAFYCAAAAAAzB7ucAAAEZ0lEQVR42u3aQXbbMAwFQN//0s6+fXkiPkDSbgc7J7JEDrUAYLzeYku8EIAFK8CCBSvAHoF9hfHXDf/4e/X66vd++//T9U/76XqABQsWLFiwYMGCPQu7nAAXr1+FTD9XQaf3BxYsWLBgwYIFC/YzYFcT6KlEf9cBVguWMQ+wYMGCBQsWLFiw/yRs9f6rDej04Fb3BxYsWLBgwYIFC/b/gK3CTK0jvQ4sWLBgwYIFCxbsd8OWBxSKDeSpwqB7cB8/CQMWLFiwYMGCBQt2CbYaqwXDt36OPcCCBQsWLFiwYMEege1GteHcLSimBkbemwIsWLBgwYIFCxbsGdg0QU4hqge02oiuDmJM7x8sWLBgwYIFCxbsWdjpBacJe1pApAXNauFRLXTAggULFixYsGDB3oVNG8vVDaUJfJrgTxc25QIBLFiwYMGCBQsW7Cjsrg1VE/wUprqOaoGw/CKABQsWLFiwYMGCPQK7e8ChenBVkCmotGACCxYsWLBgwYIF+x2wuwcjqht6hdEFfRzYAAsWLFiwYMGCBbsVdroB3G1odw+2u5524x0sWLBgwYIFCxbsUdg0MV9tRE8PVKSDJVPfXy4QwIIFCxYsWLBgwV6BPT2wsdpg3n0A6Q8AYMGCBQsWLFiwYM/ApoMS0wMcU9EtZLrPBQsWLFiwYMGCBfsZsNMN7m5jPB006Tb0V18wsGDBggULFixYsGdgqwDdA6kWJMuJeXig3ULpcWADLFiwYMGCBQsW7BbYqUR6d6SDGLv3BRYsWLBgwYIFC/YObDWBX/3eauN59/2qB1AtSMCCBQsWLFiwYMHegd014JAm+mnCnx5EdSDk8QDBggULFixYsGDBHoFNN7yaeKcFQryxYiHR3RdYsGDBggULFizYu7DVBU8D7yoM2lDV54AFCxYsWLBgwYI9AjvW4B0a6JiCWn1+96DAggULFixYsGDB3oGdahxXr0sLgakG/fSLBRYsWLBgwYIFC/YO7FQjuztAkQKn+6leVy4QwIIFCxYsWLBgwW6B7RYA3QS+OuCRNqirBxyvByxYsGDBggULFuxR2HcYqw9MFz6d8G8f5AALFixYsGDBggV7BTZ9QPWgqoVDWpikBUY8AAIWLFiwYMGCBQv2CuzqA6fgqwcxVUik+3y8H1iwYMGCBQsWLNgrsOnn7sBEF3iqYd1dN1iwYMGCBQsWLNgzsN1IG9tpYTJdWKwWAMs/CIAFCxYsWLBgwYI9AttNkNONjDWWm436boH0OLABFixYsGDBggULditsWhB0wauQKejUi/L4fLBgwYIFCxYsWLBXYMsDCkODEdXGcvdgugMgjwMbYMGCBQsWLFiwYL8CtlpoVBP9bqHSfWHajW6wYMGCBQsWLFiwHw2bQnUb7bca4WDBggULFixYsGA/AzZN6LuN8OrAxFTBUr3/sUkYsGDBggULFixYsEuw3QGLp4Wufn+qMd4d7EjXCxYsWLBgwYIFC/YMrJgNsGDBCrBgwQqwW+MHgcKW6zLdctAAAAAASUVORK5CYII=">
           </a>
         </fancybox>
       
@@ -551,40 +533,21 @@
         
             <div class="prev-next">
                 
-                    <section class="prev">
-                        <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-02-1-2-Timing-path/" rel="prev" title="1-2-FPGA时序约束理论篇之时序路径与时序模型">
-                                  
-                                      1-2-FPGA时序约束理论篇之时序路径与时序模型
-                                  
+                                <a href="/blog/2020-06-24-1-14-tcl-commands/" rel="prev" title="1-14-Vivado时序约束中Tcl命令的对象及属性">
+                                    
+                                        1-14-Vivado时序约束中Tcl命令的对象及属性
+                                    
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
                                     <a class="tag" href="/blog/tags/timing-analysis/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> timing-analysis</a>
-                                </h6>
-                            
-                        </span>
-                    </section>
-                
-                
-                    <section class="next">
-                        <span class="art-item-right" aria-hidden="true">
-                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
-                            <h4>
-                                <a href="/blog/2020-05-03-networks-http-status-code/" rel="prev" title="HTTP状态码">
-                                    
-                                        HTTP状态码
-                                    
-                                </a>
-                            </h4>
-                            
-                                
-                                <h6 class="tags">
-                                    <a class="tag" href="/blog/tags/others/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> others</a>
                                 </h6>
                             
                         </span>
@@ -629,7 +592,7 @@
 
   <script>
     window.subData = {
-      title: '1-1-FPGA时序约束理论篇之建立保持时间',
+      title: '关于FPGA芯片命名规则的解释',
       tools: true
     }
   </script>
@@ -655,7 +618,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#周期约束理论"><span class="toc-text">周期约束理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立-保持时间"><span class="toc-text">建立&#x2F;保持时间</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Xilinx的FPGA芯片"><span class="toc-text">Xilinx的FPGA芯片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Altera的FPGA芯片"><span class="toc-text">Altera的FPGA芯片</span></a></li></ol>
     </div>
   </section>
 

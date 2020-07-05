@@ -364,7 +364,7 @@
 <a id="more"></a>
 
 <p>&emsp;&emsp;在Vivado规定，必须要指定管脚电平，不然在最后一步生成比特流时会出错。</p>
-<p>&emsp;&emsp;除了管脚位置和电平，还有一个大家容易忽略但很容易引起错误的就是端接，当我们使用差分电平时比如LVDS，在在V6中我们使用<code>IBUFDS</code>来处理输入的差分信号时，可以指定端接为TRUE。</p>
+<p>&emsp;&emsp;除了管脚位置和电平，还有一个大家容易忽略但很容易引起错误的就是端接，当我们使用差分电平时比如LVDS，在V6中我们使用<code>IBUFDS</code>来处理输入的差分信号时，可以指定端接为TRUE。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">IBUFDS #(</span><br><span class="line">   .DIFF_TERM(&quot;TRUE&quot;),       &#x2F;&#x2F; Differential Termination</span><br><span class="line">   .IOSTANDARD(&quot;DEFAULT&quot;)     &#x2F;&#x2F; Specify the input I&#x2F;O standard</span><br><span class="line">) IBUFDS_inst (</span><br><span class="line">   .O(O),  &#x2F;&#x2F; Buffer output</span><br><span class="line">   .I(I),  &#x2F;&#x2F; Diff_p buffer input (connect directly to top-level port)</span><br><span class="line">   .IB(IB) &#x2F;&#x2F; Diff_n buffer input (connect directly to top-level port)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>但在Ultrascale中的IBUFDS，却把端接这个选项去掉了</p>
