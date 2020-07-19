@@ -357,20 +357,20 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="多周期路径约束"><a href="#多周期路径约束" class="headerlink" title="多周期路径约束"></a>多周期路径约束</h2><p>&emsp;&emsp;多周期路径，我们一般按照以下4个步骤来约束：</p>
+          <h3 id="多周期路径约束"><a href="#多周期路径约束" class="headerlink" title="多周期路径约束"></a>多周期路径约束</h3><p>&emsp;&emsp;多周期路径，我们一般按照以下4个步骤来约束：</p>
 <ol>
 <li>带有使能的数据</li>
 </ol>
 <p>&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求</p>
+<a id="more"></a>
+
 <center>
 <fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial63.png?raw=true"  alt="" />
 </fancybox>
 </center>
+&emsp;&emsp;其实这几个路径都是带有使能的路径，使能的周期为2倍的时钟周期，本来就应该在2个时钟周期内去判断时序收敛。因此，我们添加时序约束：
 
-<a id="more"></a>
-
-<p>&emsp;&emsp;其实这几个路径都是带有使能的路径，使能的周期为2倍的时钟周期，本来就应该在2个时钟周期内去判断时序收敛。因此，我们添加时序约束：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_multicycle_path 2 -setup -from [get_cells &#123;cmd_parse_i0&#x2F;send_resp_data_reg[*]&#125; -include_replicated_objects] -to [get_cells &#123;resp_gen_i0&#x2F;to_bcd_i0&#x2F;bcd_out_reg[*]&#125;]</span><br><span class="line">set_multicycle_path 1 -hold -from [get_cells &#123;cmd_parse_i0&#x2F;send_resp_data_reg[*]&#125; -include_replicated_objects] -to [get_cells &#123;resp_gen_i0&#x2F;to_bcd_i0&#x2F;bcd_out_reg[*]&#125;]</span><br></pre></td></tr></table></figure>
 
 <p>也可以写为：</p>
@@ -521,12 +521,7 @@
 
 带有使能的数据
 
-&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求
-
-
-
-
-"
+&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求"
           
           >
           
@@ -542,12 +537,7 @@
 
 带有使能的数据
 
-&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求
-
-
-
-
-"
+&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求"
           
           >
           
@@ -563,12 +553,7 @@
 
 带有使能的数据
 
-&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求
-
-
-
-
-"
+&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求"
           
           >
           
@@ -704,7 +689,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多周期路径约束"><span class="toc-text">多周期路径约束</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#多周期路径约束"><span class="toc-text">多周期路径约束</span></a></li></ol>
     </div>
   </section>
 

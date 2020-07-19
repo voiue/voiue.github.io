@@ -357,8 +357,10 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="时钟周期约束"><a href="#时钟周期约束" class="headerlink" title="时钟周期约束"></a>时钟周期约束</h2><p>&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。</p>
+          <h3 id="时钟周期约束"><a href="#时钟周期约束" class="headerlink" title="时钟周期约束"></a>时钟周期约束</h3><p>&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。</p>
 <p>&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。</p>
+<a id="more"></a>
+
 <p> <strong>1. Create_clock</strong></p>
 <p>&emsp;&emsp;在Vivado中使用<code>create_clock</code>来创建时钟周期约束。使用方法为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name &lt;name&gt; -period &lt;period&gt; -waveform &#123;&lt;rise_time&gt; &lt;fall_time&gt;&#125; [get_ports &lt;input_port&gt;]</span><br></pre></td></tr></table></figure>
@@ -388,8 +390,6 @@
 <td>在同一时刻源上定义多个时钟时使用</td>
 </tr>
 </tbody></table>
-<a id="more"></a>
-
 <p>&emsp;&emsp;这里的时钟必须是主时钟<code>primary clock</code>，<strong>主时钟</strong>通常有两种情形:一种是时钟由外部时钟源提供，通过时钟引脚进入FPGA，该时钟引脚绑定的时钟为主时钟:另一种是高速收发器(GT)的时钟RXOUTCLK或TXOUTCLK。对于7系列FPGA，需要对GT的这两个时钟手工约束：对于UltraScale FPGA，只需对GT的输入时钟约束即可，Vivado会自动对这两个时钟约束。</p>
 <p>&emsp;&emsp;如何确定主时钟是时钟周期约束的关键，除了根据主时钟的两种情形判断之外，还可以借助Tcl脚本判断。</p>
 <p>&emsp;&emsp;在vivado自带的example project里面，打开CPU(HDL)的工程，如下图所示。</p>
@@ -683,36 +683,7 @@
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
           href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
-&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。
- 1. Create_clock
-&emsp;&emsp;在Vivado中使用create_clock来创建时钟周期约束。使用方法为：
-1create_clock -name &lt;name&gt; -period &lt;period&gt; -waveform &#123;&lt;rise_time&gt; &lt;fall_time&gt;&#125; [get_ports &lt;input_port&gt;]
-
-
-
-
-
-参数
-含义
-
-
-
--name
-时钟名称
-
-
--period
-时钟周期，单位为ns
-
-
--waveform
-波形参数，第一个参数为时钟的第一个上升沿时刻，第二个参数为时钟的第一个下降沿时刻
-
-
--add
-在同一时刻源上定义多个时钟时使用
-
-"
+&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。"
           
           >
           
@@ -725,36 +696,7 @@
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
           href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
-&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。
- 1. Create_clock
-&emsp;&emsp;在Vivado中使用create_clock来创建时钟周期约束。使用方法为：
-1create_clock -name &lt;name&gt; -period &lt;period&gt; -waveform &#123;&lt;rise_time&gt; &lt;fall_time&gt;&#125; [get_ports &lt;input_port&gt;]
-
-
-
-
-
-参数
-含义
-
-
-
--name
-时钟名称
-
-
--period
-时钟周期，单位为ns
-
-
--waveform
-波形参数，第一个参数为时钟的第一个上升沿时刻，第二个参数为时钟的第一个下降沿时刻
-
-
--add
-在同一时刻源上定义多个时钟时使用
-
-"
+&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。"
           
           >
           
@@ -767,36 +709,7 @@
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
           href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-05-1-4-clock-period-constraints/&title=1-4-FPGA时序约束理论篇之时钟周期约束 - voiue&summary=时钟周期约束&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。
-&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。
- 1. Create_clock
-&emsp;&emsp;在Vivado中使用create_clock来创建时钟周期约束。使用方法为：
-1create_clock -name &lt;name&gt; -period &lt;period&gt; -waveform &#123;&lt;rise_time&gt; &lt;fall_time&gt;&#125; [get_ports &lt;input_port&gt;]
-
-
-
-
-
-参数
-含义
-
-
-
--name
-时钟名称
-
-
--period
-时钟周期，单位为ns
-
-
--waveform
-波形参数，第一个参数为时钟的第一个上升沿时刻，第二个参数为时钟的第一个下降沿时刻
-
-
--add
-在同一时刻源上定义多个时钟时使用
-
-"
+&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。"
           
           >
           
@@ -932,7 +845,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#时钟周期约束"><span class="toc-text">时钟周期约束</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#时钟周期约束"><span class="toc-text">时钟周期约束</span></a></li></ol>
     </div>
   </section>
 

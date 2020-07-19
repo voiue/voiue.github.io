@@ -357,8 +357,8 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h2><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
-<h3 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h3><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
+          <h3 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h3><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
+<h4 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h4><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
 <p>&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -387,7 +387,7 @@
 
 
 
-<h3 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h3><p>&emsp;&emsp;延迟约束用的是<code>set_input_delay</code>和<code>set_output_delay</code>，分别用于input端和output端，其时钟源可以是时钟输入管脚，也可以是虚拟时钟。<strong>但需要注意的是，这个两个约束并不是起延迟的作用</strong>，具体原因下面分析。</p>
+<h4 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h4><p>&emsp;&emsp;延迟约束用的是<code>set_input_delay</code>和<code>set_output_delay</code>，分别用于input端和output端，其时钟源可以是时钟输入管脚，也可以是虚拟时钟。<strong>但需要注意的是，这个两个约束并不是起延迟的作用</strong>，具体原因下面分析。</p>
 <ul>
 <li>set_input_delay</li>
 </ul>
@@ -670,7 +670,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-O约束"><span class="toc-text">I&#x2F;O约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#管脚约束"><span class="toc-text">管脚约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟约束"><span class="toc-text">延迟约束</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-O约束"><span class="toc-text">I&#x2F;O约束</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#管脚约束"><span class="toc-text">管脚约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#延迟约束"><span class="toc-text">延迟约束</span></a></li></ol></li></ol>
     </div>
   </section>
 

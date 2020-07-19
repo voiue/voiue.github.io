@@ -299,6 +299,187 @@
       
         
   <h2 class="title">
+    <a href="/blog/2020-06-08-1-7-clock-tree/">
+      1-7-FPGA时序约束实战篇之梳理时钟树
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月8日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-08T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月8日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h2 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h2><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上又增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/blog/2020-06-07-1-6-xdc-priority/">
+      1-6-FPGA时序约束理论篇之xdc约束优先级
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+<div class='new-meta-item author'>
+  <a href="https://voiue.github.io" rel="nofollow">
+    <img src="/avatar/avatar.jpg">
+    <p>voiue</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-edit" aria-hidden="true"></i>
+    <p>发布于：2020年6月7日</p>
+  </a>
+</div>
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-07T23:57:14+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p>更新于：2020年6月7日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h3 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h3><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
+<p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
+      
+        
+          
+        
+      
+    </div>
+    <!-- 
+      <div class="full-width auto-padding tags">
+        
+          <a href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> timing-analysis</a>
+        
+      </div>
+     -->
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box   reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
     <a href="/blog/2020-06-06-1-5-Timing-Exceptions/">
       1-5-FPGA时序约束理论篇之两种时序例外
     </a>
@@ -356,7 +537,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="两种时序例外"><a href="#两种时序例外" class="headerlink" title="两种时序例外"></a>两种时序例外</h2><h3 id="多周期路径"><a href="#多周期路径" class="headerlink" title="多周期路径"></a>多周期路径</h3><p>&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。</p>
+      <h3 id="两种时序例外"><a href="#两种时序例外" class="headerlink" title="两种时序例外"></a>两种时序例外</h3><h4 id="多周期路径"><a href="#多周期路径" class="headerlink" title="多周期路径"></a>多周期路径</h4><p>&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。</p>
 <center>
 <fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial20.png"  alt="" />
@@ -451,37 +632,8 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="时钟周期约束"><a href="#时钟周期约束" class="headerlink" title="时钟周期约束"></a>时钟周期约束</h2><p>&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。</p>
+      <h3 id="时钟周期约束"><a href="#时钟周期约束" class="headerlink" title="时钟周期约束"></a>时钟周期约束</h3><p>&emsp;&emsp;时钟周期约束，顾名思义，就是我们对时钟的周期进行约束，这个约束是我们用的最多的约束了，也是最重要的约束。</p>
 <p>&emsp;&emsp;下面我们讲一些Vivado中时钟约束指令。</p>
-<p> <strong>1. Create_clock</strong></p>
-<p>&emsp;&emsp;在Vivado中使用<code>create_clock</code>来创建时钟周期约束。使用方法为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_clock -name &lt;name&gt; -period &lt;period&gt; -waveform &#123;&lt;rise_time&gt; &lt;fall_time&gt;&#125; [get_ports &lt;input_port&gt;]</span><br></pre></td></tr></table></figure>
-
-
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-name</td>
-<td>时钟名称</td>
-</tr>
-<tr>
-<td>-period</td>
-<td>时钟周期，单位为ns</td>
-</tr>
-<tr>
-<td>-waveform</td>
-<td>波形参数，第一个参数为时钟的第一个上升沿时刻，第二个参数为时钟的第一个下降沿时刻</td>
-</tr>
-<tr>
-<td>-add</td>
-<td>在同一时刻源上定义多个时钟时使用</td>
-</tr>
-</tbody></table>
       
         
           
@@ -571,8 +723,8 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h2><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
-<h3 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h3><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
+      <h3 id="I-O约束"><a href="#I-O约束" class="headerlink" title="I/O约束"></a>I/O约束</h3><p>&emsp;&emsp;I/O约束是必须要用的约束，又包括管脚约束和延迟约束。</p>
+<h4 id="管脚约束"><a href="#管脚约束" class="headerlink" title="管脚约束"></a>管脚约束</h4><p>&emsp;&emsp;管脚约束就是指管脚分配，我们要指定管脚的PACKAGE_PIN和IOSTANDARD两个属性的值,前者指定了管脚的位置,后者指定了管脚对应的电平标准。</p>
 <p>&emsp;&emsp;在vivado中，使用如下方式在xdc中对管脚进行约束。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set_property -dict &#123;PACKAGE_PIN AJ16  IOSTANDARD  LVCMOS18&#125; [get_ports &quot;led[0]&quot;    ]</span><br></pre></td></tr></table></figure>
       
@@ -758,13 +910,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h1 id="读万卷书–时序约束理论篇"><a href="#读万卷书–时序约束理论篇" class="headerlink" title="读万卷书–时序约束理论篇"></a>读万卷书–时序约束理论篇</h1><h2 id="周期约束理论"><a href="#周期约束理论" class="headerlink" title="周期约束理论"></a>周期约束理论</h2><p>&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。</p>
-<p>&emsp;&emsp;周期约束就是告诉软件我们的时钟周期是多少，让它PAR后要保证在这样的时钟周期内时序不违规。大多数的约束都是周期约束，因为时序约束约的最多是时钟。</p>
-<p>&emsp;&emsp;在讲具体的时序约束前，我们先介绍两个概念，在下面的讲解中，会多次用到：</p>
-<ul>
-<li>发起端/发起寄存器/发起时钟/发起沿：指的是产生数据的源端</li>
-<li>接收端/接收寄存器/捕获时钟/捕获沿：指的是接收数据的目的端</li>
-</ul>
+      <h2 id="读万卷书–时序约束理论篇"><a href="#读万卷书–时序约束理论篇" class="headerlink" title="读万卷书–时序约束理论篇"></a>读万卷书–时序约束理论篇</h2><h3 id="周期约束理论"><a href="#周期约束理论" class="headerlink" title="周期约束理论"></a>周期约束理论</h3><p>&emsp;&emsp;首先来看什么是时序约束，泛泛来说，就是我们告诉软件（Vivado、ISE等）从哪个pin输入信号，输入信号要延迟多长时间，时钟周期是多少，让软件PAR(Place and  Route)后的电路能够满足我们的要求。因此如果我们不加时序约束，软件是无法得知我们的时钟周期是多少，PAR后的结果是不会提示时序警告的。</p>
       
         
           
@@ -1054,191 +1200,6 @@
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-31-how-to-change-mac-address-on-linux/">
-      如何在Linux中更改MAC地址
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月31日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-31T20:10:15+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月31日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>在向你展示如何在 Linux 中更改 MAC 地址之前，让我们首先讨论为什么要更改它。</p>
-<p>可能有几个原因。也许你不希望在公共网络上公开你的实际 MAC 地址（也称为物理地址）？还有可能是网络管理员可能已在路由器或防火墙中阻止了特定的 MAC 地址。</p>
-<p>一个实用的“好处”是某些公共网络（例如机场 WiFi）允许在有限的时间内免费上网。如果你还想继续使用，那么伪造 Mac 地址可能会欺骗网络，让它认为是一台新设备。这也是一个有名的原因。</p>
-<p>我将展示更改 MAC 地址（也称为欺骗/伪造 MAC 地址）的步骤。</p>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/linux/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> linux</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box   reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/blog/2020-03-26-understand-file-system/">
-      彻底理解文件系统
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-<div class='new-meta-item author'>
-  <a href="https://voiue.github.io" rel="nofollow">
-    <img src="/avatar/avatar.jpg">
-    <p>voiue</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年3月26日</p>
-  </a>
-</div>
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-26T17:09:51+08:00">
-  <a class='notlink'>
-    <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年3月26日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/20200326171416.png">
-</fancybox>
-      
-        
-          
-        
-      
-    </div>
-    <!-- 
-      <div class="full-width auto-padding tags">
-        
-          <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 文件系统</a>
-        
-      </div>
-     -->
-  </section>
-</article>
-
-          </div>
-        
-      
     
   </section>
   
@@ -1375,7 +1336,7 @@
           <li><a class="flat-box"
             title="/blog/categories/Dev/" href="/blog/categories/Dev/"
             id="blogcategoriesDev"
-            ><div class='name'>Dev</div><div class='badge'>(26)</div></a></li>
+            ><div class='name'>Dev</div><div class='badge'>(28)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/CDN/" href="/blog/categories/Dev/CDN/"
@@ -1411,6 +1372,11 @@
             title="/blog/categories/Dev/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" href="/blog/categories/Dev/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
             id="blogcategoriesDevE6938DE4BD9CE7B3BBE7BB9F"
             ><div class='name'>操作系统</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" href="/blog/categories/Dev/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+            id="blogcategoriesDevE6ADA3E58899E8A1A8E8BEBEE5BC8F"
+            ><div class='name'>正则表达式</div><div class='badge'>(2)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" href="/blog/categories/Dev/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"
@@ -1469,7 +1435,7 @@
 
 
     <div class='content'>
-      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 17.33px; color: #828282">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/timing-analysis/" style="font-size: 24px; color: #555">timing-analysis</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/" style="font-size: 14px; color: #999">命名规则</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a>
+      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 17.33px; color: #828282">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/timing-analysis/" style="font-size: 24px; color: #555">timing-analysis</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/" style="font-size: 14px; color: #999">命名规则</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 17.33px; color: #828282">正则表达式</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a>
     </div>
   </section>
 

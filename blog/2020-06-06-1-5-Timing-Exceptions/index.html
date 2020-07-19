@@ -357,7 +357,7 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h2 id="两种时序例外"><a href="#两种时序例外" class="headerlink" title="两种时序例外"></a>两种时序例外</h2><h3 id="多周期路径"><a href="#多周期路径" class="headerlink" title="多周期路径"></a>多周期路径</h3><p>&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。</p>
+          <h3 id="两种时序例外"><a href="#两种时序例外" class="headerlink" title="两种时序例外"></a>两种时序例外</h3><h4 id="多周期路径"><a href="#多周期路径" class="headerlink" title="多周期路径"></a>多周期路径</h4><p>&emsp;&emsp;上面我们讲的是时钟周期约束，默认按照单周期关系来分析数据路径，即数据的发起沿和捕获沿是最邻近的一对时钟沿。如下图所示。</p>
 <center>
 <fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial20.png"  alt="" />
@@ -547,7 +547,7 @@
 
 
 
-<h3 id="伪路径"><a href="#伪路径" class="headerlink" title="伪路径"></a>伪路径</h3><p>&emsp;&emsp;什么是伪路径？伪路径指的是该路径存在，但该路径的电路功能不会发生或者无须时序约束。如果路径上的电路不会发生，那Vivado综合后会自动优化掉，因此我们无需考虑这种情况。</p>
+<h4 id="伪路径"><a href="#伪路径" class="headerlink" title="伪路径"></a>伪路径</h4><p>&emsp;&emsp;什么是伪路径？伪路径指的是该路径存在，但该路径的电路功能不会发生或者无须时序约束。如果路径上的电路不会发生，那Vivado综合后会自动优化掉，因此我们无需考虑这种情况。</p>
 <p>&emsp;&emsp;为什么要创建伪路径？创建伪路径可以减少工具运行优化时间,增强实现结果,避免在不需要进行时序约束的地方花较多时间而忽略了真正需要进行优化的地方。</p>
 <p>&emsp;&emsp;伪路径一般用于：</p>
 <ul>
@@ -840,7 +840,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#两种时序例外"><span class="toc-text">两种时序例外</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多周期路径"><span class="toc-text">多周期路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伪路径"><span class="toc-text">伪路径</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#两种时序例外"><span class="toc-text">两种时序例外</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#多周期路径"><span class="toc-text">多周期路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#伪路径"><span class="toc-text">伪路径</span></a></li></ol></li></ol>
     </div>
   </section>
 

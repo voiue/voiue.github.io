@@ -357,7 +357,7 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h1><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上又增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
+          <h2 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h2><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上又增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
 <a id="more"></a>
 
 <center>
@@ -367,7 +367,7 @@
 
 
 <p>下面我们来一步一步进行时序约束。</p>
-<h2 id="1-梳理时钟树"><a href="#1-梳理时钟树" class="headerlink" title="1. 梳理时钟树"></a>1. 梳理时钟树</h2><p>&emsp;&emsp;我们首先要做的就是梳理时钟树，就是工程中用到了哪些时钟，各个时钟之间的关系又是什么样的，如果自己都没有把时钟关系理清楚，不要指望综合工具会把所有问题暴露出来。</p>
+<h3 id="1-梳理时钟树"><a href="#1-梳理时钟树" class="headerlink" title="1. 梳理时钟树"></a>1. 梳理时钟树</h3><p>&emsp;&emsp;我们首先要做的就是梳理时钟树，就是工程中用到了哪些时钟，各个时钟之间的关系又是什么样的，如果自己都没有把时钟关系理清楚，不要指望综合工具会把所有问题暴露出来。</p>
 <p>&emsp;&emsp;在我们这个工程中，有两个主时钟，四个衍生时钟，如下图所示。</p>
 <center>
 <fancybox>
@@ -636,7 +636,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-梳理时钟树"><span class="toc-text">1. 梳理时钟树</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#行万里路–时序约束实战篇"><span class="toc-text">行万里路–时序约束实战篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-梳理时钟树"><span class="toc-text">1. 梳理时钟树</span></a></li></ol></li></ol>
     </div>
   </section>
 

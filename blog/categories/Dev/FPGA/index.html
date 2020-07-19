@@ -382,7 +382,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="Xilinx的FPGA芯片"><a href="#Xilinx的FPGA芯片" class="headerlink" title="Xilinx的FPGA芯片"></a>Xilinx的FPGA芯片</h2><p>&emsp;&emsp;例如XC7VX485T-2FFG1761C:<br>&emsp;&emsp;<code>XC7VX485T</code>是芯片型号，表示属于Xilinx公司的V7系列的芯片，485T表示其有48.5万个逻辑单元。<br>&emsp;&emsp;<code>-2</code>表示速度等级，对于Xilinx FPGA来说，一般有-1，-2，-3三个等级，值越大，速度越高。<br>&emsp;&emsp;<code>FFG</code>表示封装方式，<code>1761</code>表示引脚数，<code>C</code>代表的是温度等级Temperature grade ，这里是商用(Commercial)，如果是<code>I</code> 就是工业用。<br>&emsp;&emsp;同一款芯片可以有多个速度等级，不同的速度等级代表着不同的性能，不同的性能又导致芯片价格的巨大差异。芯片的速度等级不是设计出来的，而是在芯片生产出来之后，实际测试标定出来的。速度快的芯片在总产量中的比率低，价格也就相应地高。那么是什么因素导致了同一批芯片的性能差异，主要有下面两点：<br>&emsp;&emsp;芯片的速度等级决定于芯片内部的门延时和线延时，这两个因素又决定于晶体管的长度L和容值C，这两个数值的差异最终决定于芯片的生产工艺。<br>&emsp;&emsp;在芯片生产过程中，有一个阶段叫做speed binning。就是采用一定的方法，按照一组标准对生产出来的芯片进行筛选和分类，进而划分不同的速度等级。</p>
+      <h3 id="Xilinx的FPGA芯片"><a href="#Xilinx的FPGA芯片" class="headerlink" title="Xilinx的FPGA芯片"></a>Xilinx的FPGA芯片</h3><p>&emsp;&emsp;例如XC7VX485T-2FFG1761C:<br>&emsp;&emsp;<code>XC7VX485T</code>是芯片型号，表示属于Xilinx公司的V7系列的芯片，485T表示其有48.5万个逻辑单元。<br>&emsp;&emsp;<code>-2</code>表示速度等级，对于Xilinx FPGA来说，一般有-1，-2，-3三个等级，值越大，速度越高。<br>&emsp;&emsp;<code>FFG</code>表示封装方式，<code>1761</code>表示引脚数，<code>C</code>代表的是温度等级Temperature grade ，这里是商用(Commercial)，如果是<code>I</code> 就是工业用。</p>
       
         
           
@@ -472,7 +472,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h1 id="Vivado时序约束中Tcl命令的对象及属性"><a href="#Vivado时序约束中Tcl命令的对象及属性" class="headerlink" title="Vivado时序约束中Tcl命令的对象及属性"></a>Vivado时序约束中Tcl命令的对象及属性</h1><p>&emsp;&emsp;在前面的章节中，我们用了很多Tcl的指令，但有些指令并没有把所有的参数多列出来解释，这一节，我们就把约束中的Tcl指令详细讲一下。</p>
+      <h2 id="Vivado时序约束中Tcl命令的对象及属性"><a href="#Vivado时序约束中Tcl命令的对象及属性" class="headerlink" title="Vivado时序约束中Tcl命令的对象及属性"></a>Vivado时序约束中Tcl命令的对象及属性</h2><p>&emsp;&emsp;在前面的章节中，我们用了很多Tcl的指令，但有些指令并没有把所有的参数多列出来解释，这一节，我们就把约束中的Tcl指令详细讲一下。</p>
 <p>我们前面讲到过<code>get_pins</code>和<code>get_ports</code>的区别，而且我们也用过<code>get_cells</code>、<code>get_clocks</code>和<code>get_nets</code>这几个指令，下面就通过一张图直观展现它们的区别。</p>
       
         
@@ -563,7 +563,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h1 id="时序约束辅助工具"><a href="#时序约束辅助工具" class="headerlink" title="时序约束辅助工具"></a>时序约束辅助工具</h1><p>&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。</p>
+      <h2 id="时序约束辅助工具"><a href="#时序约束辅助工具" class="headerlink" title="时序约束辅助工具"></a>时序约束辅助工具</h2><p>&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。</p>
       
         
           
@@ -653,16 +653,11 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="多周期路径约束"><a href="#多周期路径约束" class="headerlink" title="多周期路径约束"></a>多周期路径约束</h2><p>&emsp;&emsp;多周期路径，我们一般按照以下4个步骤来约束：</p>
+      <h3 id="多周期路径约束"><a href="#多周期路径约束" class="headerlink" title="多周期路径约束"></a>多周期路径约束</h3><p>&emsp;&emsp;多周期路径，我们一般按照以下4个步骤来约束：</p>
 <ol>
 <li>带有使能的数据</li>
 </ol>
 <p>&emsp;&emsp;首先来看带有使能的数据，在本工程中的Tming Report中，也提示了同一个时钟域之间的几个路径建立时间不满足要求</p>
-<center>
-<fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial63.png?raw=true"  alt="" />
-</fancybox>
-</center>
       
         
           
@@ -752,11 +747,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="5-伪路径约束"><a href="#5-伪路径约束" class="headerlink" title="5. 伪路径约束"></a>5. 伪路径约束</h2><p>&emsp;&emsp;在不加伪路径的时序约束时，Timing Report会提示很多的error，其中就有跨时钟域的error。</p>
-<center>
-<fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial47.png"  alt="" /></fancybox>
-</center>
+      <h3 id="5-伪路径约束"><a href="#5-伪路径约束" class="headerlink" title="5. 伪路径约束"></a>5. 伪路径约束</h3><p>&emsp;&emsp;在不加伪路径的时序约束时，Timing Report会提示很多的error，其中就有跨时钟域的error。</p>
       
         
           
@@ -846,11 +837,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h2><p>&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。</p>
-<center>
-<fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial45.png"  alt="" /></fancybox>
-</center>
+      <h3 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h3><p>&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。</p>
       
         
           
@@ -940,7 +927,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="约束衍生时钟"><a href="#约束衍生时钟" class="headerlink" title="约束衍生时钟"></a>约束衍生时钟</h2><p>&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对<code>clk_samp</code>和<code>spi_clk</code>进行约束即可。约束如下：</p>
+      <h3 id="约束衍生时钟"><a href="#约束衍生时钟" class="headerlink" title="约束衍生时钟"></a>约束衍生时钟</h3><p>&emsp;&emsp;系统中有4个衍生时钟，但其中有两个是MMCM输出的，不需要我们手动约束，因此我们只需要对<code>clk_samp</code>和<code>spi_clk</code>进行约束即可。约束如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br></pre></td></tr></table></figure>
       
         
@@ -1031,7 +1018,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="约束主时钟"><a href="#约束主时钟" class="headerlink" title="约束主时钟"></a>约束主时钟</h2><p>&emsp;&emsp;在这一节开讲之前，我们先把<code>wave_gen</code>工程的<code>wave_gen_timing.xdc</code>中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？</p>
+      <h3 id="约束主时钟"><a href="#约束主时钟" class="headerlink" title="约束主时钟"></a>约束主时钟</h3><p>&emsp;&emsp;在这一节开讲之前，我们先把<code>wave_gen</code>工程的<code>wave_gen_timing.xdc</code>中的内容都删掉，即先看下在没有任何时序约束的情况下会综合出什么结果？</p>
       
         
           
@@ -1121,7 +1108,7 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h1 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h1><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上又增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
+      <h2 id="行万里路–时序约束实战篇"><a href="#行万里路–时序约束实战篇" class="headerlink" title="行万里路–时序约束实战篇"></a>行万里路–时序约束实战篇</h2><p>&emsp;&emsp;我们以Vivado自带的<code>wave_gen</code>工程为例，该工程的各个模块功能较为明确，如下图所示。为了引入异步时钟域，我们在此程序上又增加了另一个时钟–<code>clkin2</code>，该时钟产生脉冲信号<code>pulse</code>，<code>samp_gen</code>中在<code>pulse</code>为高时才产生信号。</p>
       
         
           
@@ -1211,15 +1198,8 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h2><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
+      <h3 id="xdc约束优先级"><a href="#xdc约束优先级" class="headerlink" title="xdc约束优先级"></a>xdc约束优先级</h3><p>&emsp;&emsp;在xdc文件中，按约束的先后顺序依次被执行，因此，针对同一个时钟的不同约束，只有最后一条约束生效。</p>
 <p>&emsp;&emsp;虽然执行顺序是从前到后，但优先级却不同；就像四则运算一样，+-x÷都是按照从左到右的顺序执行，但x÷的优先级比+-要高。</p>
-<p>时序例外的优先级从高到低为：</p>
-<ol>
-<li>Clock Groups (set_clock_groups)</li>
-<li>False Path (set_false_path)</li>
-<li>Maximum Delay Path (set_max_delay) and Minimum Delay Path (set_min_delay)</li>
-<li>Multicycle Paths (set_multicycle_path)</li>
-</ol>
       
         
           
@@ -1371,7 +1351,7 @@
           <li><a class="flat-box"
             title="/blog/categories/Dev/" href="/blog/categories/Dev/"
             id="blogcategoriesDev"
-            ><div class='name'>Dev</div><div class='badge'>(26)</div></a></li>
+            ><div class='name'>Dev</div><div class='badge'>(28)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/CDN/" href="/blog/categories/Dev/CDN/"
@@ -1407,6 +1387,11 @@
             title="/blog/categories/Dev/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" href="/blog/categories/Dev/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
             id="blogcategoriesDevE6938DE4BD9CE7B3BBE7BB9F"
             ><div class='name'>操作系统</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child"
+            title="/blog/categories/Dev/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" href="/blog/categories/Dev/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+            id="blogcategoriesDevE6ADA3E58899E8A1A8E8BEBEE5BC8F"
+            ><div class='name'>正则表达式</div><div class='badge'>(2)</div></a></li>
         
           <li><a class="flat-box child"
             title="/blog/categories/Dev/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" href="/blog/categories/Dev/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"
@@ -1465,7 +1450,7 @@
 
 
     <div class='content'>
-      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 17.33px; color: #828282">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/timing-analysis/" style="font-size: 24px; color: #555">timing-analysis</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/" style="font-size: 14px; color: #999">命名规则</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a>
+      <a href="/blog/tags/CDN/" style="font-size: 14px; color: #999">CDN</a> <a href="/blog/tags/Git/" style="font-size: 20.67px; color: #6c6c6c">Git</a> <a href="/blog/tags/github/" style="font-size: 14px; color: #999">github</a> <a href="/blog/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/blog/tags/iOS/" style="font-size: 14px; color: #999">iOS</a> <a href="/blog/tags/inode/" style="font-size: 14px; color: #999">inode</a> <a href="/blog/tags/jsDeliver/" style="font-size: 14px; color: #999">jsDeliver</a> <a href="/blog/tags/linux/" style="font-size: 17.33px; color: #828282">linux</a> <a href="/blog/tags/others/" style="font-size: 17.33px; color: #828282">others</a> <a href="/blog/tags/pdf/" style="font-size: 14px; color: #999">pdf</a> <a href="/blog/tags/timing-analysis/" style="font-size: 24px; color: #555">timing-analysis</a> <a href="/blog/tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="/blog/tags/video/" style="font-size: 14px; color: #999">video</a> <a href="/blog/tags/vim/" style="font-size: 14px; color: #999">vim</a> <a href="/blog/tags/windows/" style="font-size: 14px; color: #999">windows</a> <a href="/blog/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/blog/tags/%E5%8A%B1%E5%BF%97/" style="font-size: 14px; color: #999">励志</a> <a href="/blog/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/" style="font-size: 14px; color: #999">命名规则</a> <a href="/blog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 14px; color: #999">文件系统</a> <a href="/blog/tags/%E6%99%BA%E6%85%A7/" style="font-size: 14px; color: #999">智慧</a> <a href="/blog/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 17.33px; color: #828282">正则表达式</a> <a href="/blog/tags/%E7%A3%81%E7%9B%98/" style="font-size: 14px; color: #999">磁盘</a> <a href="/blog/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" style="font-size: 14px; color: #999">虚拟内存</a>
     </div>
   </section>
 

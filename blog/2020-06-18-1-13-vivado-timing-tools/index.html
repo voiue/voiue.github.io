@@ -357,10 +357,10 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h1 id="时序约束辅助工具"><a href="#时序约束辅助工具" class="headerlink" title="时序约束辅助工具"></a>时序约束辅助工具</h1><p>&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。</p>
+          <h2 id="时序约束辅助工具"><a href="#时序约束辅助工具" class="headerlink" title="时序约束辅助工具"></a>时序约束辅助工具</h2><p>&emsp;&emsp;上面我们讲的都是xdc文件的方式进行时序约束，Vivado中还提供了两种图形界面的方式，帮我们进行时序约束：时序约束编辑器（Edit Timing Constraints ）和时序约束向导（Constraints Wizard）。两者都可以在综合或实现后的Design中打开。</p>
 <a id="more"></a>
 
-<h2 id="1-时序约束编辑器"><a href="#1-时序约束编辑器" class="headerlink" title="1. 时序约束编辑器"></a>1. 时序约束编辑器</h2><p>&emsp;&emsp;打开之后就可显示出我们之前做的所有约束，当然，还可以再添加、删除或修改时序约束。</p>
+<h3 id="1-时序约束编辑器"><a href="#1-时序约束编辑器" class="headerlink" title="1. 时序约束编辑器"></a>1. 时序约束编辑器</h3><p>&emsp;&emsp;打开之后就可显示出我们之前做的所有约束，当然，还可以再添加、删除或修改时序约束。</p>
 <center>
 <fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial51.png"  alt="" /></fancybox>
@@ -378,7 +378,7 @@
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial53.png"  alt="" /></fancybox>
 </center>
 
-<h2 id="2-时序约束向导"><a href="#2-时序约束向导" class="headerlink" title="2. 时序约束向导"></a>2. 时序约束向导</h2><p>&emsp;&emsp;时序约束向导可以自动识别出未约束的主时钟，我们把wave_gen工程的xdc文件中对clk2的时钟约束注释掉，重新综合并实现后，打开时序约束向导，可以看到clk2被检测出未约束，点击编辑按钮，设置参数后就可完成约束。</p>
+<h3 id="2-时序约束向导"><a href="#2-时序约束向导" class="headerlink" title="2. 时序约束向导"></a>2. 时序约束向导</h3><p>&emsp;&emsp;时序约束向导可以自动识别出未约束的主时钟，我们把wave_gen工程的xdc文件中对clk2的时钟约束注释掉，重新综合并实现后，打开时序约束向导，可以看到clk2被检测出未约束，点击编辑按钮，设置参数后就可完成约束。</p>
 <center>
 <fancybox>
 <img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial54.png"  alt="" /></fancybox>
@@ -634,7 +634,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-时序约束编辑器"><span class="toc-text">1. 时序约束编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-时序约束向导"><span class="toc-text">2. 时序约束向导</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#时序约束辅助工具"><span class="toc-text">时序约束辅助工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-时序约束编辑器"><span class="toc-text">1. 时序约束编辑器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-时序约束向导"><span class="toc-text">2. 时序约束向导</span></a></li></ol></li></ol>
     </div>
   </section>
 

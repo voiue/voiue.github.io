@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>1-10-FPGA时序约束实战篇之延迟约束 | voiue</title>
+  <title>正则表达式真的很骚，可惜你不会写！！！ | voiue</title>
   
   
 
@@ -295,8 +295,8 @@
         
   
     <h1 class="title">
-      <a href="/blog/2020-06-13-1-10-dealy-constraints/">
-        1-10-FPGA时序约束实战篇之延迟约束
+      <a href="/blog/2020-07-19-regular-expression/">
+        正则表达式真的很骚，可惜你不会写！！！
       </a>
     </h1>
   
@@ -322,9 +322,9 @@
             
   
   <div class='new-meta-item category'>
-    <a href='/blog/categories/Dev/FPGA/' rel="nofollow">
+    <a href='/blog/categories/Dev/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/' rel="nofollow">
       <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>Dev&nbsp;/&nbsp;FPGA</p>
+      <p>Dev&nbsp;/&nbsp;正则表达式</p>
     </a>
   </div>
 
@@ -335,7 +335,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p>发布于：2020年6月13日</p>
+    <p>发布于：2020年7月19日</p>
   </a>
 </div>
 
@@ -357,88 +357,175 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          <h3 id="延迟约束"><a href="#延迟约束" class="headerlink" title="延迟约束"></a>延迟约束</h3><p>&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。</p>
+          <p>本文旨在用最通俗的语言讲述最枯燥的基本知识</p>
+<blockquote>
+<p> 文章提纲：</p>
+<ol>
+<li>元字符</li>
+<li>重复限定符</li>
+<li>分组</li>
+<li>转义</li>
+<li>条件或</li>
+<li>区间</li>
+</ol>
+</blockquote>
 <a id="more"></a>
 
-<center>
-<fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial45.png"  alt="" /></fancybox>
-</center>
-
-<p>&emsp;&emsp;但其实这种想法是不对的，比如在很多ADC的设计中，输出的时钟的边沿刚好是数据的中心位置，而如果我们不加延迟约束，则Vivado会默认时钟和数据是对齐的。</p>
-<center>
-<fancybox>
-<img src="https://cdn.jsdelivr.net/gh/voiue/cdn-img/img/fpga/timing_toturial46.png"  alt="" /></fancybox>
-</center>
-
-<p>&emsp;&emsp;对于输入管脚，首先判断捕获时钟是主时钟还是衍生时钟，如果是主时钟，直接用<code>set_input_delay</code>即可，如果是衍生时钟，要先创建虚拟时钟，然后再设置delay。对于输出管脚，判断有没有输出随路时钟，若有，则直接使用<code>set_output_delay</code>，若没有，则需要创建虚拟时钟。</p>
-<p>&emsp;&emsp;在本工程中，输入输出数据管脚的捕获时钟如下表所示：</p>
+<p>正则表达式在几乎所有语言中都可以使用，无论是前端的JavaScript、还是后端的Java、c#。他们都提供相应的接口/函数支持正则表达式。</p>
+<p>但很神奇的是：<font color=red><em>无论你大学选择哪一门计算机语言，都没有关于正则表达式的课程给你修，在你学会正则之前，你只能看着那些正则大师们，写了一串外星文似的字符串，替代了你用一大篇幅的if else代码来做一些内容校验</em></font>。</p>
+<p>既然喜欢，那就动手学呗，可当你百度出一一堆相关资料时，你发现无一不例外的枯燥至极，难以学习（实话说，当年不理君也是这样的心态😂😂）。</p>
+<p>下面，不理君尝试用一种比较通俗点的方式讲一下正则，让你能在读完之后，自己写出一些简单的正则，再不济，能看到别人写的正则，那也不错了。</p>
+<h2 id="1-元字符"><a href="#1-元字符" class="headerlink" title="1.元字符"></a>1.元字符</h2><p>万物皆有源，正则也是如此，元字符是构造正则表达式的一种基本元素。<br>我们先来记几个常用的元字符：</p>
 <table>
 <thead>
 <tr>
-<th>管脚</th>
-<th>输入输出</th>
-<th>捕获时钟</th>
-<th>时钟类型</th>
-<th>是否有随路时钟</th>
-<th>是否需要虚拟时钟</th>
+<th align="center">元字符</th>
+<th align="left">说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>rxd_pin</td>
-<td>输入</td>
-<td>clk_pin_p</td>
-<td>主时钟</td>
-<td>x</td>
-<td>No</td>
+<td align="center">.</td>
+<td align="left">匹配除换行符以外的任意字符</td>
 </tr>
 <tr>
-<td>txd_pin</td>
-<td>输出</td>
-<td>clk_tx</td>
-<td>x</td>
-<td>无</td>
-<td>Yes</td>
+<td align="center">\w</td>
+<td align="left">匹配字母或数字或下划线或汉字</td>
 </tr>
 <tr>
-<td>lb_sel_pin</td>
-<td>输入</td>
-<td>clk_tx</td>
-<td>衍生时钟</td>
-<td>x</td>
-<td>Yes</td>
+<td align="center">\s</td>
+<td align="left">匹配任意的空白符</td>
 </tr>
 <tr>
-<td>led_pins[7:0]</td>
-<td>输出</td>
-<td>clk_tx</td>
-<td>衍生时钟</td>
-<td>无</td>
-<td>Yes</td>
+<td align="center">\d</td>
+<td align="left">匹配数字</td>
 </tr>
 <tr>
-<td>spi_mosi_pin</td>
-<td>输出</td>
-<td>spi_clk</td>
-<td>衍生时钟</td>
-<td>有</td>
-<td>No</td>
+<td align="center">\b</td>
+<td align="left">匹配单词的开始或结束</td>
 </tr>
 <tr>
-<td>dac_*</td>
-<td>输出</td>
-<td>spi_clk</td>
-<td>衍生时钟</td>
-<td>有</td>
-<td>No</td>
+<td align="center">^</td>
+<td align="left">匹配字符串的开始</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td align="left">匹配字符串的结束</td>
 </tr>
 </tbody></table>
-<p>&emsp;&emsp;根据上表，我们创建的延迟约束如下，其中的具体数字在实际工程中要根据上下游器件的时序关系（在各个器件手册中可以找到）和PCB走线延迟来决定。未避免有些约束有歧义，我们把前面的所有约束也加进来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 主时钟约束</span><br><span class="line">create_clock -period 25.000 -name clk2 [get_ports clk_in2]</span><br><span class="line"></span><br><span class="line"># 衍生时钟约束</span><br><span class="line">create_generated_clock -name clk_samp -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;clk_tx] -divide_by 32 [get_pins clk_gen_i0&#x2F;BUFHCE_clk_samp_i0&#x2F;O]</span><br><span class="line">create_generated_clock -name spi_clk -source [get_pins dac_spi_i0&#x2F;out_ddr_flop_spi_clk_i0&#x2F;ODDR_inst&#x2F;C] -divide_by 1 -invert [get_ports spi_clk_pin]</span><br><span class="line">create_generated_clock -name clk_tx -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKIN1] [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKOUT1]</span><br><span class="line">create_generated_clock -name clk_rx -source [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKIN1] [get_pins clk_gen_i0&#x2F;clk_core_i0&#x2F;inst&#x2F;mmcm_adv_inst&#x2F;CLKOUT0]</span><br><span class="line"></span><br><span class="line"># 设置异步时钟</span><br><span class="line">set_clock_groups -asynchronous -group [get_clocks clk_samp] -group [get_clocks clk2]</span><br><span class="line"></span><br><span class="line"># 延迟约束</span><br><span class="line">create_clock -period 6.000 -name virtual_clock</span><br><span class="line">set_input_delay -clock [get_clocks -of_objects [get_ports clk_pin_p]] 0.000 [get_ports rxd_pin]</span><br><span class="line">set_input_delay -clock [get_clocks -of_objects [get_ports clk_pin_p]] -min -0.500 [get_ports rxd_pin]</span><br><span class="line">set_input_delay -clock virtual_clock -max 0.000 [get_ports lb_sel_pin]</span><br><span class="line">set_input_delay -clock virtual_clock -min -0.500 [get_ports lb_sel_pin]</span><br><span class="line">set_output_delay -clock virtual_clock -max 0.000 [get_ports &#123;txd_pin &#123;led_pins[*]&#125;&#125;]</span><br><span class="line">set_output_delay -clock virtual_clock -min -0.500 [get_ports &#123;txd_pin &#123;led_pins[*]&#125;&#125;]</span><br><span class="line">set_output_delay -clock spi_clk -max 1.000 [get_ports &#123;spi_mosi_pin dac_cs_n_pin dac_clr_n_pin&#125;]</span><br><span class="line">set_output_delay -clock spi_clk -min -1.000 [get_ports &#123;spi_mosi_pin dac_cs_n_pin dac_clr_n_pin&#125;]</span><br></pre></td></tr></table></figure>
+<p>有了元字符之后，我们就可以利用这些元字符来写一些简单的正则表达式了，<br>比如：</p>
+<ol>
+<li><p>匹配有abc开头的字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\babc或者^abc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配8位数字的QQ号码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\d\d\d\d\d\d\d\d$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配1开头11位数字的手机号码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^1\d\d\d\d\d\d\d\d\d\d$</span><br></pre></td></tr></table></figure>
 
+
+
+</li>
+</ol>
+<h2 id="2-重复限定符"><a href="#2-重复限定符" class="headerlink" title="2.重复限定符"></a>2.重复限定符</h2><p>有了元字符就可以写不少的正则表达式了，但细心的你们可能会发现：别人写的正则简洁明了，而不理君写的正则一堆乱七八糟而且重复的元字符组成的。正则没提供办法处理这些重复的元字符吗？</p>
+<p>答案是有的！<br>为了处理这些重复问题，正则表达式中一些重复限定符，把重复部分用合适的限定符替代，下面我们来看一些限定符：</p>
+<table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">*</td>
+<td align="left">重复零次或更多次</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td align="left">重复一次或更多次</td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td align="left">重复零次或一次</td>
+</tr>
+<tr>
+<td align="center">{n}</td>
+<td align="left">重复n次</td>
+</tr>
+<tr>
+<td align="center">{n,}</td>
+<td align="left">重复n次或更多次</td>
+</tr>
+<tr>
+<td align="center">{n,m}</td>
+<td align="left">重复n到m次</td>
+</tr>
+</tbody></table>
+<p>有了这些限定符之后，我们就可以对之前的正则表达式进行改造了，比如：</p>
+<ol>
+<li><p>匹配8位数字的QQ号码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\d&#123;8&#125;$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配1开头11位数字的手机号码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^1\d&#123;10&#125;$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配银行卡号是14~18位的数字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\d&#123;14,18&#125;$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配以a开头的，0个或多个b结尾的字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^ab*$</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h2 id="3-分组"><a href="#3-分组" class="headerlink" title="3.分组"></a>3.分组</h2><p>从上面的例子（4）中看到，<em>限定符是作用在与他左边最近的一个字符，那么问题来了，如果我想要ab同时被</em>限定那怎么办呢？</p>
+<blockquote>
+<p>正则表达式中用小括号()来做分组，也就是括号中的内容作为一个整体。</p>
+</blockquote>
+<p>因此当我们要匹配多个ab时，我们可以这样</p>
+<p>如：匹配字符串中包含0到多个ab开头：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(ab)*</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-转义"><a href="#4-转义" class="headerlink" title="4.转义"></a>4.转义</h2><p>我们看到正则表达式用小括号来做分组，那么问题来了：</p>
+<blockquote>
+<p>如果要匹配的字符串中本身就包含小括号，那是不是冲突？应该怎么办？</p>
+</blockquote>
+<p>针对这种情况，正则提供了转义的方式，也就是要把这些元字符、限定符或者关键字转义成普通的字符，做法很简答，就是在要转义的字符前面加个斜杠，也就是\即可。<br>如：要匹配以(ab)开头：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(\(ab\))*</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-条件或"><a href="#5-条件或" class="headerlink" title="5.条件或"></a>5.条件或</h2><p>回到我们刚才的手机号匹配，我们都知道：国内号码都来自三大网，它们都有属于自己的号段，比如联通有130/131/132/155/156/185/186/145/176等号段，假如让我们匹配一个联通的号码，那按照我们目前所学到的正则，应该无从下手的，因为这里包含了一些并列的条件，也就是“或”，那么在正则中是如何表示“或”的呢？</p>
+<blockquote>
+<p>正则用符号 | 来表示或，也叫做分支条件，当满足正则里的分支条件的任何一种条件时，都会当成是匹配成功。</p>
+</blockquote>
+<p>那么我们就可以用或条件来处理这个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(130|131|132|155|156|185|186|145|176)\d&#123;8&#125;$</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-区间"><a href="#6-区间" class="headerlink" title="6.区间"></a>6.区间</h2><p>看到上面的例子，是不是看到有什么规律？是不是还有一种想要简化的冲动？<br>实际是有的</p>
+<blockquote>
+<p>正则提供一个元字符中括号 [] 来表示区间条件。</p>
+<ol>
+<li>限定0到9 可以写成[0-9]</li>
+<li>限定A-Z 写成[A-Z]</li>
+<li>限定某些数字 [165]</li>
+</ol>
+</blockquote>
+<p>那上面的正则我们还改成这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^((13[0-2])|(15[56])|(18[5-6])|145|176)\d&#123;8&#125;$</span><br></pre></td></tr></table></figure>
+
+<p>好了，正则表达式的基本用法就讲到这里了，其实它还有非常多的知识点以及元字符，我们在此只列举了部分元字符和语法来讲，旨在给那些不懂正则或者想学正则但有看不下去文档的人做一个快速入门级的教程，看完本教程，即使你不能写出高大上的正则，至少也能写一些简单的正则或者看得懂别人写的正则了，如果需要进阶学习，那就靠各位好好修炼啦。</p>
 <br>
 
- <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=73006468&page=10" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe></div>
+<blockquote>
+<p>原文链接：<a href="https://juejin.im/post/5b96a8e2e51d450e6a2de115" target="_blank" rel="noopener">https://juejin.im/post/5b96a8e2e51d450e6a2de115</a></p>
+</blockquote>
+
           
             <br>
             
@@ -471,7 +558,7 @@
           
         
           
-            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/>https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/</a></p>
+            <p>本文永久链接是：<a href=https://voiue.github.io/blog/2020-07-19-regular-expression/>https://voiue.github.io/blog/2020-07-19-regular-expression/</a></p>
           
         
       </blockquote>
@@ -500,10 +587,10 @@
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-13T23:57:14+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-19T16:52:45+08:00">
   <a class='notlink'>
     <i class="fas fa-save" aria-hidden="true"></i>
-    <p>更新于：2020年6月13日</p>
+    <p>更新于：2020年7月19日</p>
   </a>
 </div>
 
@@ -512,7 +599,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/timing-analysis/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>timing-analysis</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i><p>正则表达式</p></a></div>
 
 
         
@@ -525,7 +612,18 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/&title=1-10-FPGA时序约束实战篇之延迟约束 - voiue&summary=延迟约束&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://voiue.github.io/blog/2020-07-19-regular-expression/&title=正则表达式真的很骚，可惜你不会写！！！ - voiue&summary=本文旨在用最通俗的语言讲述最枯燥的基本知识
+
+ 文章提纲：
+
+元字符
+重复限定符
+分组
+转义
+条件或
+区间
+
+"
           
           >
           
@@ -537,7 +635,18 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/&title=1-10-FPGA时序约束实战篇之延迟约束 - voiue&summary=延迟约束&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://voiue.github.io/blog/2020-07-19-regular-expression/&title=正则表达式真的很骚，可惜你不会写！！！ - voiue&summary=本文旨在用最通俗的语言讲述最枯燥的基本知识
+
+ 文章提纲：
+
+元字符
+重复限定符
+分组
+转义
+条件或
+区间
+
+"
           
           >
           
@@ -549,7 +658,18 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-06-13-1-10-dealy-constraints/&title=1-10-FPGA时序约束实战篇之延迟约束 - voiue&summary=延迟约束&emsp;&emsp;对于延迟约束，相信很多同学是不怎么用的，主要可能就是不熟悉这个约束，也有的是嫌麻烦，因为有时还要计算PCB上的走线延迟导致的时间差。而且不加延迟约束，Vivado也只是在Timing Report中提示warning，并不会导致时序错误，这也会让很多同学误以为这个约束可有可无。"
+          href="http://service.weibo.com/share/share.php?url=https://voiue.github.io/blog/2020-07-19-regular-expression/&title=正则表达式真的很骚，可惜你不会写！！！ - voiue&summary=本文旨在用最通俗的语言讲述最枯燥的基本知识
+
+ 文章提纲：
+
+元字符
+重复限定符
+分组
+转义
+条件或
+区间
+
+"
           
           >
           
@@ -561,8 +681,8 @@
       
         
         <fancybox>
-          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqElEQVR42u3aS24jMQwFQN//0sl+BkHrkWybnZR2MWR9Slk8kH59GaXxQgAOHDhwBjhwS+BexfHfgv98/tP8q+9frVNdd+q+4MCBAwcOHDhw2+COA2Dx4qfzq+fqnuf0vuDAgQMHDhw4cFvh0qCZHqwKe3rhblC/vB84cODAgQMHDtwfgXs1R7cwCQ4cOHDgwIEDB67WeK4G5mqQnnpYcODAgQMHDhy4p8HFDdowyN4F+bhOPjhw4MCBAwcO3BBctcD41L/L9wUHDhw4cODAgVsC1x0pbHefNChP7Q8OHDhw4MCBA7cNrluYvL1weLhf9Zyn3wMHDhw4cODAgdsGV73A6Q/70oZxFTidl/4DgAMHDhw4cODAbYXrBt3TgFl9sLQhnq5zHOjBgQMHDhw4cOCWwJULeuHG3QbyeGO5eE9w4MCBAwcOHLhtcGmAPP28W0BMA28agNMGNThw4MCBAwcO3Ba4d110Kgh31+0GanDgwIEDBw4cuC1waaN4qiA51bDuNtTje4EDBw4cOHDgwC2FqxYU7yo0VgNytQALDhw4cODAgQP3NLgqRBqU03lpgJ1+EHDgwIEDBw4cuKfD3R2Up4N2u/H8077gwIEDBw4cOHBL4aqN3CpweuGpead/HwdgcODAgQMHDhy4D8GlQXCqUTz1QKfrtO8HDhw4cODAgQO3DO6uwuDdgfruIB5XgMGBAwcOHDhw4D4ElwbY9KDputUH6TagxxrS4MCBAwcOHDhwN8F1Nxhv+DZBukH6uJAJDhw4cODAgQO3HG6qYd0NyCloN6Bf/rAQHDhw4MCBAwfuw3BpoE0DZjXAVgNudRwHd3DgwIEDBw4cuGVwpwunhchqQK3Ony6Mxp18cODAgQMHDhy4N8N1D5w2hKcb4tXzxgVYcODAgQMHDhy4pXDlAl9Y+JyC6AbusYY0OHDgwIEDBw7ccrjTz9MA273YXQ3q40ImOHDgwIEDBw7cm+GmCovTDeJq0E0fNA3m4MCBAwcOHDhwW+CmA+Jd61YD+FRBFhw4cODAgQMHbitcGning+t047kblOOGNDhw4MCBAwcO3Ifh3nWBNFCnjetq8L4M1ODAgQMHDhw4cL8M7jRodoNwN7i3C6HgwIEDBw4cOHC/FK4aTKcKoacPV4YGBw4cOHDgwIFbCpc2pKvz0nVOg/EpQPWc4MCBAwcOHDhw2+C6DdxqgzrdLy14dh8GHDhw4MCBAwduK5wRQiMABw4cOAMcuM+Ob4Tt/FPatwTxAAAAAElFTkSuQmCC">
-            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADqElEQVR42u3aS24jMQwFQN//0sl+BkHrkWybnZR2MWR9Slk8kH59GaXxQgAOHDhwBjhwS+BexfHfgv98/tP8q+9frVNdd+q+4MCBAwcOHDhw2+COA2Dx4qfzq+fqnuf0vuDAgQMHDhw4cFvh0qCZHqwKe3rhblC/vB84cODAgQMHDtwfgXs1R7cwCQ4cOHDgwIEDB67WeK4G5mqQnnpYcODAgQMHDhy4p8HFDdowyN4F+bhOPjhw4MCBAwcO3BBctcD41L/L9wUHDhw4cODAgVsC1x0pbHefNChP7Q8OHDhw4MCBA7cNrluYvL1weLhf9Zyn3wMHDhw4cODAgdsGV73A6Q/70oZxFTidl/4DgAMHDhw4cODAbYXrBt3TgFl9sLQhnq5zHOjBgQMHDhw4cOCWwJULeuHG3QbyeGO5eE9w4MCBAwcOHLhtcGmAPP28W0BMA28agNMGNThw4MCBAwcO3Ba4d110Kgh31+0GanDgwIEDBw4cuC1waaN4qiA51bDuNtTje4EDBw4cOHDgwC2FqxYU7yo0VgNytQALDhw4cODAgQP3NLgqRBqU03lpgJ1+EHDgwIEDBw4cuKfD3R2Up4N2u/H8077gwIEDBw4cOHBL4aqN3CpweuGpead/HwdgcODAgQMHDhy4D8GlQXCqUTz1QKfrtO8HDhw4cODAgQO3DO6uwuDdgfruIB5XgMGBAwcOHDhw4D4ElwbY9KDputUH6TagxxrS4MCBAwcOHDhwN8F1Nxhv+DZBukH6uJAJDhw4cODAgQO3HG6qYd0NyCloN6Bf/rAQHDhw4MCBAwfuw3BpoE0DZjXAVgNudRwHd3DgwIEDBw4cuGVwpwunhchqQK3Ony6Mxp18cODAgQMHDhy4N8N1D5w2hKcb4tXzxgVYcODAgQMHDhy4pXDlAl9Y+JyC6AbusYY0OHDgwIEDBw7ccrjTz9MA273YXQ3q40ImOHDgwIEDBw7cm+GmCovTDeJq0E0fNA3m4MCBAwcOHDhwW+CmA+Jd61YD+FRBFhw4cODAgQMHbitcGning+t047kblOOGNDhw4MCBAwcO3Ifh3nWBNFCnjetq8L4M1ODAgQMHDhw4cL8M7jRodoNwN7i3C6HgwIEDBw4cOHC/FK4aTKcKoacPV4YGBw4cOHDgwIFbCpc2pKvz0nVOg/EpQPWc4MCBAwcOHDhw2+C6DdxqgzrdLy14dh8GHDhw4MCBAwduK5wRQiMABw4cOAMcuM+Ob4Tt/FPatwTxAAAAAElFTkSuQmCC">
+          <a class='qrcode' rel="external nofollow noopener noreferrer" data-fancybox="gallery-qrcode" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADnElEQVR42u3aS3LCQAwFQO5/6eQAKZf1G5BJzw4w41F785B4/Vil9UIADhw4cBY4cEvgXsX1Z8Ob67KfR9+/en1ZeLNecODAgQMHDhy4bXDhAFiEu4OI3id7nuq+lw8IHDhw4MCBAwduKVw0qE4fsPogbgsNvg7XCw4cOHDgwIED98/hug3TKjA4cODAgQMHDhy42iC52zCtngMcOHDgwIEDB+7b4bqNwmmQ6IMI/zFwyyQfHDhw4MCBAwduCC67ugPgT78u1wsOHDhw4MCBA7cErruyDcxqg7M7sB6rFxw4cODAgQMHbglcNSBGQab+OFi9T7bhedtoBQcOHDhw4MCBWwY3VeDU9d3BdhQ6PfgGBw4cOHDgwIFbBnc60IYDZjLYTgf42/rBgQMHDhw4cOAeAtcdFFehoufJ7t8euIMDBw4cOHDgwC2Byx6g2oDM7n96YJ5d4MCBAwcOHDhw2+C6DcZTA+CpB9kN+OFJPjhw4MCBAwcO3Jvh0o28oQDchaoG7nDQjf5yAAcOHDhw4MCB+xDc9EG6QTXb0JwO6uDAgQMHDhw4cE+Be9dAurtPdjA9FXzBgQMHDhw4cOC2wmUPMBVspwJsdfBcDtjgwIEDBw4cOHDL4LJBuNs4zDYup+5XDergwIEDBw4cOHBPgftUwKxCTwfky33AgQMHDhw4cOCWwk01LLPvdwfG3fOFPcCBAwcOHDhw4JbBdRuU0YNGg+qp77UDMzhw4MCBAwcO3BK4U0F4ehA9NfCuBm1w4MCBAwcOHLhtcN2Ns8E3O1jOBtduXeVfDuDAgQMHDhw4cMvgyg2/4YbidKDNXgcOHDhw4MCBA7cdbjpodq+fGlxXB+7pST44cODAgQMHDtyb4aLBtNuAzH4vW/CpwTk4cODAgQMHDtxT4KoHPhY8m/tlB+zgwIEDBw4cOHBPg5sKnNlBdbSgqUF1ebANDhw4cODAgQO3BK67ugeZeoDRB1G9Dhw4cODAgQMHbhvc6cKrjcVscD4d6MGBAwcOHDhw4LbCZQNvtqBow7L6eRY8ex5w4MCBAwcOHLjtcNECsgVlB87VoNseOHcn+eDAgQMHDhw4cA+DyxbcbUxWg3u70QkOHDhw4MCBA/dlcNX3u7DVB1iGBgcOHDhw4MCBWwo3NeCdKrQ6iK4G3NvvgwMHDhw4cODALYObGuBWG5pVqOr9s+cABw4cOHDgwIHbBmflFjhw4MCBs8CB+/D6BcJWfcRO9Uf3AAAAAElFTkSuQmCC">
+            <img style='height:16px;border-radius:0;margin-left:4px' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADnElEQVR42u3aS3LCQAwFQO5/6eQAKZf1G5BJzw4w41F785B4/Vil9UIADhw4cBY4cEvgXsX1Z8Ob67KfR9+/en1ZeLNecODAgQMHDhy4bXDhAFiEu4OI3id7nuq+lw8IHDhw4MCBAwduKVw0qE4fsPogbgsNvg7XCw4cOHDgwIED98/hug3TKjA4cODAgQMHDhy42iC52zCtngMcOHDgwIEDB+7b4bqNwmmQ6IMI/zFwyyQfHDhw4MCBAwduCC67ugPgT78u1wsOHDhw4MCBA7cErruyDcxqg7M7sB6rFxw4cODAgQMHbglcNSBGQab+OFi9T7bhedtoBQcOHDhw4MCBWwY3VeDU9d3BdhQ6PfgGBw4cOHDgwIFbBnc60IYDZjLYTgf42/rBgQMHDhw4cOAeAtcdFFehoufJ7t8euIMDBw4cOHDgwC2Byx6g2oDM7n96YJ5d4MCBAwcOHDhw2+C6DcZTA+CpB9kN+OFJPjhw4MCBAwcO3Jvh0o28oQDchaoG7nDQjf5yAAcOHDhw4MCB+xDc9EG6QTXb0JwO6uDAgQMHDhw4cE+Be9dAurtPdjA9FXzBgQMHDhw4cOC2wmUPMBVspwJsdfBcDtjgwIEDBw4cOHDL4LJBuNs4zDYup+5XDergwIEDBw4cOHBPgftUwKxCTwfky33AgQMHDhw4cOCWwk01LLPvdwfG3fOFPcCBAwcOHDhw4JbBdRuU0YNGg+qp77UDMzhw4MCBAwcO3BK4U0F4ehA9NfCuBm1w4MCBAwcOHLhtcN2Ns8E3O1jOBtduXeVfDuDAgQMHDhw4cMvgyg2/4YbidKDNXgcOHDhw4MCBA7cdbjpodq+fGlxXB+7pST44cODAgQMHDtyb4aLBtNuAzH4vW/CpwTk4cODAgQMHDtxT4KoHPhY8m/tlB+zgwIEDBw4cOHBPg5sKnNlBdbSgqUF1ebANDhw4cODAgQO3BK67ugeZeoDRB1G9Dhw4cODAgQMHbhvc6cKrjcVscD4d6MGBAwcOHDhw4LbCZQNvtqBow7L6eRY8ex5w4MCBAwcOHLjtcNECsgVlB87VoNseOHcn+eDAgQMHDhw4cA+DyxbcbUxWg3u70QkOHDhw4MCBA/dlcNX3u7DVB1iGBgcOHDhw4MCBWwo3NeCdKrQ6iK4G3NvvgwMHDhw4cODALYObGuBWG5pVqOr9s+cABw4cOHDgwIHbBmflFjhw4MCBs8CB+/D6BcJWfcRO9Uf3AAAAAElFTkSuQmCC">
           </a>
         </fancybox>
       
@@ -585,16 +705,16 @@
                         <span class="art-item-left">
                             <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                             <h4>
-                                <a href="/blog/2020-06-15-1-11-false-path/" rel="prev" title="1-11-FPGA时序约束实战篇之伪路径约束">
+                                <a href="/blog/2020-07-19-commonly-used-regular-expression/" rel="prev" title="常用正则表达式公式总结">
                                   
-                                      1-11-FPGA时序约束实战篇之伪路径约束
+                                      常用正则表达式公式总结
                                   
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
-                                    <a class="tag" href="/blog/tags/timing-analysis/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> timing-analysis</a>
+                                    <a class="tag" href="/blog/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 正则表达式</a>
                                 </h6>
                             
                         </span>
@@ -605,16 +725,16 @@
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/blog/2020-06-12-1-9-generated-clock/" rel="prev" title="1-9-FPGA时序约束实战篇之衍生时钟约束">
+                                <a href="/blog/2020-07-05-explanation-of-FPGA-chip-naming-rules/" rel="prev" title="关于FPGA芯片命名规则的解释">
                                     
-                                        1-9-FPGA时序约束实战篇之衍生时钟约束
+                                        关于FPGA芯片命名规则的解释
                                     
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
-                                    <a class="tag" href="/blog/tags/timing-analysis/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> timing-analysis</a>
+                                    <a class="tag" href="/blog/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 命名规则</a>
                                 </h6>
                             
                         </span>
@@ -659,7 +779,7 @@
 
   <script>
     window.subData = {
-      title: '1-10-FPGA时序约束实战篇之延迟约束',
+      title: '正则表达式真的很骚，可惜你不会写！！！',
       tools: true
     }
   </script>
@@ -685,7 +805,7 @@
 
 
     <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟约束"><span class="toc-text">延迟约束</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-元字符"><span class="toc-text">1.元字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-重复限定符"><span class="toc-text">2.重复限定符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-分组"><span class="toc-text">3.分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-转义"><span class="toc-text">4.转义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-条件或"><span class="toc-text">5.条件或</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-区间"><span class="toc-text">6.区间</span></a></li></ol>
     </div>
   </section>
 
